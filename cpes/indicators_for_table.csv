@@ -1,0 +1,18 @@
+Source,Data Set,Indicator,Data Availability,Dimensions,Measure,Variables
+Connecticut State Department of Education,Chronic Absenteeism by All Students,Chronic absenteeism,Town/District,Grade K-12,Number,
+Connecticut Department of Emergency Services and Public Protection,UCR Crime Index,Property Crime,Town,"12-17, 18-25, 26+, <10, 10-12, 13-14, 15, 16, 17, tot <18, 18, 19, 20, 21, 22, 23, 24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+, tot 18+, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling"
+Connecticut Department of Emergency Services and Public Protection,Liquor Law Arrests,Liquor law violations,Town,"12-17, 18-25, 26+, Age <18, Age 18+, Age 12-20, Gender, Race/Ethnicity",Number,Alcohol
+Connecticut Department of Public Health,Drug-induced Deaths,Overdose deaths,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,"Alcohol
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs"
+Connecticut Office of the Chief Medical Examiner,Accidental Drug Related Deaths by Drug Type,Any opioid related death,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,"Prescription Drugs
+Heroin"
+Connecticut Office of the Chief Medical Examiner,Accidental Drug Related Deaths by Individual Drugs Detected,Heroin related deaths,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,Heroin
