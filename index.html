@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Welcome to CTData's Shiny Server!</title>
+  <title>Connecticut Data Collaborative's Shiny Server</title>
   <style type="text/css">
     body, html {
       font-family: Helvetica, Arial, sans-serif;
@@ -85,9 +85,68 @@
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">CTData Shiny Apps</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Our Code</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Connecticut Data Collaborative Shiny Apps</h1>
+      <p>Applications built and maintained by CTData using the Shiny web framework. </p>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <h2>CT SEOW Data Portal</h2>
+        <div class="thumbnail">
+          <img src="images/cpes_app.jpg" />
+        </div>
+        <p>
+          A data portal for that explores identification, sharing and use of data to improve substance abuse prevention and mental health promotion, and behavioral health in general.
+        </p>
+        <a href="./cpes" class="btn btn-primary" role="button">Launch App</a>
+        <br>
+      </div>
+      
+      
+      <div class="col-md-4 col-sm-6">
+        <h2>CONNECT Dashboard</h2>
+        <div class="thumbnail">
+          <img src="images/connect_app.png" />
+        </div>
+        <p>
+          A dashboard to explore data by Department of Children and Families (DCF) region and education data by district.
+        </p>
+        <a href="./connect" class="btn btn-primary" role="button">Launch App</a>
+        <br>
+      </div>     
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+  
   <div id="titleBar">
     <div id="container">
-      <h1>Welcome to CTData's Shiny Server!</h1>
+      <h1>Connecticut Data Collaborative's Shiny Server</h1>
     </div>
   </div>
   <div id="outer-content">
