@@ -15,8 +15,8 @@ library(shinythemes)
 library(knitr)
 library(kableExtra)
 
-source('./scripts/read_in_data.R')
-#indicator_csv <- read.csv("./indicators_for_table.csv", stringsAsFactors = F, header=T, check.names=F)
+#source('./scripts/read_in_data.R')
+indicator_csv <- read.csv("indicators_for_table.csv", stringsAsFactors = F, header=T, check.names=F)
 
 
 sources <- unique(indicator_csv$Source)
