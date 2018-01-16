@@ -1,0 +1,43 @@
+body {
+  background: #fff;
+}
+
+#header {
+  text-align: center;
+  color: #fdfdfd;
+  text-shadow: 0 0 1px #000;
+  padding: 20px 0 80px;
+  background: #0088cc url('ctdata-health.jpg');
+  border-bottom: 1px solid #ddd;
+  margin: 0 -15px;
+  word-wrap: break-word;
+}
+
+#title {
+  font-size: 4em;
+  text-shadow: 0 0 5px #000;
+}
+
+#subtitle {
+  font-size: 1.5em;
+  margin-top: -4px;
+}
+
+#subsubtitle {
+  font-size: 1.3em;
+}
+
+#subsubtitle a {
+  color: #fdfdfd;
+  text-decoration: underline;
+}
+
+#resourcepage {
+  text-align: left;
+  color: black;
+  border-bottom: 1px solid #ddd;
+  margin: 0 -15px;
+  word-wrap: break-word; 
+  /*width: 1200px;*/
+  padding: 20px;
+}
