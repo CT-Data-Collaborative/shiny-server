@@ -16,17 +16,17 @@ library(knitr)
 library(kableExtra)
 
 #source('./scripts/read_in_data.R')
-indicator_csv <- read.csv("indicators_for_table.csv", stringsAsFactors = F, header=T, check.names=F)
+#indicator_csv <- read.csv("indicators_for_table.csv", stringsAsFactors = F, header=T, check.names=F)
 
-sources <- unique(indicator_csv$Source)
+#sources <- unique(indicator_csv$Source)
 
 # Define UI for application
 shinyUI(
   fluidPage(
     title = "Connecticut SEOW Data Portal",
       tags$head(
-        tags$link(href = "style.css", rel = "stylesheet"),
-        tags$link(rel = "shortcut icon", type="image/x-icon", href="https://raw.githubusercontent.com/CT-Data-Collaborative/shiny-server/master/images/favicon.ico")
+        #tags$link(href = "style.css", rel = "stylesheet"),
+        #tags$link(rel = "shortcut icon", type="image/x-icon", href="https://raw.githubusercontent.com/CT-Data-Collaborative/shiny-server/master/images/favicon.ico")
       ),
       div(id = "header",
         div(id = "title",
@@ -110,10 +110,10 @@ shinyUI(
                     HTML('<br>'),
                     HTML('<hr>'),
                     h3("Partners"),
-                    align="center",
-                    img(src="./www/LOGOtransparentcolor.png", width=100), 
-                    img(src="./www/uconn-health-wordmark-stacked-blue.png", width=100), 
-                    img(src="./www/ctdata-logo.png", width=100)
+                    align="center"
+                    #img(src="./www/LOGOtransparentcolor.png", width=100), 
+                    #img(src="./www/uconn-health-wordmark-stacked-blue.png", width=100), 
+                    #img(src="./www/ctdata-logo.png", width=100)
                   )
                 )
         ), 
@@ -133,7 +133,7 @@ shinyUI(
           dashboardHeader(disable=T),
           dashboardSidebar(width=250),
           dashboardBody(
-            dataTableOutput("indicator_table")
+           # dataTableOutput("indicator_table")
           )
         ),
         tags$footer(HTML(paste("Powered by the Connecticut Data Collaborative", "Copyright © 2018", sep="<br/>")), 
@@ -184,9 +184,9 @@ shinyUI(
                 fluidRow(
                   column(12, div(style="padding: 0px 0px",
                       sidebarMenu(
-                        selectInput("select",
-                        label = HTML('<h3 style="color:black;">Select Source</h3>'),
-                        choices = sources)
+                        #selectInput("select",
+                       # label = HTML('<h3 style="color:black;">Select Source</h3>'),
+                        #choices = sources)
                         )
                       )
                    )
@@ -196,9 +196,9 @@ shinyUI(
                 fluidRow(
                   column(12, div(style="padding: 0px 0px",
                       sidebarMenu(
-                        selectInput("select", 
-                        label = HTML('<h4>Source</h4>'),
-                        choices = sources, selected="YRBS")
+                        #selectInput("select", 
+                        #label = HTML('<h4>Source</h4>'),
+                        #choices = sources, selected="YRBS")
                         )
                       )
                    )
