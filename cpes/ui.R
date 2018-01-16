@@ -111,9 +111,9 @@ shinyUI(
                     HTML('<hr>'),
                     h3("Partners"),
                     align="center",
-                    img(src="LOGOtransparentcolor.png", width=100), 
-                    img(src="uconn-health-wordmark-stacked-blue.png", width=100), 
-                    img(src="ctdata-logo.png", width=100)
+                    img(src="./www/LOGOtransparentcolor.png", width=100), 
+                    img(src="./www/uconn-health-wordmark-stacked-blue.png", width=100), 
+                    img(src="./www/ctdata-logo.png", width=100)
                   )
                 )
         ), 
