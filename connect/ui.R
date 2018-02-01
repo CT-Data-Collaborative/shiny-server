@@ -7,7 +7,6 @@
 #    http://shiny.rstudio.com/
 #
 library(aws.s3)
-library(readr)
 library(jsonlite)
 library(shiny) #load shiny after jsonlite so validate functions work
 library(shinyBS)
