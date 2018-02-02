@@ -6,33 +6,33 @@
 #
 #    http://shiny.rstudio.com/
 #
-library(aws.s3)
-library(jsonlite)
-library(shiny) #load shiny after jsonlite so validate functions work
-library(shinyBS)
-library(shinyLP)
-library(shinydashboard)
-library(plotly)
-library(RCurl)
-library(tidyr)
-library(DT)
-library(ggplot2)
-library(datapkg)
-library(ggthemes)
-library(stringr)
-library(shinythemes)
-library(knitr)
-library(kableExtra)
-library(rgeos)
-library(maptools)
-library(dplyr)
-library(rgdal)
-library(censusr)
+# library(aws.s3)
+# library(jsonlite)
+# library(shiny) #load shiny after jsonlite so validate functions work
+# library(shinyBS)
+# library(shinyLP)
+# library(shinydashboard)
+# library(plotly)
+# library(RCurl)
+# library(tidyr)
+# library(DT)
+# library(ggplot2)
+# library(datapkg)
+# library(ggthemes)
+# library(stringr)
+# library(shinythemes)
+# library(knitr)
+# library(kableExtra)
+# library(rgeos)
+# library(maptools)
+# library(dplyr)
+# library(rgdal)
+# library(censusr)
 
 ##Read in data
 #######HEALTH#####################################################################################################################################
 
-source('./scripts/download_jsons_from_s3.R')
+#source('./scripts/download_jsons_from_s3.R')
 h_url <- HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town?v=table&f={%22Town%22:%20%22Hartford%22,%20%22Variable%22:%20%22Fetal%20Mortality%22,%20%22Race%22:%20%22All%22,%20%22Year%22:%20%222010-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
 ec1_url <- HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-annual-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%222016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
 ec2_url <- HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Year%22:%20%222013%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
@@ -158,10 +158,10 @@ shinyUI(
                         )
                       )
                     )
-                ), 
-                plotOutput("gg_regions", height = 200), 
-                uiOutput("region_text"),
-                uiOutput("region_list")
+                ) 
+                # plotOutput("gg_regions", height = 200), 
+                # uiOutput("region_text"),
+                # uiOutput("region_list")
               ), 
               conditionalPanel(
                 condition="input.tabselected==7",
@@ -179,8 +179,8 @@ shinyUI(
                       )
                     )
                   )
-                ),
-                uiOutput("edu_text")
+                )
+                #uiOutput("edu_text")
               )
             ) 
           ), #end of side bar
@@ -197,13 +197,13 @@ shinyUI(
               tabPanel("Health", value = 1,
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates - ", h_url),
-                        plotlyOutput("HPlot1", width="100%"),
+                       # plotlyOutput("HPlot1", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates by Race/Ethnicity - ", h_url),
-                      plotlyOutput("HPlot2", width="100%"), 
+                     # plotlyOutput("HPlot2", width="100%"), 
                       collapsible = T
                   )
                 )
@@ -211,19 +211,19 @@ shinyUI(
               tabPanel("Early Childhood", value = 2,
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Annual - ", ec1_url),
-                         plotlyOutput("ECPlot1", width="100%"), 
+                        # plotlyOutput("ECPlot1", width="100%"), 
                          collapsible = T
                   )
                 ), 
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Cohort - ", ec2_url),
-                          plotlyOutput("ECPlot2", width="100%"), 
+                        #  plotlyOutput("ECPlot2", width="100%"), 
                           collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, % Cohort - ", ec2_url),
-                         plotlyOutput("ECPlot3", width="100%"),
+                       #  plotlyOutput("ECPlot3", width="100%"),
                          collapsible = T
                   ) 
                 )
@@ -231,8 +231,7 @@ shinyUI(
               tabPanel("Juvenile Justice", value = 3, 
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Selected Crimes - ", jj_url),
-                    box(width=8,plotlyOutput("JJPlot1", width="100%")
-                    ),
+                   # box(width=8,plotlyOutput("JJPlot1", width="100%")),
                     tabBox(width=4, id = "tabset3", height = "100px",
                            tabPanel("Metadata", div(HTML("<b>Disorderly Conduct</b> — Breach of the peace.  <br>
                                                           <b>Drugs</b> — Offenses relating to narcotic drugs. <br>
@@ -243,8 +242,7 @@ shinyUI(
                     ), collapsible=T
                   ), 
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Rate per 100,000 Persons - ", jj_url),
-                    box(width=8, plotlyOutput("JJPlot2", width="100%")
-                    ),                    
+                   # box(width=8, plotlyOutput("JJPlot2", width="100%")),                    
                     tabBox(width=4,id = "tabset4", height = "100px",
                           tabPanel("Metadata", "The denominators for these rates are derived from 5-Year ACS population figures. As such, the rate of arrests is given with a Margin of Error calculated from the Margin of Error present in the population data.")
                     ), collapsible=T
@@ -258,20 +256,20 @@ shinyUI(
                     tabsetPanel(
                       tabPanel("Age", value = 1,
                         box(width="100%",
-                          title =  tagList(shiny::icon("table"), cw1_url),
-                          tableOutput("CWTable")
+                          title =  tagList(shiny::icon("table"), cw1_url)
+                         # tableOutput("CWTable")
                         )
                       ),
                       tabPanel("Gender", value=2,
                         box(width="100%",
-                          title = tagList(shiny::icon("bar-chart"), cw2_url),
-                          plotlyOutput("CW_gender", width="100%")
+                          title = tagList(shiny::icon("bar-chart"), cw2_url)
+                          #plotlyOutput("CW_gender", width="100%")
                         ) 
                       ), 
                       tabPanel("Race/Ethnicity", value=3,
                         box(width="100%",
-                          title = tagList(shiny::icon("bar-chart"), cw3_url),
-                          plotlyOutput("CW_race", width="100%")
+                          title = tagList(shiny::icon("bar-chart"), cw3_url)
+                         # plotlyOutput("CW_race", width="100%")
                         ) 
                       )
                     ) 
@@ -289,17 +287,17 @@ shinyUI(
                   )
                 ),
                 fluidRow(
-                    box(width=12, title = tagList(shiny::icon("info-circle"), "Employed or Enrolled Youth - ", cw4_url),
+                    box(width=12, title = tagList(shiny::icon("info-circle"), "Employed or Enrolled Youth - ", cw4_url)
                          #red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black.
-                    infoBox(title= "Female", value = textOutput("eey_value_f"), subtitle = textOutput("eey_moe_f"),
-                            icon = shiny::icon("female"), color = "red", width = 4,
-                            href = NULL, fill = FALSE),
-                    infoBox(title= "Male", value = textOutput("eey_value_m"), subtitle = textOutput("eey_moe_m"),
-                            icon = shiny::icon("male"), color = "blue", width = 4,
-                            href = NULL, fill = FALSE),
-                    infoBox(title= "Total", value = textOutput("eey_value_t"), subtitle = textOutput("eey_moe_t"),
-                            icon = shiny::icon("users"), color = "black", width = 4,
-                            href = NULL, fill = FALSE)
+                    # infoBox(title= "Female", value = textOutput("eey_value_f"), subtitle = textOutput("eey_moe_f"),
+                    #         icon = shiny::icon("female"), color = "red", width = 4,
+                    #         href = NULL, fill = FALSE),
+                    # infoBox(title= "Male", value = textOutput("eey_value_m"), subtitle = textOutput("eey_moe_m"),
+                    #         icon = shiny::icon("male"), color = "blue", width = 4,
+                    #         href = NULL, fill = FALSE),
+                    # infoBox(title= "Total", value = textOutput("eey_value_t"), subtitle = textOutput("eey_moe_t"),
+                    #         icon = shiny::icon("users"), color = "black", width = 4,
+                    #         href = NULL, fill = FALSE)
                          ), collapsible=T
                 )
               ),
@@ -307,8 +305,8 @@ shinyUI(
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", d1_url),
                   column(9,
-                    box(width="100%",
-                        plotlyOutput("DPlot_age_race", width="100%")
+                    box(width="100%"
+                       # plotlyOutput("DPlot_age_race", width="100%")
                     )
                   ),
                   column(3,
@@ -332,30 +330,30 @@ shinyUI(
                 ),  
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Gender - ", d1_url),
-                        plotlyOutput("DPlot_age", width="100%"),
+                       # plotlyOutput("DPlot_age", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Race/Ethnicity and Gender - ", d1_url),
-                        plotlyOutput("DPlot_race", width="100%"),
+                        #plotlyOutput("DPlot_race", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Median Household Income - ", d2_url),
                   column(9,
-                    box(width="100%",
-                        plotlyOutput("Dplot_mhi", width="100%")
+                    box(width="100%"
+                       # plotlyOutput("Dplot_mhi", width="100%")
                     )
                   ),
                   column(3,
                     box(width="100%",
-                      h3(textOutput("mhi_text")),
-                      HTML('<h4 style="color:black;"> Median Household Income</h4>'),
-                      HTML('<h3><span id="mhi_value" class="shiny-text-output"></span>&nbsp;<span id="mhi_moe" 
-                           style="color:grey;font-size:0.67em;" 
-                           class="shiny-text-output"></span></h3>')
+                     # h3(textOutput("mhi_text")),
+                      HTML('<h4 style="color:black;"> Median Household Income</h4>')
+                      # HTML('<h3><span id="mhi_value" class="shiny-text-output"></span>&nbsp;<span id="mhi_moe" 
+                      #      style="color:grey;font-size:0.67em;" 
+                      #      class="shiny-text-output"></span></h3>')
                     )
                   ), collapsible=T
                 )
@@ -364,14 +362,14 @@ shinyUI(
               tabPanel("Behavioral Health", value = 6,
                 fluidRow(
                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Children in Need of Treatment by Age and Race"),
-                       plotlyOutput("BHPlot1"),
+                     #  plotlyOutput("BHPlot1"),
                        collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, title =  tagList(shiny::icon("table"), "Potential Treatment Needs by Age Range and Race/Ethnicity"),
-                    box(width=8,
-                        tableOutput("BHTable"), offset=0, align = "left"
+                    box(width=8
+                      #  tableOutput("BHTable"), offset=0, align = "left"
                     ),
                     tabBox(width = 4,                                         
                       id = "tabset5", height = "100px",
@@ -386,19 +384,19 @@ shinyUI(
                fluidRow(
                 # column(12,
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Educational Need", max_year_edu, e1_url),
-                       plotlyOutput("EPlot1"),
+                     #  plotlyOutput("EPlot1"),
                        collapsible = T
                    ),
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Suspension Rate by Race", max_year_edu2, e2_url),
-                       plotlyOutput("EPlot2"),
+                     #  plotlyOutput("EPlot2"),
                        collapsible = T, collapsed = T
                    ),
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Sanctions by Type", max_year_edu3, e3_url),
-                       plotlyOutput("EPlot3"),
+                      # plotlyOutput("EPlot3"),
                        collapsible = T, collapsed = T
                    ), 
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Incidents by Type", max_year_edu4, e4_url),
-                       plotlyOutput("EPlot4"),
+                     #  plotlyOutput("EPlot4"),
                        collapsible = T, collapsed = T
                    )
                    # box(width=12,title =  tagList(shiny::icon("bar-chart"), "Kindergarten Entrance Inventory", max_year_kei, e5_url),
