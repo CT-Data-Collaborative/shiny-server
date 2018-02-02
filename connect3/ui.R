@@ -137,7 +137,7 @@ shinyUI(
                       sidebarMenu(
                         selectInput("select",
                         label = HTML('<h3 style="color:black;">Select Region</h3>'),
-                        choices = c("Statewide", "Southwest Region","South Central Region",
+                        choices = list("Statewide", "Southwest Region","South Central Region",
                                     "Eastern Region","North Central Region","Western Region","Central Region"), 
                         selected = "Statewide")
                         )
