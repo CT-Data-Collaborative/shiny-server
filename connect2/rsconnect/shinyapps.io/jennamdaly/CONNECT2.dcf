@@ -1,0 +1,13 @@
+name: CONNECT2
+title: CONNECT2
+username:
+account: jennamdaly
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 270507
+bundleId: 1205117
+url: https://jennamdaly.shinyapps.io/CONNECT2/
+when: 1517599825.16009
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: raw/all_years_FM_UNSUPPRESSED.csv|raw/all_years_FM_with_race_rates_UNSUPPRESSED.csv|raw/birth_to_three_annual_2016_UNSUPPRESSED.csv|raw/birth_to_three_cohort_2013_UNSUPPRESSED.csv|raw/census2010_townasrh.csv|raw/ct-school-district-list-with-fips.csv|raw/dcf-regions.csv|raw/maternal_characteristics_UNSUPRESSEDbackground_1-Year.csv|raw/pop_by_age_gender_regions.csv|raw/pop_by_age_race_regions.csv|raw/pop_by_race_gender_regions.csv|scripts/download_jsons_from_s3.R|scripts/process_data_create_csvs.R
