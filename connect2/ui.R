@@ -34,6 +34,29 @@ library(shinythemes)
 #######HEALTH#####################################################################################################################################
 
 #source('./scripts/download_jsons_from_s3.R')
+mylist <- c("Statewide", 
+            "Southwest Region",      #1
+            "South Central Region",  #2
+            "Eastern Region",        #3
+            "North Central Region",  #4
+            "Western Region",        #5
+            "Central Region")        #6
+
+region_list <- c("Connecticut",
+                 "Region 1:Southwest", 
+                 "Region 2:South Central", 
+                 "Region 3:Eastern",                 
+                 "Region 4:North Central",
+                 "Region 5:Western",
+                 "Region 6:Central")
+
+region_list2 <- c("Other",
+                 "Region 1: Southwest", 
+                 "Region 2: South Central", 
+                 "Region 3: Eastern",                 
+                 "Region 4: North Central",
+                 "Region 5: Western",
+                 "Region 6: Central")
 h_url <- HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town?v=table&f={%22Town%22:%20%22Hartford%22,%20%22Variable%22:%20%22Fetal%20Mortality%22,%20%22Race%22:%20%22All%22,%20%22Year%22:%20%222010-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
 ec1_url <- HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-annual-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%222016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
 ec2_url <- HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Year%22:%20%222013%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
