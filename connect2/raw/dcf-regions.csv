@@ -1,0 +1,172 @@
+Town,FIPS,Region
+Bridgeport,900108070,Region 1:Southwest
+Darien,900118850,Region 1:Southwest
+Easton,900123890,Region 1:Southwest
+Fairfield,900126620,Region 1:Southwest
+Greenwich,900133620,Region 1:Southwest
+Monroe,900148620,Region 1:Southwest
+New Canaan,900150580,Region 1:Southwest
+Norwalk,900156060,Region 1:Southwest
+Stamford,900173070,Region 1:Southwest
+Stratford,900174190,Region 1:Southwest
+Trumbull,900177200,Region 1:Southwest
+Weston,900183430,Region 1:Southwest
+Westport,900183500,Region 1:Southwest
+Wilton,900186370,Region 1:Southwest
+Ansonia,900901220,Region 2:South Central
+Bethany,900904580,Region 2:South Central
+Branford,900907310,Region 2:South Central
+Derby,900919550,Region 2:South Central
+East Haven,900922910,Region 2:South Central
+Hamden,900935650,Region 2:South Central
+Milford,900947535,Region 2:South Central
+New Haven,900952070,Region 2:South Central
+North Branford,900953890,Region 2:South Central
+North Haven,900954870,Region 2:South Central
+Orange,900957600,Region 2:South Central
+Seymour,900967610,Region 2:South Central
+Shelton,900168170,Region 2:South Central
+West Haven,900982870,Region 2:South Central
+Woodbridge,900987700,Region 2:South Central
+Ashford,901501430,Region 3:Eastern
+Bozrah,901106820,Region 3:Eastern
+Brooklyn,901509190,Region 3:Eastern
+Canterbury,901512130,Region 3:Eastern
+Chaplin,901513810,Region 3:Eastern
+Chester,900714300,Region 3:Eastern
+Clinton,900715350,Region 3:Eastern
+Colchester,901115910,Region 3:Eastern
+Columbia,901316400,Region 3:Eastern
+Coventry,901317800,Region 3:Eastern
+Cromwell,900718080,Region 3:Eastern
+Deep River,900719130,Region 3:Eastern
+Durham,900720810,Region 3:Eastern
+Eastford,901521860,Region 3:Eastern
+East Haddam,900722280,Region 3:Eastern
+East Hampton,900722490,Region 3:Eastern
+East Lyme,901123400,Region 3:Eastern
+Essex,900726270,Region 3:Eastern
+Franklin,901129910,Region 3:Eastern
+Griswold,901133900,Region 3:Eastern
+Groton,901134250,Region 3:Eastern
+Guilford,900934950,Region 3:Eastern
+Haddam,900735230,Region 3:Eastern
+Hampton,901536000,Region 3:Eastern
+Killingly,901540500,Region 3:Eastern
+Killingworth,900740710,Region 3:Eastern
+Lebanon,901142390,Region 3:Eastern
+Ledyard,901142600,Region 3:Eastern
+Lisbon,901143230,Region 3:Eastern
+Lyme,901144210,Region 3:Eastern
+Madison,900944560,Region 3:Eastern
+Mansfield,901344910,Region 3:Eastern
+Middlefield,900747080,Region 3:Eastern
+Middletown,900747360,Region 3:Eastern
+Montville,901148900,Region 3:Eastern
+New London,901152350,Region 3:Eastern
+North Stonington,901155500,Region 3:Eastern
+Norwich,901156270,Region 3:Eastern
+Old Lyme,901157040,Region 3:Eastern
+Old Saybrook,900757320,Region 3:Eastern
+Plainfield,901559980,Region 3:Eastern
+Pomfret,901561030,Region 3:Eastern
+Portland,900761800,Region 3:Eastern
+Preston,901162150,Region 3:Eastern
+Putnam,901562710,Region 3:Eastern
+Salem,901166210,Region 3:Eastern
+Scotland,901567400,Region 3:Eastern
+Sprague,901171670,Region 3:Eastern
+Sterling,901573420,Region 3:Eastern
+Stonington,901173770,Region 3:Eastern
+Thompson,901575870,Region 3:Eastern
+Union,901377830,Region 3:Eastern
+Voluntown,901178600,Region 3:Eastern
+Waterford,901180280,Region 3:Eastern
+Westbrook,900781680,Region 3:Eastern
+Willington,901385950,Region 3:Eastern
+Windham,901586790,Region 3:Eastern
+Woodstock,901588190,Region 3:Eastern
+Andover,901301080,Region 4:North Central
+Bloomfield,900305910,Region 4:North Central
+Bolton,901306260,Region 4:North Central
+East Granby,900322070,Region 4:North Central
+East Hartford,900322630,Region 4:North Central
+East Windsor,900324800,Region 4:North Central
+Ellington,901325360,Region 4:North Central
+Enfield,900325990,Region 4:North Central
+Glastonbury,900331240,Region 4:North Central
+Granby,900332640,Region 4:North Central
+Hartford,900337070,Region 4:North Central
+Hebron,901337910,Region 4:North Central
+Manchester,900344700,Region 4:North Central
+Marlborough,900345820,Region 4:North Central
+Somers,901369220,Region 4:North Central
+South Windsor,900371390,Region 4:North Central
+Stafford,901372090,Region 4:North Central
+Suffield,900374540,Region 4:North Central
+Tolland,901376290,Region 4:North Central
+Vernon,901378250,Region 4:North Central
+West Hartford,900382590,Region 4:North Central
+West Hartland,NA,Region 4:North Central
+Windsor,900387000,Region 4:North Central
+Windsor Locks,900387070,Region 4:North Central
+Barkhamsted,900502760,Region 5:Western
+Beacon Falls,900903250,Region 5:Western
+Bethel,900104720,Region 5:Western
+Bethlehem,900504930,Region 5:Western
+Bridgewater,900508210,Region 5:Western
+Brookfield,900108980,Region 5:Western
+Canaan,900510940,Region 5:Western
+Cheshire,900914160,Region 5:Western
+Colebrook,900516050,Region 5:Western
+Cornwall,900517240,Region 5:Western
+Danbury,900118500,Region 5:Western
+Goshen,900532290,Region 5:Western
+Hartland,900337140,Region 5:Western
+Harwinton,900537280,Region 5:Western
+Kent,900540290,Region 5:Western
+Litchfield,900543370,Region 5:Western
+Middlebury,900946940,Region 5:Western
+Morris,900549460,Region 5:Western
+Naugatuck,900949950,Region 5:Western
+New Fairfield,900150860,Region 5:Western
+New Hartford,900551350,Region 5:Western
+New Milford,900552630,Region 5:Western
+Newtown,900152980,Region 5:Western
+Norfolk,900553470,Region 5:Western
+North Canaan,900554030,Region 5:Western
+Oxford,900958300,Region 5:Western
+Prospect,900962290,Region 5:Western
+Redding,900163480,Region 5:Western
+Ridgefield,900163970,Region 5:Western
+Roxbury,900565930,Region 5:Western
+Salisbury,900566420,Region 5:Western
+Sharon,900567960,Region 5:Western
+Sherman,900168310,Region 5:Western
+Southbury,900969640,Region 5:Western
+Thomaston,900575730,Region 5:Western
+Torrington,900576570,Region 5:Western
+Warren,900579510,Region 5:Western
+Washington,900579720,Region 5:Western
+Waterbury,900980070,Region 5:Western
+Watertown,900580490,Region 5:Western
+Winchester,900586440,Region 5:Western
+Wolcott,900987560,Region 5:Western
+Woodbury,900587910,Region 5:Western
+Avon,900302060,Region 6:Central
+Berlin,900304300,Region 6:Central
+Bristol,900308490,Region 6:Central
+Burlington,900310100,Region 6:Central
+Canton,900312270,Region 6:Central
+Farmington,900327600,Region 6:Central
+Meriden,900946520,Region 6:Central
+New Britain,900350440,Region 6:Central
+Newington,900352140,Region 6:Central
+Plainville,900360120,Region 6:Central
+Plymouth,900560750,Region 6:Central
+Rocky Hill,900365370,Region 6:Central
+Simsbury,900368940,Region 6:Central
+Southington,900370550,Region 6:Central
+Wallingford,900978740,Region 6:Central
+Wethersfield,900384900,Region 6:Central
+Connecticut,9,Connecticut
