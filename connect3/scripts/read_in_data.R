@@ -26,9 +26,9 @@ print("juvenile justice")
 jj_regions <- read.csv(paste0(path_to_data, "/", "jj_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
 
 print("child welfare")
-cw_total <- read.csv(paste0(path_to_data, "/", "cw_total.csv"), stringsAsFactors=F, header=T, check.names=F)
-cw_gender_total <- read.csv(paste0(path_to_data, "/", "cw_gender_total.csv"), stringsAsFactors=F, header=T, check.names=F)
-cw_race_total <- read.csv(paste0(path_to_data, "/", "cw_race_total.csv"), stringsAsFactors=F, header=T, check.names=F)
+cw_age_final <- read.csv(paste0(path_to_data, "/", "cw_age_final.csv"), stringsAsFactors=F, header=T, check.names=F)
+cw_gender_final <- read.csv(paste0(path_to_data, "/", "cw_gender_final.csv"), stringsAsFactors=F, header=T, check.names=F)
+cw_race_final <- read.csv(paste0(path_to_data, "/", "cw_race_final.csv"), stringsAsFactors=F, header=T, check.names=F)
 cw_backfill <- read.csv(paste0(path_to_data, "/", "cw_backfill.csv"), stringsAsFactors=F, header=T, check.names=F)
 cw_eey_regions <- read.csv(paste0(path_to_data, "/", "cw_eey_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
 
@@ -48,6 +48,14 @@ bh_r4 <- read.csv(paste0(path_to_data, "/", "bh_r4.csv"), stringsAsFactors=F, he
 bh_r5 <- read.csv(paste0(path_to_data, "/", "bh_r5.csv"), stringsAsFactors=F, header=T, check.names=F)
 bh_r6 <- read.csv(paste0(path_to_data, "/", "bh_r6.csv"), stringsAsFactors=F, header=T, check.names=F)
 bh_plot1 <- read.csv(paste0(path_to_data, "/", "bh_plot1.csv"), stringsAsFactors=F, header=T, check.names=F)
+bh_CT[is.na(bh_CT)]<-""
+bh_r1[is.na(bh_r1)]<-""
+bh_r2[is.na(bh_r2)]<-""
+bh_r3[is.na(bh_r3)]<-""
+bh_r4[is.na(bh_r4)]<-""
+bh_r5[is.na(bh_r5)]<-""
+bh_r6[is.na(bh_r6)]<-""
+
 
 print("education")
 edu <- read.csv(paste0(path_to_data, "/", "edu.csv"), stringsAsFactors=F, header=T, check.names=F)
@@ -66,8 +74,8 @@ max_year_b23c_regions <- max(b23c_regions$Year)
 max_year_jj_regions <- max(jj_regions$Year)
 max_year_pop_regions <- max(pop_by_age_gender_regions$Year)
 max_year_mhi_regions <- max(mhi_df$Year)
-max_year_cw_gender <- "SFY 2013-2014"
-max_year_cw_race <- "SFY 2013-2014"
+max_year_cw_gender <- "SFY 2016-2017"
+max_year_cw_race <- "SFY 2016-2017"
 max_year_cw_eey <- max(cw_eey_regions$Year)
 max_year_edu <- max(edu$Year)
 max_year_edu2 <- max(edu2$Year)

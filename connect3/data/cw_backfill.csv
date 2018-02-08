@@ -335,6 +335,118 @@
 "North Central Region","Out of State","Total","Hispanic",9
 "North Central Region","Out of State","Total","Other",5
 "North Central Region","Out of State","Total","White",8
+"Other","In State","Connecticut Juvenile Training School","Black",22
+"Other","In State","Connecticut Juvenile Training School","Hispanic",10
+"Other","In State","Connecticut Juvenile Training School","Other",5
+"Other","In State","Connecticut Juvenile Training School","White",3
+"Other","In State","Foster Care","Black",0
+"Other","In State","Foster Care","Hispanic",0
+"Other","In State","Foster Care","Other",0
+"Other","In State","Foster Care","White",0
+"Other","In State","Group Home","Black",5
+"Other","In State","Group Home","Hispanic",6
+"Other","In State","Group Home","Other",0
+"Other","In State","Group Home","White",0
+"Other","In State","High Meadows","Black",0
+"Other","In State","High Meadows","Hispanic",0
+"Other","In State","High Meadows","Other",0
+"Other","In State","High Meadows","White",0
+"Other","In State","Independent Living","Black",0
+"Other","In State","Independent Living","Hispanic",0
+"Other","In State","Independent Living","Other",0
+"Other","In State","Independent Living","White",1
+"Other","In State","Medical or Psychiatric Hospital Placement","Black",0
+"Other","In State","Medical or Psychiatric Hospital Placement","Hispanic",0
+"Other","In State","Medical or Psychiatric Hospital Placement","Other",0
+"Other","In State","Medical or Psychiatric Hospital Placement","White",0
+"Other","In State","PDC or Safe Home","Black",0
+"Other","In State","PDC or Safe Home","Hispanic",0
+"Other","In State","PDC or Safe Home","Other",0
+"Other","In State","PDC or Safe Home","White",0
+"Other","In State","Relative Foster Care","Black",0
+"Other","In State","Relative Foster Care","Hispanic",0
+"Other","In State","Relative Foster Care","Other",0
+"Other","In State","Relative Foster Care","White",0
+"Other","In State","Residential Treatment Center","Black",3
+"Other","In State","Residential Treatment Center","Hispanic",2
+"Other","In State","Residential Treatment Center","Other",1
+"Other","In State","Residential Treatment Center","White",5
+"Other","In State","Shelter","Black",0
+"Other","In State","Shelter","Hispanic",0
+"Other","In State","Shelter","Other",0
+"Other","In State","Shelter","White",0
+"Other","In State","Solnit Center","Black",0
+"Other","In State","Solnit Center","Hispanic",1
+"Other","In State","Solnit Center","Other",0
+"Other","In State","Solnit Center","White",0
+"Other","In State","Special Study","Black",0
+"Other","In State","Special Study","Hispanic",0
+"Other","In State","Special Study","Other",0
+"Other","In State","Special Study","White",0
+"Other","In State","Therapeutic Foster Care","Black",0
+"Other","In State","Therapeutic Foster Care","Hispanic",0
+"Other","In State","Therapeutic Foster Care","Other",0
+"Other","In State","Therapeutic Foster Care","White",0
+"Other","In State","Total","Black",30
+"Other","In State","Total","Hispanic",19
+"Other","In State","Total","Other",6
+"Other","In State","Total","White",9
+"Other","Out of State","Connecticut Juvenile Training School","Black",0
+"Other","Out of State","Connecticut Juvenile Training School","Hispanic",0
+"Other","Out of State","Connecticut Juvenile Training School","Other",0
+"Other","Out of State","Connecticut Juvenile Training School","White",0
+"Other","Out of State","Foster Care","Black",0
+"Other","Out of State","Foster Care","Hispanic",0
+"Other","Out of State","Foster Care","Other",0
+"Other","Out of State","Foster Care","White",0
+"Other","Out of State","Group Home","Black",0
+"Other","Out of State","Group Home","Hispanic",0
+"Other","Out of State","Group Home","Other",0
+"Other","Out of State","Group Home","White",0
+"Other","Out of State","High Meadows","Black",0
+"Other","Out of State","High Meadows","Hispanic",0
+"Other","Out of State","High Meadows","Other",0
+"Other","Out of State","High Meadows","White",0
+"Other","Out of State","Independent Living","Black",0
+"Other","Out of State","Independent Living","Hispanic",0
+"Other","Out of State","Independent Living","Other",0
+"Other","Out of State","Independent Living","White",0
+"Other","Out of State","Medical or Psychiatric Hospital Placement","Black",0
+"Other","Out of State","Medical or Psychiatric Hospital Placement","Hispanic",0
+"Other","Out of State","Medical or Psychiatric Hospital Placement","Other",0
+"Other","Out of State","Medical or Psychiatric Hospital Placement","White",0
+"Other","Out of State","PDC or Safe Home","Black",0
+"Other","Out of State","PDC or Safe Home","Hispanic",0
+"Other","Out of State","PDC or Safe Home","Other",0
+"Other","Out of State","PDC or Safe Home","White",0
+"Other","Out of State","Relative Foster Care","Black",0
+"Other","Out of State","Relative Foster Care","Hispanic",0
+"Other","Out of State","Relative Foster Care","Other",0
+"Other","Out of State","Relative Foster Care","White",0
+"Other","Out of State","Residential Treatment Center","Black",0
+"Other","Out of State","Residential Treatment Center","Hispanic",0
+"Other","Out of State","Residential Treatment Center","Other",0
+"Other","Out of State","Residential Treatment Center","White",1
+"Other","Out of State","Shelter","Black",0
+"Other","Out of State","Shelter","Hispanic",0
+"Other","Out of State","Shelter","Other",0
+"Other","Out of State","Shelter","White",0
+"Other","Out of State","Solnit Center","Black",0
+"Other","Out of State","Solnit Center","Hispanic",0
+"Other","Out of State","Solnit Center","Other",0
+"Other","Out of State","Solnit Center","White",0
+"Other","Out of State","Special Study","Black",0
+"Other","Out of State","Special Study","Hispanic",0
+"Other","Out of State","Special Study","Other",0
+"Other","Out of State","Special Study","White",0
+"Other","Out of State","Therapeutic Foster Care","Black",0
+"Other","Out of State","Therapeutic Foster Care","Hispanic",0
+"Other","Out of State","Therapeutic Foster Care","Other",0
+"Other","Out of State","Therapeutic Foster Care","White",0
+"Other","Out of State","Total","Black",0
+"Other","Out of State","Total","Hispanic",0
+"Other","Out of State","Total","Other",0
+"Other","Out of State","Total","White",1
 "South Central Region","In State","Connecticut Juvenile Training School","Black",5
 "South Central Region","In State","Connecticut Juvenile Training School","Hispanic",1
 "South Central Region","In State","Connecticut Juvenile Training School","Other",0
@@ -559,16 +671,16 @@
 "Southwest Region","Out of State","Total","Hispanic",7
 "Southwest Region","Out of State","Total","Other",0
 "Southwest Region","Out of State","Total","White",2
-"Statewide","In State","Connecticut Juvenile Training School","Black",32
-"Statewide","In State","Connecticut Juvenile Training School","Hispanic",26
-"Statewide","In State","Connecticut Juvenile Training School","Other",3
-"Statewide","In State","Connecticut Juvenile Training School","White",14
+"Statewide","In State","Connecticut Juvenile Training School","Black",54
+"Statewide","In State","Connecticut Juvenile Training School","Hispanic",36
+"Statewide","In State","Connecticut Juvenile Training School","Other",8
+"Statewide","In State","Connecticut Juvenile Training School","White",17
 "Statewide","In State","Foster Care","Black",222
 "Statewide","In State","Foster Care","Hispanic",369
 "Statewide","In State","Foster Care","Other",91
 "Statewide","In State","Foster Care","White",394
-"Statewide","In State","Group Home","Black",104
-"Statewide","In State","Group Home","Hispanic",119
+"Statewide","In State","Group Home","Black",109
+"Statewide","In State","Group Home","Hispanic",125
 "Statewide","In State","Group Home","Other",17
 "Statewide","In State","Group Home","White",133
 "Statewide","In State","High Meadows","Black",0
@@ -578,7 +690,7 @@
 "Statewide","In State","Independent Living","Black",50
 "Statewide","In State","Independent Living","Hispanic",49
 "Statewide","In State","Independent Living","Other",10
-"Statewide","In State","Independent Living","White",45
+"Statewide","In State","Independent Living","White",46
 "Statewide","In State","Medical or Psychiatric Hospital Placement","Black",7
 "Statewide","In State","Medical or Psychiatric Hospital Placement","Hispanic",9
 "Statewide","In State","Medical or Psychiatric Hospital Placement","Other",2
@@ -591,16 +703,16 @@
 "Statewide","In State","Relative Foster Care","Hispanic",286
 "Statewide","In State","Relative Foster Care","Other",58
 "Statewide","In State","Relative Foster Care","White",295
-"Statewide","In State","Residential Treatment Center","Black",46
-"Statewide","In State","Residential Treatment Center","Hispanic",44
-"Statewide","In State","Residential Treatment Center","Other",6
-"Statewide","In State","Residential Treatment Center","White",75
+"Statewide","In State","Residential Treatment Center","Black",49
+"Statewide","In State","Residential Treatment Center","Hispanic",46
+"Statewide","In State","Residential Treatment Center","Other",7
+"Statewide","In State","Residential Treatment Center","White",80
 "Statewide","In State","Shelter","Black",26
 "Statewide","In State","Shelter","Hispanic",27
 "Statewide","In State","Shelter","Other",4
 "Statewide","In State","Shelter","White",25
 "Statewide","In State","Solnit Center","Black",12
-"Statewide","In State","Solnit Center","Hispanic",14
+"Statewide","In State","Solnit Center","Hispanic",15
 "Statewide","In State","Solnit Center","Other",3
 "Statewide","In State","Solnit Center","White",11
 "Statewide","In State","Special Study","Black",57
@@ -611,10 +723,10 @@
 "Statewide","In State","Therapeutic Foster Care","Hispanic",226
 "Statewide","In State","Therapeutic Foster Care","Other",51
 "Statewide","In State","Therapeutic Foster Care","White",200
-"Statewide","In State","Total","Black",990
-"Statewide","In State","Total","Hispanic",1250
-"Statewide","In State","Total","Other",261
-"Statewide","In State","Total","White",1283
+"Statewide","In State","Total","Black",1020
+"Statewide","In State","Total","Hispanic",1269
+"Statewide","In State","Total","Other",267
+"Statewide","In State","Total","White",1292
 "Statewide","Out of State","Connecticut Juvenile Training School","Black",0
 "Statewide","Out of State","Connecticut Juvenile Training School","Hispanic",0
 "Statewide","Out of State","Connecticut Juvenile Training School","Other",0
@@ -650,7 +762,7 @@
 "Statewide","Out of State","Residential Treatment Center","Black",13
 "Statewide","Out of State","Residential Treatment Center","Hispanic",6
 "Statewide","Out of State","Residential Treatment Center","Other",5
-"Statewide","Out of State","Residential Treatment Center","White",17
+"Statewide","Out of State","Residential Treatment Center","White",18
 "Statewide","Out of State","Shelter","Black",0
 "Statewide","Out of State","Shelter","Hispanic",0
 "Statewide","Out of State","Shelter","Other",0
@@ -670,7 +782,7 @@
 "Statewide","Out of State","Total","Black",38
 "Statewide","Out of State","Total","Hispanic",32
 "Statewide","Out of State","Total","Other",12
-"Statewide","Out of State","Total","White",54
+"Statewide","Out of State","Total","White",55
 "Western Region","In State","Connecticut Juvenile Training School","Black",3
 "Western Region","In State","Connecticut Juvenile Training School","Hispanic",8
 "Western Region","In State","Connecticut Juvenile Training School","Other",1

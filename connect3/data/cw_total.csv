@@ -167,20 +167,20 @@
 "Western Region","Out of State","Solnit Center",0,0,NA,0,0,0
 "Western Region","Out of State","Special Study",0,0,NA,0,0,0
 "Western Region","Out of State","Therapeutic Foster Care",0,0,NA,0,0,0
-"Statewide","In State","Total",907,403,604,1327,543,3784
+"Statewide","In State","Total",907,403,604,1376,558,3848
 "Statewide","In State","Foster Care",459,174,174,209,60,1076
 "Statewide","In State","Relative Foster Care",362,162,173,137,28,862
 "Statewide","In State","Therapeutic Foster Care",31,39,170,314,125,679
-"Statewide","In State","Group Home",3,0,10,230,130,373
+"Statewide","In State","Group Home",3,0,10,236,135,384
 "Statewide","In State","Special Study",50,26,32,87,20,215
-"Statewide","In State","Residential Treatment Center",0,0,8,144,19,171
-"Statewide","In State","Independent Living",0,0,0,7,147,154
-"Statewide","Out of State","Total",29,19,22,47,19,136
+"Statewide","In State","Residential Treatment Center",0,0,8,154,20,182
+"Statewide","In State","Independent Living",0,0,0,7,148,155
+"Statewide","Out of State","Total",29,19,22,47,20,137
+"Statewide","In State","Connecticut Juvenile Training School",0,0,0,98,17,115
 "Statewide","In State","Shelter",0,0,2,77,3,82
-"Statewide","In State","Connecticut Juvenile Training School",0,0,0,66,9,75
 "Statewide","Out of State","Relative Foster Care",22,16,15,9,2,64
-"Statewide","Out of State","Residential Treatment Center",0,0,1,27,13,41
-"Statewide","In State","Solnit Center",0,0,2,37,1,40
+"Statewide","Out of State","Residential Treatment Center",0,0,1,27,14,42
+"Statewide","In State","Solnit Center",0,0,2,38,1,41
 "Statewide","In State","PDC or Safe Home",0,2,19,16,0,37
 "Statewide","Out of State","Foster Care",6,3,4,8,2,23
 "Statewide","In State","Medical or Psychiatric Hospital Placement",2,0,14,3,1,20

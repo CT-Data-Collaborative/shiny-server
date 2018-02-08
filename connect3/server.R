@@ -62,17 +62,17 @@ shinyServer(function(input, output, session) {
   ###########################
   region_list_reactive <- reactive({
     if(input$select=="Southwest Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Bridgeport</li><li>Darien</li><li>Easton</li><li>Fairfield</li><li>Greenwich</li><li>Monroe</li><li>New Canaan</li><li>Norwalk</li><li>Stamford</li><li>Stratford</li><li>Trumbull</li><li>Weston</li><li>Westport</li><li>Wilton</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Bridgeport</li><li>Darien</li><li>Easton</li><li>Fairfield</li><li>Greenwich</li><li>Monroe</li><li>New Canaan</li><li>Norwalk</li><li>Stamford</li><li>Stratford</li><li>Trumbull</li><li>Weston</li><li>Westport</li><li>Wilton</li></ol>", "</font>"))
     } else if (input$select=="South Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Ansonia</li><li>Bethany</li><li>Branford</li><li>Derby</li><li>East Haven</li><li>Hamden</li><li>Milford</li><li>New Haven </li><li>North Branford</li><li>North Haven</li><li>Orange</li><li>Seymour</li><li>Shelton</li><li>West Haven</li><li>Woodbridge</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Ansonia</li><li>Bethany</li><li>Branford</li><li>Derby</li><li>East Haven</li><li>Hamden</li><li>Milford</li><li>New Haven </li><li>North Branford</li><li>North Haven</li><li>Orange</li><li>Seymour</li><li>Shelton</li><li>West Haven</li><li>Woodbridge</li></ol>", "</font>"))
     } else if (input$select=="Eastern Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Ashford</li><li>Bozrah </li><li>Brooklyn </li><li>Canterbury </li><li>Chaplin </li><li>Chester </li><li>Clinton </li><li>Colchester </li><li>Columbia </li><li>Coventry </li><li>Cromwell </li><li>Deep River </li><li>Durham </li><li>East Haddam </li><li>East Hampton </li><li>East Lyme </li><li>Eastford </li><li>Essex </li><li>Franklin </li><li>Griswold </li><li>Groton </li><li>Guilford </li><li>Haddam </li><li>Hampton </li><li>Killingly </li><li>Killingworth </li><li>Lebanon </li><li>Ledyard </li><li>Lisbon </li><li>Lyme </li><li>Madison </li><li>Mansfield </li><li>Middlefield  </li><li>Middletown </li><li>Montville </li><li>New London</li><li>North Stonington </li><li>Norwich </li><li>Old Lyme </li><li>Old Saybrook </li><li>Plainfield </li><li>Pomfret </li><li>Portland </li><li>Preston </li><li>Putnam </li><li>Salem </li><li>Scotland </li><li>Sprague </li><li>Sterling </li><li>Stonington </li><li>Thompson </li><li>Union </li><li>Voluntown </li><li>Waterford </li><li>Westbrook </li><li>Willington </li><li>Windham </li><li>Woodstock</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Ashford</li><li>Bozrah </li><li>Brooklyn </li><li>Canterbury </li><li>Chaplin </li><li>Chester </li><li>Clinton </li><li>Colchester </li><li>Columbia </li><li>Coventry </li><li>Cromwell </li><li>Deep River </li><li>Durham </li><li>East Haddam </li><li>East Hampton </li><li>East Lyme </li><li>Eastford </li><li>Essex </li><li>Franklin </li><li>Griswold </li><li>Groton </li><li>Guilford </li><li>Haddam </li><li>Hampton </li><li>Killingly </li><li>Killingworth </li><li>Lebanon </li><li>Ledyard </li><li>Lisbon </li><li>Lyme </li><li>Madison </li><li>Mansfield </li><li>Middlefield  </li><li>Middletown </li><li>Montville </li><li>New London</li><li>North Stonington </li><li>Norwich </li><li>Old Lyme </li><li>Old Saybrook </li><li>Plainfield </li><li>Pomfret </li><li>Portland </li><li>Preston </li><li>Putnam </li><li>Salem </li><li>Scotland </li><li>Sprague </li><li>Sterling </li><li>Stonington </li><li>Thompson </li><li>Union </li><li>Voluntown </li><li>Waterford </li><li>Westbrook </li><li>Willington </li><li>Windham </li><li>Woodstock</li></ol>", "</font>"))
     } else if (input$select=="North Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Andover</li><li>Bloomfield</li><li>Bolton</li><li>East Granby</li><li>East Hartford</li><li>East Windsor</li><li>Ellington</li><li>Enfield</li><li>Glastonbury</li><li>Granby</li><li>Hartford</li><li>Hebron</li><li>Manchester</li><li>Marlborough</li><li>Somers</li><li>South Windsor</li><li>Stafford</li><li>Suffield</li><li>Tolland</li><li>Vernon</li><li>West Hartford</li><li>Windsor</li><li>Windsor Locks</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Andover</li><li>Bloomfield</li><li>Bolton</li><li>East Granby</li><li>East Hartford</li><li>East Windsor</li><li>Ellington</li><li>Enfield</li><li>Glastonbury</li><li>Granby</li><li>Hartford</li><li>Hebron</li><li>Manchester</li><li>Marlborough</li><li>Somers</li><li>South Windsor</li><li>Stafford</li><li>Suffield</li><li>Tolland</li><li>Vernon</li><li>West Hartford</li><li>Windsor</li><li>Windsor Locks</li></ol>", "</font>"))
     } else if (input$select=="Western Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Barkhamsted</li><li>Beacon Falls</li><li>Bethel</li><li>Bethlehem</li><li>Bridgewater</li><li>Brookfield</li><li>Canaan</li><li> Cheshire</li><li>Colebrook</li><li>Cornwall</li><li>Danbury</li><li>Goshen</li><li>Hartland</li><li>Harwinton</li><li>Kent</li><li> Litchfield</li><li>Middlebury</li><li>Morris</li><li>Naugatuck</li><li>New Fairfield</li><li>New Hartford</li><li>New Milford</li><li> Newtown</li><li>Norfolk</li><li>North Canaan</li><li>Oxford</li><li>Prospect</li><li>Redding</li><li>Ridgefield</li><li>Roxbury</li><li> Salisbury</li><li>Sharon</li><li>Sherman</li><li>Southbury</li><li>Thomaston</li><li>Torrington</li><li>Warren</li><li>Washington</li><li> Waterbury</li><li>Watertown</li><li>Winchester</li><li>Wolcott</li><li>Woodbury</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Barkhamsted</li><li>Beacon Falls</li><li>Bethel</li><li>Bethlehem</li><li>Bridgewater</li><li>Brookfield</li><li>Canaan</li><li> Cheshire</li><li>Colebrook</li><li>Cornwall</li><li>Danbury</li><li>Goshen</li><li>Hartland</li><li>Harwinton</li><li>Kent</li><li> Litchfield</li><li>Middlebury</li><li>Morris</li><li>Naugatuck</li><li>New Fairfield</li><li>New Hartford</li><li>New Milford</li><li> Newtown</li><li>Norfolk</li><li>North Canaan</li><li>Oxford</li><li>Prospect</li><li>Redding</li><li>Ridgefield</li><li>Roxbury</li><li> Salisbury</li><li>Sharon</li><li>Sherman</li><li>Southbury</li><li>Thomaston</li><li>Torrington</li><li>Warren</li><li>Washington</li><li> Waterbury</li><li>Watertown</li><li>Winchester</li><li>Wolcott</li><li>Woodbury</li></ol>", "</font>"))
     } else if (input$select=="Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol><li>Avon</li><li>Berlin</li><li>Bristol</li><li>Burlington</li><li>Canton</li><li>Farmington</li><li>Meriden</li><li>New Britain</li><li> Newington</li><li>Plainville</li><li>Plymouth</li><li>Rocky Hill</li><li>Simsbury</li><li>Southington</li><li>Wallingford</li><li> Wethersfield</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Avon</li><li>Berlin</li><li>Bristol</li><li>Burlington</li><li>Canton</li><li>Farmington</li><li>Meriden</li><li>New Britain</li><li> Newington</li><li>Plainville</li><li>Plymouth</li><li>Rocky Hill</li><li>Simsbury</li><li>Southington</li><li>Wallingford</li><li> Wethersfield</li></ol>", "</font>"))
     }
   })
   ###########################
@@ -90,16 +90,23 @@ shinyServer(function(input, output, session) {
                        mutate(avg_Value = round(mean(Value), 1)) %>% 
                        select(-Town, -Value, -FIPS)) %>% 
                        rename(Value = avg_Value)
+    #color palette = "Paired"
+# [1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C" "#FB9A99" "#E31A1C"
+# [7] "#FDBF6F" "#FF7F00" "#CAB2D6" "#6A3D9A" "#FFFF99" "#B15928"
     h_plot1 <- spread(h_plot1, Type, Value)
     m <- list(b=50) # l = left; r = right; t = top; b = bottom
     hplot1 <- plot_ly(h_plot1, x = "Fetal", y = ~Fetal, name = 'Fetal', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto') %>%
-             add_trace(x = "Infant", y = ~Infant, name = 'Infant', text = ~paste0(Infant)) %>%
-             add_trace(x = "Neonatal", y = ~Neonatal, name = 'Neonatal', text = ~paste0(Neonatal)) %>%
-             add_trace(x = "Postneonatal", y = ~Postneonatal, name = 'Postneonatal', text = ~paste0(Postneonatal)) %>%
+                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
+             add_trace(x = "Infant", y = ~Infant, name = 'Infant', text = ~paste0(Infant), 
+                     marker = list(color = "#1F78B4")) %>%
+             add_trace(x = "Neonatal", y = ~Neonatal, name = 'Neonatal', text = ~paste0(Neonatal), 
+                     marker = list(color = "#B2DF8A")) %>%
+             add_trace(x = "Postneonatal", y = ~Postneonatal, name = 'Postneonatal', text = ~paste0(Postneonatal), 
+                     marker = list(color = "#33A02C")) %>%
      layout(margin=m, title = paste(paste0(unique(h_plot1$Region), ","), "All Races,", max_year_health_regions, sep = " "),
          #xaxis = list(title = "Type"),
-         yaxis = list(title = "Rate"), 
+         yaxis = list(title = "Rate per 1000 births"), 
          showlegend = FALSE, 
          annotations = list(x = 1, y = -0.15, text = "Source: Connecticut Department of Public Health", 
                             showarrow = F, xref='paper', yref='paper', 
@@ -139,12 +146,14 @@ shinyServer(function(input, output, session) {
     h_plot2$Infant <- as.numeric(h_plot2$Infant)
     m <- list(b=50) # l = left; r = right; t = top; b = bottom
     hplot2 <- plot_ly(h_plot2, x = ~Race, y = ~Fetal, name = 'Fetal', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto') %>%
-             add_trace(y = ~Infant, name = 'Infant', text = ~paste0(Infant)) %>%
+                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
+             add_trace(y = ~Infant, name = 'Infant', text = ~paste0(Infant), 
+                     marker = list(color = "#1F78B4")) %>%
     layout(margin=m, title = paste(paste0(unique(h_plot2$Region), ","), 
                                     max_year_health_rates_regions, sep = " "),
          xaxis = list(title = ""),
-         yaxis = list(title = "Rate"), 
+         yaxis = list(title = "Rate per 1000 births"), 
          legend = list(x = 0.8, y = 0.85), 
          annotations = list(x = 1, y = -0.15, text = "Source: Connecticut Department of Public Health", 
                             showarrow = F, xref='paper', yref='paper', 
@@ -162,23 +171,39 @@ shinyServer(function(input, output, session) {
     ec_plot1 <- unique(ec_plot1 %>%
                        group_by(Indicator) %>% 
                        mutate(tot_Value = round(sum(Value), 0)) %>% 
-                       select(-Town, -Value, -FIPS)) %>% 
+                       select(-Town, -Value, -FIPS, -`Measure Period`, -`Measure Type`, -Variable, -Year)) %>% 
                        rename(Value = tot_Value)
-    ec_plot1 <- spread(ec_plot1, Indicator, Value)
+    
+    ec_plot1$ValueC <- format(ec_plot1$Value, big.mark=",", scientific=FALSE) 
+    
+    ec_plot1 <- ec_plot1 %>% 
+       gather(Value, ValueC, -(Indicator:Region)) %>%
+       unite(temp, Indicator, Value) %>%
+       spread(temp, ValueC)
+    cols <- c("Evaluations_Value", "Exited to Early Childhood Special Education_Value", 
+              "Individual Family Service Plans_Value", "Referrals_Value", "Total Eligible_Value", 
+              "Total Served_Value")
+    ec_plot1[cols] <- sapply(ec_plot1[cols],as.numeric)
     m <- list(b=80) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0)
-    ecplot1 <- plot_ly(ec_plot1, x = "Evaluations", y = ~Evaluations, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations), textposition = 'auto') %>%
+    x <- list(tickangle = 0) 
+    ecplot1 <- plot_ly(ec_plot1, x = "Evaluations", y = ~Evaluations_Value, name = 'Evaluations', type = 'bar', 
+                     hoverinfo = 'text', text = ~paste0(Evaluations_ValueC), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
              add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
-                       y = ~`Exited to Early Childhood Special Education`, 
+                       y = ~`Exited to Early Childhood Special Education_Value`, 
                        name = 'Exited to<br>Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education`)) %>%
+                       text = ~paste0(`Exited to Early Childhood Special Education_ValueC`), 
+                     marker = list(color = "#1F78B4")) %>%
              add_trace(x = "Individual<br>Family Service<br>Plans", 
-                       y = ~`Individual Family Service Plans`, name = 'Individual<br>Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans`)) %>%
-             add_trace(x = "Referrals", y = ~Referrals, name = 'Referrals', text = ~paste0(Referrals)) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible`, name = 'Total Eligible', text = ~paste0(`Total Eligible`)) %>%
-             add_trace(x = "Total Served", y = ~`Total Served`, name = 'Total Served', text = ~paste0(`Total Served`)) %>%
+                       y = ~`Individual Family Service Plans_Value`, name = 'Individual<br>Family<br>Service<br>Plans', 
+                       text = ~paste0(`Individual Family Service Plans_ValueC`), 
+                     marker = list(color = "#B2DF8A")) %>%
+             add_trace(x = "Referrals", y = ~Referrals_Value, name = 'Referrals', text = ~paste0(Referrals_ValueC), 
+                     marker = list(color = "#33A02C")) %>%
+             add_trace(x = "Total Eligible", y = ~`Total Eligible_Value`, name = 'Total Eligible', text = ~paste0(`Total Eligible_ValueC`), 
+                     marker = list(color = "#FB9A99")) %>%
+             add_trace(x = "Total Served", y = ~`Total Served_Value`, name = 'Total Served', text = ~paste0(`Total Served_ValueC`), 
+                     marker = list(color = "#E31A1C")) %>%
      layout(margin=m, title = paste(paste0(unique(ec_plot1$Region), ","), max_year_b23_regions, sep = " "),
          xaxis = x, #list(title = "Indicator"),
          yaxis = list(title = "Number"), 
@@ -190,22 +215,6 @@ shinyServer(function(input, output, session) {
      ecplot1
   })    
   ###########################
-  # ec_reactive2 <- reactive({
-  #   selected<- input$select
-  #   b23c_regions$`Total Births` <- as.numeric(b23c_regions$`Total Births`)
-  #   ec_plot2 <- b23c_regions[b23c_regions$Region == selected & b23c_regions$Year == max_year_b23c_regions 
-  #                            & b23c_regions$`Measure Type` == "Number",]
-  #   ec_plot2 <- unique(ec_plot2 %>% 
-  #                        group_by(Indicator) %>% 
-  #                        mutate(tot_Value = round(sum(Value), 0), 
-  #                               total_Births = sum(`Total Births`), 
-  #                               `% Cohort` = round((tot_Value / total_Births)*100, 1)) %>% 
-  #                        select(-`% Cohort`, -Value, -`Total Births`, -FIPS, -Year, -`Measure Type`, -Variable, -Town, -total_Births))
-  # 
-  #   ec_plot2 <- spread(ec_plot2, Indicator, tot_Value)
-  #   return(ec_plot2)
-  # })
-
   output$ECPlot2 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
@@ -221,21 +230,38 @@ shinyServer(function(input, output, session) {
                                 `% Cohort` = round((tot_Value / total_Births)*100, 1)) %>% 
                          select(-`% Cohort`, -Value, -`Total Births`, -FIPS, -Year, -`Measure Type`, -Variable, -Town, -total_Births))
 
-    ec_plot2 <- spread(ec_plot2, Indicator, tot_Value)
+    ec_plot2$ValueC <- format(ec_plot2$tot_Value, big.mark=",", scientific=FALSE) 
+    
+    ec_plot2 <- ec_plot2 %>% 
+       gather(tot_Value, ValueC, -(Indicator:Region)) %>%
+       unite(temp, Indicator, tot_Value) %>%
+       spread(temp, ValueC)
+    
+    cols <- c("Evaluations_tot_Value", "Exited to Early Childhood Special Education_tot_Value", 
+              "Individual Family Service Plans_tot_Value", "Referrals_tot_Value", "Total Eligible_tot_Value", 
+              "Total Served_tot_Value")
+    ec_plot2[cols] <- sapply(ec_plot2[cols],as.numeric)
+    
     m <- list(b=80) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0)
-    ecplot2 <- plot_ly(ec_plot2, x = "Evaluations", y = ~Evaluations, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations), textposition = 'auto') %>%
+    x <- list(tickangle = 0) 
+    ecplot2 <- plot_ly(ec_plot2, x = "Evaluations", y = ~Evaluations_tot_Value, name = 'Evaluations', type = 'bar', 
+                     hoverinfo = 'text', text = ~paste0(Evaluations_ValueC), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
              add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
-                       y = ~`Exited to Early Childhood Special Education`, 
+                       y = ~`Exited to Early Childhood Special Education_tot_Value`, 
                        name = 'Exited to Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education`)) %>%
+                       text = ~paste0(`Exited to Early Childhood Special Education_ValueC`), 
+                     marker = list(color = "#1F78B4")) %>%
              add_trace(x = "Individual Family<br>Service Plans", 
-                       y = ~`Individual Family Service Plans`, name = 'Individual Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans`)) %>%
-             add_trace(x = "Referrals", y = ~Referrals, name = 'Referrals', text = ~paste0(Referrals)) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible`, name = 'Total Eligible', text = ~paste0(`Total Eligible`)) %>%
-             add_trace(x = "Total Served", y = ~`Total Served`, name = 'Total Served', text = ~paste0(`Total Served`)) %>%
+                       y = ~`Individual Family Service Plans_tot_Value`, name = 'Individual Family<br>Service<br>Plans', 
+                       text = ~paste0(`Individual Family Service Plans_ValueC`), 
+                     marker = list(color = "#B2DF8A")) %>%
+             add_trace(x = "Referrals", y = ~Referrals_tot_Value, name = 'Referrals', text = ~paste0(Referrals_ValueC), 
+                     marker = list(color = "#33A02C")) %>%
+             add_trace(x = "Total Eligible", y = ~`Total Eligible_tot_Value`, name = 'Total Eligible', text = ~paste0(`Total Eligible_ValueC`), 
+                     marker = list(color = "#FB9A99")) %>%
+             add_trace(x = "Total Served", y = ~`Total Served_tot_Value`, name = 'Total Served', text = ~paste0(`Total Served_ValueC`), 
+                     marker = list(color = "#E31A1C")) %>%
      layout(margin=m, title = paste(paste0(unique(ec_plot2$Region), ","), max_year_b23c_regions, "Birth Cohort", sep = " "),
          xaxis = x, #list(title = "Indicator"),
          yaxis = list(title = "Number"), 
@@ -247,22 +273,6 @@ shinyServer(function(input, output, session) {
      ecplot2    
   })
   ###########################
-  # ec_reactive3 <- reactive({
-  #   selected<- input$select
-  #   b23c_regions$`Total Births` <- as.numeric(b23c_regions$`Total Births`)
-  #   ec_plot3 <- b23c_regions[b23c_regions$Region == selected & b23c_regions$Year == max_year_b23c_regions 
-  #                            & b23c_regions$`Measure Type` == "Number",]
-  #   ec_plot3 <- unique(ec_plot3 %>% 
-  #                        group_by(Indicator) %>% 
-  #                        mutate(tot_Value = round(sum(Value), 0), 
-  #                               total_Births = sum(`Total Births`), 
-  #                               `% Cohort` = round((tot_Value / total_Births)*100, 1)) %>% 
-  #                        select(-tot_Value, -Value, -`Total Births`, -FIPS, -Year, -`Measure Type`, -Variable, -Town, -total_Births))
-  # 
-  #   ec_plot3 <- spread(ec_plot3, Indicator, `% Cohort`)
-  #   return(ec_plot3)
-  # })
-  
   output$ECPlot3 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
@@ -282,17 +292,23 @@ shinyServer(function(input, output, session) {
     m <- list(b=80) # l = left; r = right; t = top; b = bottom
     x <- list(tickangle = 0)
     ecplot3 <- plot_ly(ec_plot3, x = "Evaluations", y = ~Evaluations, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations, '%'), textposition = 'auto') %>%
+                     hoverinfo = 'text', text = ~paste0(Evaluations, '%'), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
              add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
                        y = ~`Exited to Early Childhood Special Education`, 
                        name = 'Exited to<br>Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education`, '%')) %>%
+                       text = ~paste0(`Exited to Early Childhood Special Education`, '%'), 
+                     marker = list(color = "#1F78B4")) %>%
              add_trace(x = "Individual<br>Family Service<br>Plans", 
                        y = ~`Individual Family Service Plans`, name = 'Individual<br>Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans`, '%')) %>%
-             add_trace(x = "Referrals", y = ~Referrals, name = 'Referrals', text = ~paste0(Referrals, '%')) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible`, name = 'Total Eligible', text = ~paste0(`Total Eligible`, '%')) %>%
-             add_trace(x = "Total Served", y = ~`Total Served`, name = 'Total Served', text = ~paste0(`Total Served`, '%')) %>%
+                       text = ~paste0(`Individual Family Service Plans`, '%'), 
+                     marker = list(color = "#B2DF8A")) %>%
+             add_trace(x = "Referrals", y = ~Referrals, name = 'Referrals', text = ~paste0(Referrals, '%'), 
+                     marker = list(color = "#33A02C")) %>%
+             add_trace(x = "Total Eligible", y = ~`Total Eligible`, name = 'Total Eligible', text = ~paste0(`Total Eligible`, '%'), 
+                     marker = list(color = "#FB9A99")) %>%
+             add_trace(x = "Total Served", y = ~`Total Served`, name = 'Total Served', text = ~paste0(`Total Served`, '%'), 
+                     marker = list(color = "#E31A1C")) %>%
      layout(margin=m, title = paste(paste0(unique(ec_plot3$Region), ","), "% of", max_year_b23c_regions, "Birth Cohort", sep = " "),
          xaxis = x, #list(title = "Indicator"),
          yaxis = list(title = "Percent"), 
@@ -304,21 +320,6 @@ shinyServer(function(input, output, session) {
      ecplot3 
   })
   ###########################  
-  jj_reactive <- reactive({
-    selected<- input$select
-    jj_plot1 <- jj_regions[jj_regions$Year == max_year_jj_regions & jj_regions$Region == selected & 
-                               jj_regions$Variable == "Juvenile Arrests" & jj_regions$`Measure Type` == "Number" &
-                               jj_regions$Crime != "Total" & jj_regions$`Age Range` != "Total",]
-    jj_plot1 <- unique(jj_plot1 %>% 
-                         group_by(`Age Range`, Crime) %>% 
-                         mutate(tot_Value = sum(Value)) %>% 
-                         select(-Town, -Value, -FIPS, -Year, -Variable, -`Measure Type`))
-    jj_plot1 <- spread(jj_plot1, `Age Range`, tot_Value)    
-    jj_plot1 <- jj_plot1[jj_plot1$Crime %in% c("Drugs", "Other", "Disorderly Conduct", "Larceny", "Other Assault (Simple)"),]
-    
-    return(jj_plot1)
-  })
-
   output$JJPlot1 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
@@ -333,13 +334,17 @@ shinyServer(function(input, output, session) {
                          select(-Town, -Value, -FIPS, -Year, -Variable, -`Measure Type`))
     jj_plot1 <- spread(jj_plot1, `Age Range`, tot_Value)    
     jj_plot1 <- jj_plot1[jj_plot1$Crime %in% c("Drugs", "Other", "Disorderly Conduct", "Larceny", "Other Assault (Simple)"),]
-    
+    jj_plot1$`15 to 17 yearsC` <- format(unique(jj_plot1$`15 to 17 years`), big.mark=",", scientific=FALSE) 
+
     m <- list(b=110) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0)
+    x <- list(tickangle = 0) 
     jjplot1 <- plot_ly(jj_plot1, x = ~str_wrap(Crime, width=15), y = ~`0 to 9 years`, name = '0 to 9 years', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto') %>%
-             add_trace( y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`)) %>%
-             add_trace( y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 years`)) %>%
+                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
+             add_trace( y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`), 
+                     marker = list(color = "#1F78B4")) %>%
+             add_trace( y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 yearsC`), 
+                     marker = list(color = "#B2DF8A")) %>%
      layout(margin=m, title = paste(paste0(unique(jj_plot1$Region), ","), max_year_jj_regions, sep = " "),
          xaxis = list(title = ""),
          yaxis = list(title = "Number"), 
@@ -372,10 +377,14 @@ shinyServer(function(input, output, session) {
     m <- list(b=90) # l = left; r = right; t = top; b = bottom
     x <- list(tickangle = 0)
     jjplot2 <- plot_ly(jj_plot2, x = "0 to 9 years", y = ~`0 to 9 years`, name = '0 to 9 years', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto') %>%
-               add_trace(x = "10 to 14 years", y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`)) %>%
-               add_trace(x = "15 to 17 years", y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 years`)) %>%
-               add_trace(x = "Total", y = ~`Total`, name = 'Total', text = ~paste0(Total)) %>%
+                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto', 
+                     marker = list(color = "#A6CEE3")) %>%
+               add_trace(x = "10 to 14 years", y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`), 
+                     marker = list(color = "#1F78B4")) %>%
+               add_trace(x = "15 to 17 years", y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 years`), 
+                     marker = list(color = "#B2DF8A")) %>%
+               add_trace(x = "Total", y = ~`Total`, name = 'Total', text = ~paste0(Total), 
+                     marker = list(color = "#33A02C")) %>%
      layout(margin=m, title = paste(paste0(unique(jj_plot2$Region), ","), max_year_jj_regions, sep = " "),
          xaxis = x, #list(title = "Indicator"),
          yaxis = list(title = "Rate per 100,000 Persons"), 
@@ -388,69 +397,70 @@ shinyServer(function(input, output, session) {
   })
   ###########################  
   cols <- c("0 to 3 Years", "4 to 6 Years", "7 to 12 Years", "13 to 17 Years", "18 Years and Over", "Total")
-  cw_total[cols] <- sapply(cw_total[cols],as.numeric)
+  cw_age_final[cols] <- sapply(cw_age_final[cols],as.numeric)
 
    output$CWTable <- renderTable({
       placement <- input$rd
       selected<- input$select
     if(input$select=="Statewide") {
       if(input$rd == "In State") {
-       table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,]
+       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
        table <- table %>% select(-Region, -`Location of Placement`)
       } else {       
-       table  <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,]
+       table  <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
        table <- table %>% select(-Region, -`Location of Placement`)
         }
     } else if (input$select=="Southwest Region") {
       if(input$rd == "In State") {
-       table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
        table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-       table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
        table <- table %>% select(-Region, -`Location of Placement`)
       }
     } else if (input$select=="South Central Region") {
       if(input$rd == "In State") {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,]
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
         table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       }
     } else if (input$select=="Eastern Region") {
       if(input$rd == "In State") {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       }
     } else if (input$select=="North Central Region") {
       if(input$rd == "In State") {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       }
     } else if (input$select=="Western Region") {
       if(input$rd == "In State") {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,]
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
         table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       }
     } else if (input$select=="Central Region") {
       if(input$rd == "In State") {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       } else {
-        table <- cw_total[cw_total$Region == selected & cw_total$`Location of Placement` == placement,] 
+        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
         table <- table %>% select(-Region, -`Location of Placement`)
       }
     }
-  }, caption = "Source: CT Dept of Children and Families, accessed via data.ct.gov", striped=T, hover=T, condensed=T, responsive=T, spacing="xs")
+  }, digits = 0, caption = "Source: CT Dept of Children and Families, accessed via data.ct.gov", 
+     striped=T, hover=T, condensed=T, responsive=T, spacing="xs", width= "auto")
   ########################### 
 
   output$CW_gender <- renderPlotly({
@@ -459,10 +469,9 @@ shinyServer(function(input, output, session) {
     )    
     selected<- input$select
     placement <- input$rd
-    cw_plot1 <- cw_gender_total[cw_gender_total$Region == selected & 
-                             cw_gender_total$`Location of Placement` == placement & cw_gender_total$Gender != "Total" &
-                             cw_gender_total$`Type of Placement` != "Total",]
-    cw_plot1 <- spread(cw_plot1, Gender, Value)
+    cw_plot1 <- cw_gender_final[cw_gender_final$Region == selected & 
+                             cw_gender_final$`Location of Placement` == placement &
+                             cw_gender_final$`Type of Placement` != "Total",]
     cw_plot1$`Type of Placement` <- gsub(" Placement", "", cw_plot1$`Type of Placement`)
     m <- list(l=220, b=110) # l = left; r = right; t = top; b = bottom
     cwplot1 <- plot_ly(cw_plot1, y = ~str_wrap(`Type of Placement`, width=40), x = ~Female, name = 'Female', type = 'bar', 
@@ -487,19 +496,19 @@ shinyServer(function(input, output, session) {
     selected<- input$select
     placement <- input$rd
     
-    cw_plot2 <- cw_backfill[cw_backfill$Region == selected & 
-                             cw_backfill$`Location of Placement` == placement & cw_backfill$`Race/Ethnicity` != "Total" &
-                             cw_backfill$`Type of Placement` != "Total",]
+    cw_plot2 <- cw_race_final[cw_race_final$Region == selected & 
+                             cw_race_final$`Location of Placement` == placement &
+                             cw_race_final$`Type of Placement` != "Total",]
 
-    cw_plot2 <- spread(cw_plot2, `Race/Ethnicity`, Value)
+    #cw_plot2 <- spread(cw_plot2, `Race/Ethnicity`, Value)
     cw_plot2$`Type of Placement` <- gsub(" Placement", "", cw_plot2$`Type of Placement`)
 
-    m <- list(l=220, b=110) # l = left; r = right; t = top; b = bottom
+    m <- list(l=220, b=110) # l = left; r = right; t = top; b = bottom  
     cwplot2 <- plot_ly(cw_plot2, y = ~str_wrap(`Type of Placement`, width=40), x = ~Other, name = 'Other', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Other), textposition = 'auto', marker = list(color='#d62728')) %>%
-             add_trace( x = ~Black, name = 'Black or African American', text = ~paste0(Black), marker = list(color='#2ca02c')) %>%
-             add_trace( x = ~Hispanic, name = 'Hispanic or Latino', text = ~paste0(Hispanic), marker = list(color = '#ff7f0e')) %>%
-             add_trace( x = ~White, name = 'White', text = ~paste0(White), marker = list(color = '#1f77b4')) %>%
+                     hoverinfo = 'text', text = ~paste0(Other), textposition = 'auto', marker = list(color='#33A02C')) %>%
+             add_trace( x = ~Black, name = 'Black or African American', text = ~paste0(Black), marker = list(color='#B2DF8A')) %>%
+             add_trace( x = ~Hispanic, name = 'Hispanic or Latino', text = ~paste0(Hispanic), marker = list(color = '#1F78B4')) %>%
+             add_trace( x = ~White, name = 'White', text = ~paste0(White), marker = list(color = '#A6CEE3')) %>%
      layout(margin=m, title = paste(paste0(unique(cw_plot2$Region), ","), max_year_cw_race, "-", 
                                     placement, sep = " "),
          xaxis = list(title = "Number", tickangle = 0),
@@ -650,63 +659,72 @@ shinyServer(function(input, output, session) {
       mutate(Sum_Pop = sum(Population)) %>%
       select(`Age Cohort`, `Race/Ethnicity`, Sum_Pop, Region) %>% 
       rename(Race = `Race/Ethnicity`, Age = `Age Cohort`))
-    xState <- list(tickangle = 0, title = "Population", 
-              tickmode='array', 
-              tickvals = c(-600000, -500000, -400000, -300000, -200000, -100000, 0, 100000, 200000, 300000, 400000, 500000, 600000), 
-              ticktext = c('600000', '500000', '400000', '300000', '200000', '100000', '0', '100000', '200000', '300000', '400000', '500000', '600000'))
-    xRegion <- list(tickangle = 0, title = "Population", 
-               tickmode='array', 
-               tickvals = c(-100000, -80000, -60000, -40000, -20000, 0, 20000, 40000, 60000, 80000, 100000), 
-               ticktext = c('100000', '80000', '60000', '40000', '20000', '0', '20000', '40000', '60000', '80000', '100000'))
-    y <- list(tickangle = 0, title = "Age Range")
-    if (input$select == "Statewide") {
-      xx = xState
-    } else {
-      xx = xRegion
-    }
-    d_plot_age_race_calc$Age <- factor(d_plot_age_race_calc$Age, levels = c("0 to 4 years",
-                                                                            "5 to 9 years",
-                                                                            "10 to 14 years",
-                                                                            "15 to 19 years",
-                                                                            "20 to 24 years",
-                                                                            "25 to 29 years",
-                                                                            "30 to 34 years",
-                                                                            "35 to 44 years",
-                                                                            "45 to 54 years",
-                                                                            "55 to 64 years",
-                                                                            "65 to 74 years",
-                                                                            "75 to 84 years",
-                                                                            "85 years and over"))
-    
-
-    d_plot_age_race_calc <- spread(d_plot_age_race_calc, Age, Sum_Pop)
+    d_plot_age_race_calc$Sum_PopC <- format(d_plot_age_race_calc$Sum_Pop, big.mark=",", scientific=FALSE)
+    d_plot_age_race_calc <- d_plot_age_race_calc %>% 
+       gather(Sum_Pop, Sum_PopC, -c(Age, Race, Region)) %>%
+       unite(temp, Age, Sum_Pop) %>%
+       spread(temp, Sum_PopC)
+    cols <- c("0 to 4 years_Sum_Pop", "5 to 9 years_Sum_Pop",         
+              "10 to 14 years_Sum_Pop", "15 to 19 years_Sum_Pop",     
+              "20 to 24 years_Sum_Pop", "25 to 29 years_Sum_Pop",     
+              "30 to 34 years_Sum_Pop", "35 to 44 years_Sum_Pop",     
+              "45 to 54 years_Sum_Pop", "55 to 64 years_Sum_Pop",     
+              "65 to 74 years_Sum_Pop", "75 to 84 years_Sum_Pop", 
+              "85 years and over_Sum_Pop")
+    d_plot_age_race_calc[cols] <- sapply(d_plot_age_race_calc[cols],as.numeric)
     m <- list(b=100, r=50) # l = left; r = right; t = top; b = bottom
-    dplotagerace <- plot_ly(d_plot_age_race_calc, x="0 to 4", y = ~`0 to 4 years`, type = 'bar',
+    ax <- list(
+      type = "category",
+      categoryorder = "array",
+      categoryarray = c("0 to 4 years_Sum_Pop", "5 to 9 years_Sum_Pop",         
+                  "10 to 14 years_Sum_Pop", "15 to 19 years_Sum_Pop",     
+                  "20 to 24 years_Sum_Pop", "25 to 29 years_Sum_Pop",     
+                  "30 to 34 years_Sum_Pop", "35 to 44 years_Sum_Pop",     
+                  "45 to 54 years_Sum_Pop", "55 to 64 years_Sum_Pop",     
+                  "65 to 74 years_Sum_Pop", "75 to 84 years_Sum_Pop", 
+                  "85 years and over_Sum_Pop"),
+      showgrid = TRUE,
+      showline = TRUE,
+      autorange = TRUE,
+      showticklabels = TRUE,
+      ticks = "outside",
+      tickangle = 0
+)
+    dplotagerace <- plot_ly(d_plot_age_race_calc, x="0 to 4", y = ~`0 to 4 years_Sum_Pop`, type = 'bar',
                         hoverinfo = 'name+text', textposition = 'auto',
-                        name = '0 to 4 years', text = ~paste0(`0 to 4 years`), marker = list(color = 'rgb(49,130,189)')) %>%
-                    add_trace(x="5 to 9", y=~`5 to 9 years`, name = '5 to 9 years',  text = ~paste0(`5 to 9 years`)) %>%
-                    add_trace(x="10 to 14", y=~`10 to 14 years`, name = '10 to 14 years',  text = ~paste0(`10 to 14 years`)) %>%
-                    add_trace(x="15 to 19", y=~`15 to 19 years`, name = '15 to 19 years',  text = ~paste0(`15 to 19 years`)) %>%
-                    add_trace(x="20 to 24", y=~`20 to 24 years`, name = '20 to 24 years',  text = ~paste0(`20 to 24 years`)) %>%
-                    add_trace(x="25 to 29", y=~`25 to 29 years`, name = '25 to 29 years',  text = ~paste0(`25 to 29 years`)) %>%
-                    add_trace(x="30 to 34", y=~`30 to 34 years`, name = '30 to 34 years',  text = ~paste0(`30 to 34 years`)) %>%
-                    add_trace(x="35 to 44", y=~`35 to 44 years`, name = '35 to 44 years',  text = ~paste0(`35 to 44 years`)) %>%
-                    add_trace(x="45 to 54", y=~`45 to 54 years`, name = '45 to 54 years',  text = ~paste0(`45 to 54 years`)) %>%
-                    add_trace(x="55 to 64", y=~`55 to 64 years`, name = '55 to 64 years',  text = ~paste0(`55 to 64 years`)) %>%
-                    add_trace(x="65 to 74", y=~`65 to 74 years`, name = '65 to 74 years',  text = ~paste0(`65 to 74 years`)) %>%
-                    add_trace(x="75 to 84", y=~`75 to 84 years`, name = '75 to 84 years',  text = ~paste0(`75 to 84 years`)) %>%
-                    add_trace(x="85 and over", y=~`85 years and over`, name = '85 years and over',  text = ~paste0(`85 years and over`)) %>%
+                        name = '0 to 4 years', text = ~paste0(`0 to 4 years_Sum_PopC`), marker = list(color = '#A6CEE3')) %>%
+                    add_trace(x="5 to 9", y=~`5 to 9 years_Sum_Pop`, name = '5 to 9 years',  text = ~paste0(`5 to 9 years_Sum_PopC`)) %>%
+                    add_trace(x="10 to 14", y=~`10 to 14 years_Sum_Pop`, name = '10 to 14 years',  text = ~paste0(`10 to 14 years_Sum_PopC`)) %>%
+                    add_trace(x="15 to 19", y=~`15 to 19 years_Sum_Pop`, name = '15 to 19 years',  text = ~paste0(`15 to 19 years_Sum_PopC`)) %>%
+                    add_trace(x="20 to 24", y=~`20 to 24 years_Sum_Pop`, name = '20 to 24 years',  text = ~paste0(`20 to 24 years_Sum_PopC`)) %>%
+                    add_trace(x="25 to 29", y=~`25 to 29 years_Sum_Pop`, name = '25 to 29 years',  text = ~paste0(`25 to 29 years_Sum_PopC`)) %>%
+                    add_trace(x="30 to 34", y=~`30 to 34 years_Sum_Pop`, name = '30 to 34 years',  text = ~paste0(`30 to 34 years_Sum_PopC`)) %>%
+                    add_trace(x="35 to 44", y=~`35 to 44 years_Sum_Pop`, name = '35 to 44 years',  text = ~paste0(`35 to 44 years_Sum_PopC`)) %>%
+                    add_trace(x="45 to 54", y=~`45 to 54 years_Sum_Pop`, name = '45 to 54 years',  text = ~paste0(`45 to 54 years_Sum_PopC`)) %>%
+                    add_trace(x="55 to 64", y=~`55 to 64 years_Sum_Pop`, name = '55 to 64 years',  text = ~paste0(`55 to 64 years_Sum_PopC`)) %>%
+                    add_trace(x="65 to 74", y=~`65 to 74 years_Sum_Pop`, name = '65 to 74 years',  text = ~paste0(`65 to 74 years_Sum_PopC`)) %>%
+                    add_trace(x="75 to 84", y=~`75 to 84 years_Sum_Pop`, name = '75 to 84 years',  text = ~paste0(`75 to 84 years_Sum_PopC`)) %>%
+                    add_trace(x="85 and over", y=~`85 years and over_Sum_Pop`, name = '85 years and over',  
+                              text = ~paste0(`85 years and over_Sum_PopC`)) %>%
                 layout(margin = m, showlegend = FALSE,
                        title = paste(paste0(unique(d_plot_age_race_calc$Region), ","), max_year_pop_regions, sep = " "),          
-                       xaxis = list(title = "Age Group", tickangle = 30),
+                       xaxis = list(title = "Age Group", tickangle = 30, 
+      type = "category",
+      categoryorder = "array",
+      categoryarray = c("0 to 4 years_Sum_Pop", "5 to 9 years_Sum_Pop",         
+                  "10 to 14 years_Sum_Pop", "15 to 19 years_Sum_Pop",     
+                  "20 to 24 years_Sum_Pop", "25 to 29 years_Sum_Pop",     
+                  "30 to 34 years_Sum_Pop", "35 to 44 years_Sum_Pop",     
+                  "45 to 54 years_Sum_Pop", "55 to 64 years_Sum_Pop",     
+                  "65 to 74 years_Sum_Pop", "75 to 84 years_Sum_Pop", 
+                  "85 years and over_Sum_Pop"),
+      autorange = TRUE),
                        yaxis = list(title = "Number"), 
                        annotations = list(x = 1, y = -0.3, text = "Source: U.S. Census", 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")),
-                       barmode = 'group',
-                       xaxis = xx, 
-                       yaxis = y)
+                       barmode = 'group')
 
     dplotagerace
   })
@@ -749,16 +767,17 @@ shinyServer(function(input, output, session) {
                                                                             "65 to 74 years",
                                                                             "75 to 84 years",
                                                                             "85 years and over"))
-    
+    d_plot_age_calc_plot$FemaleC <- format(d_plot_age_calc_plot$Female, big.mark=",", scientific=FALSE)
+    d_plot_age_calc_plot$abs_m_popC <- format(d_plot_age_calc_plot$abs_m_pop, big.mark=",", scientific=FALSE)
     m <- list(l=120, b=100) # l = left; r = right; t = top; b = bottom
     xState <- list(tickangle = 0, title = "Population", 
               tickmode='array', 
               tickvals = c(-600000, -500000, -400000, -300000, -200000, -100000, 0, 100000, 200000, 300000, 400000, 500000, 600000), 
-              ticktext = c('600000', '500000', '400000', '300000', '200000', '100000', '0', '100000', '200000', '300000', '400000', '500000', '600000'))
+              ticktext = c('600,000', '500,000', '400,000', '300,000', '200,000', '100,000', '0', '100,000', '200,000', '300,000', '400,000', '500,000', '600,000'))
     xRegion <- list(tickangle = 0, title = "Population", 
                tickmode='array', 
                tickvals = c(-100000, -80000, -60000, -40000, -20000, 0, 20000, 40000, 60000, 80000, 100000), 
-               ticktext = c('100000', '80000', '60000', '40000', '20000', '0', '20000', '40000', '60000', '80000', '100000'))
+               ticktext = c('100,000', '80,000', '60,000', '40,000', '20,000', '0', '20,000', '40,000', '60,000', '80,000', '100,000'))
     y <- list(tickangle = 0, title = "Age Range")
     
     if (input$select == "Statewide") {
@@ -768,10 +787,10 @@ shinyServer(function(input, output, session) {
     }
     dplotage <- plot_ly(d_plot_age_calc_plot, x = ~Female, y = ~Age, type = 'bar',
                         hoverinfo = 'name+text',textposition = 'auto',
-                        orientation = 'h', name = 'Female', text = ~paste0(Female),
+                        orientation = 'h', name = 'Female', text = ~paste0(FemaleC),
                         marker = list(color = 'rgba(222,45,38,0.8)', 
                                                   width = 3)) %>%
-                add_trace(x=~Male, name = 'Male',  text = ~paste0(abs_m_pop),                      
+                add_trace(x=~Male, name = 'Male',  text = ~paste0(abs_m_popC),                      
                           marker = list(color = 'rgb(49,130,189)', 
                                                   width = 3)) %>%
                 layout(margin = m, legend = list(traceorder='reversed', orientation = 'h', x = 0.1, y = -0.1),
@@ -824,21 +843,22 @@ shinyServer(function(input, output, session) {
                                                               "Hispanic or Latino",
                                                               "White Alone Not Hispanic or Latino",
                                                               "White Alone"))
-    
+    d_plot_race_calc_plot$FemaleC <- format(d_plot_race_calc_plot$Female, big.mark=",", scientific=FALSE)
+    d_plot_race_calc_plot$abs_m_popC <- format(d_plot_race_calc_plot$abs_m_pop, big.mark=",", scientific=FALSE)
     m <- list(l=250, b=100) # l = left; r = right; t = top; b = bottom
     xState <- list(tickangle = 0, 
                    title = "Population", 
                    tickmode='array', 
                    tickvals = c( -1250000, -1000000, -750000, -500000, -250000, 0, 
                                 250000, 500000, 750000, 1000000, 1250000), 
-                   ticktext = c('1250000', '1000000', '750000', '500000', '250000', '0', 
-                                '250000', '500000', '750000', '1000000', '1250000'))
+                   ticktext = c('1,250,000', '1,000,000', '750,000', '500,000', '250,000', '0', 
+                                '250,000', '500,000', '750,000', '1,000,000', '1,250,000'))
     xRegion <- list(tickangle = 0, title = "Population", 
                tickmode='array', 
                tickvals = c(-300000, -250000, -200000, -150000, -100000, -50000, 0, 
                             50000, 100000, 150000, 200000, 250000, 300000), 
-               ticktext = c('300000', '250000', '200000', '150000', '100000', '50000', '0', 
-                            '50000', '100000', '150000', '200000', '250000', '300000'))
+               ticktext = c('300,000', '250,000', '200,000', '150,000', '100,000', '50,000', '0', 
+                            '50,000', '100,000', '150,000', '200,000', '250,000', '300,000'))
     yy <- list(tickangle = 0, 
               title = "Race/Ethnicity", 
               categoryorder = 'array', 
@@ -859,10 +879,10 @@ shinyServer(function(input, output, session) {
     }
     dplotrace <- plot_ly(d_plot_race_calc_plot, x = ~Female, y = ~Race, type = 'bar',
                         hoverinfo = 'name+text',textposition = 'auto',
-                        orientation = 'h', name = 'Female', text = ~paste0(Female),
+                        orientation = 'h', name = 'Female', text = ~paste0(FemaleC),
                         marker = list(color = 'rgba(222,45,38,0.8)', 
                                                   width = 3)) %>%
-                add_trace(x=~Male, name = 'Male',  text = ~paste0(abs_m_pop),                      
+                add_trace(x=~Male, name = 'Male',  text = ~paste0(abs_m_popC),                      
                           marker = list(color = 'rgb(49,130,189)', 
                                                   width = 3)) %>%
                 layout(margin = m,
@@ -881,78 +901,32 @@ shinyServer(function(input, output, session) {
     dplotrace
 	})
   ###########################   
-
   output$Dplot_mhi <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
     selected<- input$select
-    
-  if (selected == "Southwest Region") {
-    marker_select = list(color = c('rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 
-                                   '#1f77b4', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)'))
-  } else if (selected == "South Central Region") {
-    marker_select = list(color = c('rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', '#1f77b4', 
-                                   'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)')) 
-  } else if (selected == "Eastern Region") {
-    marker_select = list(color = c('rgba(204,204,204,1)', '#1f77b4', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 
-                                   'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)'))     
-  } else if (selected == "North Central Region") {
-    marker_select = list(color = c('rgba(204,204,204,1)', 'rgba(204,204,204,1)', '#1f77b4', 'rgba(204,204,204,1)', 
-                                   'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)'))  
-  } else if (selected == "Western Region") {
-    marker_select = list(color = c('rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 
-                                   'rgba(204,204,204,1)', 'rgba(204,204,204,1)', '#1f77b4'))
-  } else if (selected == "Central Region") {
-    marker_select = list(color = c('#1f77b4', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 
-                                   'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)')) 
-  } else { #Statewide
-    marker_select = list(color = c('rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 
-                                   'rgba(204,204,204,1)', '#1f77b4', 'rgba(204,204,204,1)')) 
-  }
-    
-    total_mhi <- mhi_df_regions[mhi_df_regions$Variable == "Median Household Income",]
-    total_n <- total_mhi %>% 
-      count(Region)
-    total_mhi <- merge(total_mhi, total_n, by = "Region")
-    total_mhi <- unique(total_mhi %>% 
-      group_by(Region) %>% 
-      mutate(tot_mhi = sum(Value), 
-             final_mhi = tot_mhi / n) %>% 
-      select(Region, n, final_mhi))
-      
-    total_moe <- mhi_df_regions[mhi_df_regions$Variable == "Margins of Error",]
-    total_moe <- unique(total_moe %>% 
-      group_by(Region) %>% 
-      mutate(final_moe = aggregate_moe(Value)) %>% 
-      select(final_moe, Region))
-    
-    mhi_df_regions_calc <- merge(total_mhi, total_moe, by = "Region")
-    mhi_df_regions_calc$final_mhi <- round(mhi_df_regions_calc$final_mhi, 0)
-    mhi_df_regions_calc$final_moe <- round(mhi_df_regions_calc$final_moe, 0)
-    mhi_df_regions_calc$Region <- factor(mhi_df_regions_calc$Region, 
-                                         levels = c("Statewide", 
-                                                    "Southwest Region",      #1
-                                                    "South Central Region",  #2
-                                                    "Eastern Region",        #3
-                                                    "North Central Region",  #4
-                                                    "Western Region",        #5
-                                                    "Central Region"))
-    m <- list(b=110, r=60) # l = left; r = right; t = top; b = bottom
-    dplot3 <- plot_ly(mhi_df_regions_calc, x = ~Region, y = ~final_mhi, 
-                     name = 'Median Household Income', type = 'bar', 
-                               marker = marker_select,
-                     hoverinfo = 'text', text = ~paste(paste0("$", final_mhi), "+/-", final_moe, sep = " "), 
-                     error_y = ~list(array = final_moe, color = '#000000')) %>%
-     layout(margin=m, title = paste(selected, "vs. All Regions,", max_year_mhi_regions, sep = " "),
-         xaxis = list(title = "", tickangle = 30),
-         yaxis = list(title = "Income ($)"), 
-         barmode = 'group', legend = list(x = 0.7, y = 0.95),
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    mhi_df_towns$Town <- factor(mhi_df_towns$Town, levels = unique(mhi_df_towns$Town)[order(mhi_df_towns$`Median Household Income`, decreasing = TRUE)])
+    mhi_df_towns$`Median Household IncomeC` <- format(mhi_df_towns$`Median Household Income`, big.mark = ",", scientific=FALSE)
+    mhi_df_towns$`Margins of ErrorC` <- format(mhi_df_towns$`Margins of Error`, big.mark = ",", scientific=FALSE)
+
+    dplot3 <- plot_ly(mhi_df_towns, x = ~Town, y = ~`Median Household Income`, 
+                     name = 'Median Household Income', type = 'scatter', mode = 'markers',
+                     hoverinfo = 'text', text = ~paste(paste0("$", `Median Household IncomeC`), "+/-", `Margins of ErrorC`, sep = " "), 
+                     error_y = ~list(array = `Margins of Error`, color = '#000000')) %>%
+     layout(margin=list(b=100, r=45),
+            title = paste(selected, max_year_mhi_regions, sep = ", "),
+         xaxis = list(title = "Towns", tickangle = 45),
+         yaxis = list(title = "Median Household Income ($)"), 
+         barmode = 'group', 
+         legend = list(x = 0.7, y = 0.95),
          annotations = list(x = 1, y = -0.35, text = "Source: U.S. Census", 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")))
-     dplot3    
+      dplot3
   })
   ###########################  
   output$mhi_text <- renderText({
@@ -960,69 +934,133 @@ shinyServer(function(input, output, session) {
   })
   ########################### 
   output$mhi_value <- renderText({
-     selected<- input$select
-     total_mhi <- mhi_df_regions[mhi_df_regions$Variable == "Median Household Income",]
-    total_n <- total_mhi %>% 
-      count(Region)
-    total_mhi <- merge(total_mhi, total_n, by = "Region")
-    total_mhi <- unique(total_mhi %>% 
-      group_by(Region) %>% 
-      mutate(tot_mhi = sum(Value), 
-             final_mhi = tot_mhi / n) %>% 
-      select(Region, n, final_mhi))
-      
-    total_moe <- mhi_df_regions[mhi_df_regions$Variable == "Margins of Error",]
-    total_moe <- unique(total_moe %>% 
-      group_by(Region) %>% 
-      mutate(final_moe = aggregate_moe(Value)) %>% 
-      select(final_moe, Region))
-    
-    mhi_df_regions_calc <- merge(total_mhi, total_moe, by = "Region")
-    mhi_df_regions_calc$final_mhi <- round(mhi_df_regions_calc$final_mhi, 0)
-    mhi_df_regions_calc$final_moe <- round(mhi_df_regions_calc$final_moe, 0)
-    mhi_df_regions_calc$Region <- factor(mhi_df_regions_calc$Region, 
-                                         levels = c("Statewide", 
-                                                    "Southwest Region",      #1
-                                                    "South Central Region",  #2
-                                                    "Eastern Region",        #3
-                                                    "North Central Region",  #4
-                                                    "Western Region",        #5
-                                                    "Central Region"))
-     mhi_value_df <- mhi_df_regions_calc[mhi_df_regions_calc$Region == selected,]
-     value <- format(unique(mhi_value_df$final_mhi), big.mark=",", scientific=FALSE) 
-     paste0("$", value)
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    max_valueC <- format(mhi_df_towns$`Median Household Income`, big.mark=",", scientific=FALSE) 
+    paste0("$", max_valueC)
+  }) 
+  ########################### 
+  output$mhi_moe <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    max_moeC <- format(mhi_df_towns$`Margins of Error`, big.mark=",", scientific=FALSE) 
+    paste0("+/-", max_moeC)
+  })  
+  ########################### 
+  output$max_mhi_town <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    max_value <- max(mhi_df_towns$`Median Household Income`)
+    max_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == max_value,]
+    max_town <- unique(max_mhi_df_towns$Town)
+    max_town
   })
+  ########################### 
+  output$max_mhi_value <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    max_value <- max(mhi_df_towns$`Median Household Income`)
+    max_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == max_value,]
+    max_town <- unique(max_mhi_df_towns$Town)
+    max_valueC <- format(max_value, big.mark=",", scientific=FALSE) 
+    paste0("$", max_valueC)
+  }) 
+  ########################### 
+  output$max_mhi_moe <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    max_value <- max(mhi_df_towns$`Median Household Income`)
+    max_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == max_value,]
+    max_moe <- unique(max_mhi_df_towns$`Margins of Error`)
+    max_moeC <- format(max_moe, big.mark=",", scientific=FALSE) 
+    paste0("+/-", max_moeC)
+  })    
+  ########################### 
+  output$min_mhi_town <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    min_value <- min(mhi_df_towns$`Median Household Income`)
+    min_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == min_value,]
+    min_town <- unique(min_mhi_df_towns$Town)
+    min_town
+  })
+  ########################### 
+  output$min_mhi_value <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    min_value <- min(mhi_df_towns$`Median Household Income`)
+    min_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == min_value,]
+    min_town <- unique(min_mhi_df_towns$Town)
+    min_valueC <- format(min_value, big.mark=",", scientific=FALSE) 
+    paste0("$", min_valueC)
+  }) 
+  ########################### 
+  output$min_mhi_moe <- renderText({
+    selected<- input$select
+    mhi_df_towns <- mhi_df_regions[mhi_df_regions$Region == selected,]
+    mhi_df_towns <- spread(mhi_df_towns, Variable, Value)
+    min_value <- min(mhi_df_towns$`Median Household Income`)
+    min_mhi_df_towns <- mhi_df_towns[mhi_df_towns$`Median Household Income` == min_value,]
+    min_town <- unique(min_mhi_df_towns$Town)
+    min_moe <- unique(min_mhi_df_towns$`Margins of Error`)
+    min_moeC <- format(min_moe, big.mark=",", scientific=FALSE) 
+    paste0("+/-", min_moeC)
+  })   
+ 
   ########################### 
   output$mhi_moe <- renderText({
      selected<- input$select
-          total_mhi <- mhi_df_regions[mhi_df_regions$Variable == "Median Household Income",]
+    total_mhi <- mhi_df_regions[mhi_df_regions$Variable == "Median Household Income",]
     total_n <- total_mhi %>% 
       count(Region)
     total_mhi <- merge(total_mhi, total_n, by = "Region")
-    total_mhi <- unique(total_mhi %>% 
+    total_mhi_calc <- unique(total_mhi %>% 
       group_by(Region) %>% 
       mutate(tot_mhi = sum(Value), 
-             final_mhi = tot_mhi / n) %>% 
-      select(Region, n, final_mhi))
-      
-    total_moe <- mhi_df_regions[mhi_df_regions$Variable == "Margins of Error",]
-    total_moe <- unique(total_moe %>% 
+             final_mhi = tot_mhi / n, 
+             sigma = sd(Value), 
+             sd_mhi = sigma/sqrt(n), 
+             ci_mhi = 2.01*sd_mhi) %>% #tvalue n-1<35
+        select(Region, final_mhi, ci_mhi) %>% 
+        filter(Region != "Statewide")) 
+    
+    test  <- total_mhi %>% 
       group_by(Region) %>% 
-      mutate(final_moe = aggregate_moe(Value)) %>% 
-      select(final_moe, Region))
-    mhi_df_regions_calc <- merge(total_mhi, total_moe, by = "Region")
-    mhi_df_regions_calc$final_mhi <- round(mhi_df_regions_calc$final_mhi, 0)
-    mhi_df_regions_calc$final_moe <- round(mhi_df_regions_calc$final_moe, 0)
-    mhi_df_regions_calc$Region <- factor(mhi_df_regions_calc$Region, 
+      mutate(tot_mhi = sum(Value), 
+             final_mhi = tot_mhi / n, 
+             sigma = sd(Value), 
+             sd_mhi = sigma/sqrt(n), 
+             ci_mhi = 2.01*sd_mhi) %>% #tvalue n-1<35
+        filter(Region != "Statewide")
+    
+    total_mhi_calc <- as.data.frame(total_mhi_calc)  
+    #bring in Statewide MOE
+    total_moe <- mhi_df_regions[mhi_df_regions$Region == "Statewide",]
+    total_moe <- spread(total_moe, Variable, Value)
+    total_moe <- total_moe %>% 
+      select(Region, `Median Household Income`, `Margins of Error`) %>% 
+      rename(final_mhi = `Median Household Income`, ci_mhi = `Margins of Error`)
+  
+    total_mhi_calc <- rbind(total_mhi_calc, total_moe)
+    total_mhi_calc$final_mhi <- round(total_mhi_calc$final_mhi, 0)
+    total_mhi_calc$ci_mhi <- round(total_mhi_calc$ci_mhi, 0)
+    total_mhi_calc$Region <- factor(total_mhi_calc$Region, 
                                          levels = c("Statewide", 
                                                     "Southwest Region",      #1
                                                     "South Central Region",  #2
                                                     "Eastern Region",        #3
                                                     "North Central Region",  #4
                                                     "Western Region",        #5
-                                                    "Central Region"))
-     mhi_value_df <- mhi_df_regions_calc[mhi_df_regions_calc$Region == selected,]
-     moe <- format(unique(mhi_value_df$final_moe), big.mark=",", scientific=FALSE) 
+                                                    "Central Region"))       #6
+     mhi_value_df <- total_mhi_calc[total_mhi_calc$Region == selected,]
+     moe <- format(unique(mhi_value_df$ci_mhi), big.mark=",", scientific=FALSE) 
      paste0("+/-", moe)
   })  
   ###########################
@@ -1041,12 +1079,20 @@ shinyServer(function(input, output, session) {
     
     bh_plot_race$`Age Range` <- factor(bh_plot_race$`Age Range`, levels = c("0 to 5", "6 to 9", "10 to 15", "16 to 19", "20 to 21"))
     bh_plot_race <- arrange(bh_plot_race, `Age Range`)
-    bhplotrace <- plot_ly(bh_plot_race, x = ~`Age Range`, y = ~White, name = 'White', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(White), textposition = 'auto') %>%
-                   add_trace( y = ~Hispanic, name = 'Hispanic or Latino', text = ~paste0(Hispanic)) %>%
+    bh_plot_race$WhiteC <- format(bh_plot_race$White, big.mark=",", scientific=FALSE)
+    bh_plot_race$BlackC <- format(bh_plot_race$Black, big.mark=",", scientific=FALSE)
+    bh_plot_race$HispanicC <- format(bh_plot_race$Hispanic, big.mark=",", scientific=FALSE)
+    bh_plot_race$OtherC <- format(bh_plot_race$Other, big.mark=",", scientific=FALSE)
 
-             add_trace( y = ~Black, name = 'Black or African American', text = ~paste0(Black)) %>%
-             add_trace( y = ~Other, name = 'Other', text = ~paste0(Other)) %>%
+    bhplotrace <- plot_ly(bh_plot_race, x = ~`Age Range`, y = ~White, name = 'White', type = 'bar', 
+                     hoverinfo = 'text', text = ~paste0(WhiteC), textposition = 'auto', 
+                     marker = list(color="#A6CEE3")) %>%
+                   add_trace( y = ~Hispanic, name = 'Hispanic or Latino', text = ~paste0(HispanicC), 
+                     marker = list(color="#1F78B4")) %>%
+             add_trace( y = ~Black, name = 'Black or African American', text = ~paste0(BlackC), 
+                     marker = list(color="#B2DF8A")) %>%
+             add_trace( y = ~Other, name = 'Other', text = ~paste0(OtherC), 
+                     marker = list(color="#33A02C")) %>%
      layout(margin=m, title = paste(paste0(unique(bh_plot_race$Region), ","), "2010", sep = " "),
          xaxis = list(title = ""),
          yaxis = list(title = "Number"), 
@@ -1060,6 +1106,7 @@ shinyServer(function(input, output, session) {
   ###########################  
    output$BHTable <- function() {
     if(input$select=="Statewide") {
+      bh_CT[is.na(bh_CT)]<-""
       bh_CT %>%
        knitr::kable("html", row.names=NA) %>%
        kable_styling(c("striped", "hover", "condensed", "responsive", "xs"), full_width = T) %>%
@@ -1072,6 +1119,7 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet")
        #scroll_box(height = "400px")
     } else if (input$select=="Southwest Region") {
+      bh_r1[is.na(bh_r1)]<-""
       bh_r1 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T ) %>%
@@ -1084,7 +1132,8 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet") 
        # scroll_box(height = "400px")
     } else if (input$select=="South Central Region") {
-        bh_r2 %>%
+      bh_r2[is.na(bh_r2)]<-""
+       bh_r2 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T) %>%
        group_rows("0 - 5", 1, 3) %>%
@@ -1096,7 +1145,8 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet") 
        # scroll_box(height = "400px")
     } else if (input$select=="Eastern Region") {
-        bh_r3 %>%
+      bh_r3[is.na(bh_r3)]<-""
+      bh_r3 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T) %>%
        group_rows("0 - 5", 1, 3) %>%
@@ -1108,7 +1158,8 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet") 
        # scroll_box(height = "400px")
     } else if (input$select=="North Central Region") {
-        bh_r4 %>%
+      bh_r4[is.na(bh_r4)]<-""
+      bh_r4 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T) %>%
        group_rows("0 - 5", 1, 3) %>%
@@ -1120,7 +1171,8 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet") 
        # scroll_box(height = "400px")
     } else if (input$select=="Western Region") {
-        bh_r5 %>%
+      bh_r5[is.na(bh_r5)]<-""
+      bh_r5 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T) %>%
        group_rows("0 - 5", 1, 3) %>%
@@ -1132,6 +1184,7 @@ shinyServer(function(input, output, session) {
        add_footnote(c("Source: US Census; Calculations by CONNECT project"), notation = "alphabet") 
        # scroll_box(height = "400px")
     } else if (input$select=="Central Region") {
+      bh_r6[is.na(bh_r6)]<-""
        bh_r6 %>%
        knitr::kable("html") %>%
        kable_styling(c("striped", "hover", "condensed", "responsive"), full_width = T) %>%
@@ -1192,11 +1245,9 @@ dd <- unique(edu$District)
      edu_plot <- edu[edu$`Measure Type` == "Percent" & edu$District %in% selected & 
                        edu$Value != -9999.0 &
                        edu$Year == max_year_edu,]
-     m <- list(b=100)
-         e_plot1 <- ggplot(data=edu_plot, 
-                           aes(x=`Indicator of Educational Need`, y=Value, fill=District))+
+     e_plot1 <- ggplot(edu_plot, aes(`Indicator of Educational Need`, y=Value, fill=District, 
+                                     text=sprintf("%s<br>%s<br>%s", District, `Indicator of Educational Need`, paste0(Value, "%"))))+
          geom_bar(stat="identity", position = "dodge") + 
-         #geom_text(aes(label=paste(Value, "%")), size=3, position = position_dodge(width=1)) + 
          theme_bw() +
          xlab("Indicator of Educational Need") + ylab("Percent") +
          scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
@@ -1206,11 +1257,13 @@ dd <- unique(edu$District)
                axis.title = element_text(size=10), 
  			         plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +
          labs(caption = "Source: Connecticut State Department of Education")
-         e_plot1 <- ggplotly(e_plot1)
-         e_plot1 <- e_plot1 %>% layout(margin=m, annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
+         e_plot1 <- ggplotly(e_plot1, tooltip="text")
+         e_plot1 <- e_plot1 %>% 
+           layout(margin=list(l=40, b=90), 
+                  annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+                  showarrow = F, xref='paper', yref='paper', 
+                  xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                  font=list(size=15, color="grey")))
          e_plot1
    })
   ###########################  
@@ -1224,39 +1277,29 @@ dd <- unique(edu$District)
     shiny::validate(
       need(nrow(edu2_plot) != 0, "No data are available for your selection, try selecting another District")
     )
-      x <- list(
-        ticklen = 5,
-        tickwidth = 1,
-        tickfont = list(size = 10)
-      )
-      y <- list(
-        ticklen = 15,
-        tickwidth = 1
-      )      
-      m <- list(l=100, r=20, b=80, t=40) # l = left; r = right; t = top; b = bottom
-        e_plot2 <- ggplot(data=edu2_plot, aes(x=`Race/Ethnicity`, y=Value, fill=District)) +
-        geom_bar(stat="identity", position = "dodge") + ylab("Percent") +
-        #geom_text(aes(x=`Race/Ethnicity`, y=Value, label=paste(Value, "%")), vjust=-0.4, size=3, position = position_dodge(width=1)) + 
-          theme_bw() + 
-        scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
-        scale_fill_manual(values = dd.col.random)+ 
-        theme(axis.text = element_text(size=8),
-			        plot.title = element_text(size=10, face="bold"), 
-              axis.title=element_text(size=10), 
- 			        plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-        labs(caption = "Source: Connecticut State Department of Education")
-        e_plot2 <- ggplotly(e_plot2)
-        e_plot2 <- e_plot2 %>% layout(
-         margin=m, annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")),
-         barmode = 'group',
-         xaxis = x, yaxis = y, 
-         bargap = 0.3,
-         legend = list(x = 100, y = 0.9, font = list(size=10)),
-         xaxis = x, yaxis = y)
-        e_plot2        
+    e_plot2 <- ggplot(data=edu2_plot, aes(x=`Race/Ethnicity`, y=Value, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", District, `Race/Ethnicity`, paste0(Value, "%")))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Percent") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
+      labs(caption = "Source: Connecticut State Department of Education")
+      e_plot2 <- ggplotly(e_plot2, tooltip="text")
+      e_plot2 <- e_plot2 %>% layout(
+        margin=list(l=40, b=90), 
+        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)), 
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot2        
     })
   ###########################  
 
@@ -1270,40 +1313,29 @@ dd <- unique(edu$District)
     shiny::validate(
       need(nrow(edu3_plot) != 0, "No data are available for your selection, try selecting another District")
     )
-      x <- list(
-        ticklen = 5,
-        tickwidth = 1,
-        tickfont = list(size = 10)
-      )
-      y <- list(
-        ticklen = 15,
-        tickwidth = 1
-      )      
-      m <- list(l=100, r=20, b=80, t=40) # l = left; r = right; t = top; b = bottom
-        e_plot3 <- ggplot(data=edu3_plot, aes(x=`Sanction Type`, y=Value, fill=District)) +
-        geom_bar(stat="identity", position = "dodge") + ylab("Number") +
-        #geom_text(aes(x=`Sanction Type`, y=Value, label=paste(Value)), vjust=-0.4, size=3, 
-                #  position = position_dodge(width=1)) + 
-     theme_bw() + 
-        scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
-        scale_fill_manual(values = dd.col.random)+ 
-        theme(axis.text = element_text(size=8),
-			        plot.title = element_text(size=10, face="bold"), 
-              axis.title=element_text(size=10), 
- 			        plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-        labs(caption = "Source: Connecticut State Department of Education")
-        e_plot3 <- ggplotly(e_plot3)
-        e_plot3 <- e_plot3 %>% layout(
-         margin=m, annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")),
-         barmode = 'group',
-         xaxis = x, yaxis = y, 
-         bargap = 0.3,
-         legend = list(x = 100, y = 0.9, font = list(size=10)),
-         xaxis = x, yaxis = y)
-        e_plot3        
+    e_plot3 <- ggplot(data=edu3_plot, aes(x=`Sanction Type`, y=Value, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", District, `Sanction Type`, paste0(Value)))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Number") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
+      labs(caption = "Source: Connecticut State Department of Education")
+      e_plot3 <- ggplotly(e_plot3, tooltip="text")
+      e_plot3 <- e_plot3 %>% layout(
+        margin=list(l=50, b=90), 
+        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)),
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot3        
     })
   ########################### 
 
@@ -1317,40 +1349,29 @@ dd <- unique(edu$District)
     shiny::validate(
       need(nrow(edu4_plot) != 0, "No data are available for your selection, try selecting another District")
     )
-      x <- list(
-        ticklen = 5,
-        tickwidth = 1,
-        tickfont = list(size = 10)
-      )
-      y <- list(
-        ticklen = 15,
-        tickwidth = 1
-      )      
-      m <- list(l=100, r=20, b=80, t=40) # l = left; r = right; t = top; b = bottom
-        e_plot4 <- ggplot(data=edu4_plot, aes(x=`Incident Type`, y=Value, fill=District)) +
-        geom_bar(stat="identity", position = "dodge") + ylab("Number") +
-        #geom_text(aes(x=`Incident Type`, y=Value, label=paste(Value)), vjust=-0.4, size=3, 
-       #           position = position_dodge(width=1)) + 
-          theme_bw() + 
-        scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
-        scale_fill_manual(values = dd.col.random)+ 
-        theme(axis.text = element_text(size=8),
-			        plot.title = element_text(size=10, face="bold"), 
-              axis.title=element_text(size=10), 
- 			        plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-        labs(caption = "Source: Connecticut State Department of Education")
-        e_plot4 <- ggplotly(e_plot4)
-        e_plot4 <- e_plot4 %>% layout(
-         margin=m, annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")),
-         barmode = 'group',
-         xaxis = x, yaxis = y, 
-         bargap = 0.3,
-         legend = list(x = 100, y = 0.9, font = list(size=10)),
-         xaxis = x, yaxis = y)
-        e_plot4        
+    e_plot4 <- ggplot(data=edu4_plot, aes(x=`Incident Type`, y=Value, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", District, `Incident Type`, paste0(Value)))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Number") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
+      labs(caption = "Source: Connecticut State Department of Education")
+      e_plot4 <- ggplotly(e_plot4, tooltip="text")
+      e_plot4 <- e_plot4 %>% layout(
+        margin=list(l=50, b=90), 
+        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)),
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot4        
     })   
   ###########################
    # edu5_plot <- kei[kei$FixedDistrict %in% selected & kei$`Level 1` != -9999 & !is.na(kei$`Level 1`) & kei$Year == max_year_kei,]
