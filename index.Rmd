@@ -1,0 +1,19 @@
+---
+title: "Connecticut Data Collaborative Data Tools"
+---
+
+***
+
+## CT SEOW Data Portal
+
+A data portal for that explores indicators, data sets and resources to improve substance abuse prevention, mental health promotion and behavioral health in general.
+
+<a href="https://ctdata.shinyapps.io/cpes/" target = "_blank" class="btn btn-primary" role="button">Launch App</a>
+
+***
+
+## CONNECT Dashboard
+
+A dashboard to explore data by Department of Children and Families (DCF) region and education data by district.
+
+<a href="https://ctdata.shinyapps.io/connect/" target = "_blank" class="btn btn-primary" role="button">Launch App</a>

@@ -1,0 +1,24 @@
+name: my-website
+navbar:
+  title: Connecticut Data Collaborative's Shiny Server
+  right:
+  - text: Home
+    icon: fa-home
+    href: index.html
+  - text: Documentation
+    href: doc.html
+  - text: Our Code
+    href: https://github.com/CT-Data-Collaborative/shiny-server
+  - text: Contact
+    href: contact.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: custom.css
+    lib_dir: site_libs
+    self_contained: no
+output_dir: '.'
+
