@@ -1,0 +1,209 @@
+Source,Source Acronym,CPES Indicator,Data Availability Level,Dimensions,Measure,Variables,Form,CTData Category (Tag),CTData Data Set Name(s),CTData Data Set Description(s),Notes,Raw Data Source,Current
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Current use,State,"Grade 9-12, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Cocaine
+Problem Gambling",Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Past month use,State,"Grade 9-12, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Other Illicit Drugs",Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Lifetime use,State,"Grade 9-12, Gender, Race/Ethnicity",Number,"Marijuana
+Prescription Drugs
+Heroin
+Cocaine",Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Early onset (first use before age 13),State,"Grade 9-12, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana",Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Current binge drinking,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Alcohol,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Past month binge drinking,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Alcohol,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Drove after drinking,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Alcohol,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Rode in car when driver had been drinking,State,"Grade 9-12, Gender, Race/Ethnicity",Number,,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,So sad or hopeless stopped usual activities,State,"Grade 9-12, Gender, Race/Ethnicity",Number,,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Suicide seriously considered past 12 months,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Suicide,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Suicide plan past 12 months,National,"Grade 9-12, Gender, Race/Ethnicity",Number,Suicide,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Suicide attempt(s) past 12 months,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Suicide,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Behavior Component (YRBS),YRBS,Self-inflicted injury,State,"Grade 9-12, Gender, Race/Ethnicity",Number,Suicide,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Ever tobacco use,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Ever cigarette use,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Ever vaping,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Current tobacco use,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Current cigarette smoking,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Current E-cig use,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Tobacco use initiation,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+CT Student Health Survey: Tobacco Component (YRBS),YRBS,Living with tobacco smoker,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Aggregate Data Report,YRBS,,,,,
+NSDUH,NSDUH,Past month binge drinking,State,"12-17, 18-25, 26+, 12+, 18+",Number,Alcohol,Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Past year use,State,"12-17, 18-25, 26+, 12+, 18+",Number,"Marijuana
+Prescription Drugs
+Cocaine",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Past month use,State,"12-17, 18-25, 26+, 12+, 18+",Number,"Alcohol
+Tobacco
+Marijuana
+Other Illicit Drugs",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Perception of risk of harm from use,State,"12-17, 18-25, 26+, 12+, 18+",Number,"Alcohol
+Tobacco
+Marijuana",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Early onset (first use before age 13),State,"12-17, 18-25, 26+, 12+, 18+",Number,"Alcohol
+Marijuana",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Abuse or dependence past year,State,"12-17, 18-25, 26+, 12+, 18+",Number,"Alcohol
+Other Illicit Drugs",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Needing but not receiving treatment in past year,State,"12-17, 18-25, 26+, 12+, 18+",Number,"Alcohol
+Other Illicit Drugs",Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Serious mental illness in past year,State,"12-17, 18-25, 26+, 12+, 18+",Number,,Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Any mental illness in past year,State,"12-17, 18-25, 26+, 12+, 18+",Number,,Aggregate Data Report,NSDUH,,,,,
+NSDUH,NSDUH,Had at least one major depressive episode in past year,State,"12-17, 18-25, 26+, 12+, 18+",Number,,Aggregate Data Report,NSDUH,,,,,
+SDE,SDE,School Attendance,Town/District,Grade K-12,Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",Report,SDE,,,,,
+SDE,SDE,School dropout rate,Town/District,Grade 9-12,Number,"Alcohol
+Tobacco
+Prescription Drugs
+Other Illicit Drugs",Report,SDE,,,,,
+SDE,SDE,School suspensions/ expulsions,Town/District,Grade K-12,Number,,Report,SDE,,,,,
+SDE,SDE,Chronic absenteeism,Town/District,Grade K-12,Number,,Report,SDE,,,,,
+SDE,SDE,Graduation rates,Town/District,Grade 9-12,Number,,Report,SDE,,,,,
+SDE,SDE,Enrollment rate,Town/District,Grade PK-12,Number,,Report,SDE,,,,,
+Crash repository,,Alcohol or substance related fatal MV crashes,Town/Individual,"12-17, 18-25, 26+, <18, 18+, Gender, Race/Ethnicity",Number,Alcohol,Interactive database,,,,,,
+Crash repository,,Alcohol or substance related MV accidents,Town/Individual,"12-17, 18-25, 26+, <18, 18+, Gender, Race/Ethnicity",Number,Alcohol,Interactive database,,,,,,
+Crash repository,,Alcohol or substance related MV deaths,Town/Individual,"12-17, 18-25, 26+, <18, 18+, Gender, Race/Ethnicity",Number,Alcohol,Interactive database,,,,,,
+DCP,DCP,Alcohol Seller Violation Rate,Town,,Number,Alcohol,Report,,,,,,
+DCP,DCP,Density liquor permits,Town,,Number,Alcohol,Report,,,,,,
+CT Council on Problem Gambling,,Calls to gambling helpline,Individual,"Ages 18-25, Ages 26+, Gender, Race/Ethnicity",Number,Problem Gambling,Report,,,,,,
+TEDS,TEDS,Treatment admissions,State,"12-17, 18-25, 26+, 31-35, 36-40, 41-45, 46-50, 51-55, 56-60, 61-65, 66+, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",Aggregate Data Report,,,,,,
+DPH,DPH,Deaths from lung cancer,Town,"Age <18, Age 18+",Number,Tobacco,Report,DPH,,,,,
+DPH,DPH,Alcohol-related suicide deaths,Town,"Age <18, Age 18+",Number,Alcohol,Report,DPH,,,,,
+DPH,DPH,Teen births,Town,,Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,DPH,,,,,
+DPH,DPH,Neonatal Abstinence Syndrome,State,,Number,"Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,DPH,,,,,
+DPH,DPH,Hepatitis,Town,,Number,Heroin,Report,DPH,,,,,
+DPH,DPH,COPD deaths,State,,Number,Tobacco,Report,DPH,,,,,
+DPH,DPH,Cardiac disease deaths,,,Number,,Report,DPH,,,,,
+DPH,DPH,Youth Tobacco Survey,State,"Grade 6-8, 9-12, Gender, Race/Ethnicity",Number,Tobacco,Report,DPH,,,,,
+DPH,DPH,Emergency room visits,,,Number,,Report,DPH,,,,,
+UCR,UCR,Property Crime,Town,"12-17, 18-25, 26+, <10, 10-12, 13-14, 15, 16, 17, tot <18, 18, 19, 20, 21, 22, 23, 24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+, tot 18+, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",Report,UCR,UCR Crime Index,,,,
+UCR,UCR,Violent Crime,Town,"12-17, 18-25, 26+, <10, 10-12, 13-14, 15, 16, 17, tot <18, 18, 19, 20, 21, 22, 23, 24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+, tot 18+, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",Report,UCR,,,,,
+UCR,UCR,Embezzle-ment,Town,"12-17, 18-25, 26+, <10, 10-12, 13-14, 15, 16, 17, tot <18, 18, 19, 20, 21, 22, 23, 24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+, tot 18+, Gender, Race/Ethnicity",Number,Problem Gambling,Report,UCR,,,,,
+UCR,UCR,Offense vs Family,Town,"12-17, 18-25, 26+, <10, 10-12, 13-14, 15, 16, 17, tot <18, 18, 19, 20, 21, 22, 23, 24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+, tot 18+, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",Report,UCR,,,,,
+UCR,UCR,Driving under the influence arrests,Town,"12-17, 18-25, 26+, Age <18, Age 18+, Age 12-20, Gender, Race/Ethnicity",Number,Alcohol,Report,UCR,,,,,
+UCR,UCR,Liquor law violations,Town,"12-17, 18-25, 26+, Age <18, Age 18+, Age 12-20, Gender, Race/Ethnicity",Number,Alcohol,Report,UCR,Liquor Law Arrests,,,,
+UCR,UCR,Drug abuse violations (drug law violations),Town,"12-17, 18-25, 26+, Age <18, Age 18+, Age 12-20, Gender, Race/Ethnicity",Number,"Marijuana
+Heroin
+Cocaine
+Other Illicit Drugs",Report,UCR,,,,,
+Prescription Drug Monitoring Program,,Opioid Prescriptions et. al,State,,Number,Prescription Drugs,Report,,,,,,
+OCME,OCME,Overdose deaths,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,"Alcohol
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Raw dataset,OCME,Drug-induced Deaths,,,,
+OCME,OCME,Accidental overdose deaths,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,"Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Raw dataset,OCME,,,,,
+OCME,OCME,Any opioid related death,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,"Prescription Drugs
+Heroin",Raw dataset,OCME,Accidental Drug Related Deaths by Drug Type,,,,
+OCME,OCME,Heroin related deaths,Individual,"12-17, 18-25, 26+, Any age based on individual cases, Gender, Race/Ethnicity",Number,Heroin,Raw dataset,OCME,Accidental Drug Related Deaths by Individual Drugs Detected,,,,
+AIDS CT,,HIV/AIDS,Town,,Number,Heroin,Report,,,,,,
+DMHAS/CT ClearinghouseUCONN Health,,Community Readiness Survey,RAC,"12-17, 18-25, 26+, 2006, 2008, 2010, 2012, 2014, 2016",Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Suicide
+Problem Gambling",Raw dataset,,,,,,
+Monitoring the Future Survey,,,National,"Grades 8, 10, 12",Number,"Alcohol
+Tobacco
+Marijuana
+Heroin
+Cocaine
+Other Illicit Drugs",Report,,,,,,
+Datahaven Community Wellbeing Survey,,?????,State,"18-34, 35-49, 50-64, 65+, Education, Income, Community, Gender, Race/Ethnicity",Number,Tobacco,Report (maybe raw data set),,,,,,
+Datahaven Community Wellbeing Survey,,Ever tried vape pens,State,"18-34, 35-49, 50-64, 65+, Education, Income, Community, Gender, Race/Ethnicity",Number,Tobacco,Report,,,,,,
+Census,,Population,Town,,Number,,Report,Census,,,,,
+Census,,Gender,Town,Gender,Number,,Report,Census,,,,,
+Census,,Race,Town,Race/Ethnicity,Number,,Report,Census,,,,,
+Census,,Ethnicity: Hispanic or Latino,Town,Race/Ethnicity,Number,,Report,Census,,,,,
+Census,,Age,Town,"<5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, ≥85, 18 and older, 21 and older, 62 and older, 65 and older, Gender",Number,,Report,Census,,,,,
+Census,,Total Housing Units,Town,,Number,,Report,Census,,,,,
+CT Data Collaborative,,Median Household Income,Town,,Number,,Report,,,,,,
+CT Data Collaborative,,Poverty Rate,Town,,Number,,Report,,,,,,
+CT Data Collaborative,,Owner Occupied Dwellings,Town,,Number,,Report,,,,,,
+CT Data Collaborative,,Educational Attainment,Town,,Number,,Report,,,,,,
+CT Data Collaborative,,Un-employment rate,Town,,Number,,Report,,,,,,
+National Kids Count,,Single parent family,State,,Number,,Report,,,,,,
+CDC,CDC,BRFSS,State,"18-24, 25-34, 35-44, 45-54, 55-64, 65+, Other demographics, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco",Report,CDC,,,,,
+CDC,CDC,Tobacco Retailer Violation Rate,Town,,Number,Tobacco,Report,CDC,,,,,
+CDC,CDC,YRBSS,National,Grades 9-12,Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Suicide",Interactive Database,CDC,,,,,
+CORE survey,CORE,Binge alcohol consumption in last 2 weeks,State,"College students, Gender, Race/Ethnicity",Number,Alcohol,Report,CORE survey,,,,,
+CORE survey,CORE,Average number of drinks consumed in a week,State,"College students, Gender, Race/Ethnicity",Number,Alcohol,Report,CORE survey,,,,,
+CORE survey,CORE,Initiation of use,State,"College students, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,CORE survey,,,,,
+CORE survey,CORE,Past year use,State,"College students, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,CORE survey,,,,,
+CORE survey,CORE,Location of use,State,"College students, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,CORE survey,,,,,
+CORE survey,CORE,Past 30 day use,State,"College students, Gender, Race/Ethnicity",Number,"Alcohol
+Tobacco
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",Report,CORE survey,,,,,

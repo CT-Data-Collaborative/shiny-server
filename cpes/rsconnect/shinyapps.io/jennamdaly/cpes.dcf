@@ -1,0 +1,13 @@
+name: cpes
+title: cpes
+username:
+account: jennamdaly
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 279508
+bundleId: 1235720
+url: https://jennamdaly.shinyapps.io/cpes/
+when: 1519333150.04199
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: cpes_notes.txt|cpes_processing.R|indicators.csv|.RData|test.pdf|ui2.R|ui3.R|www/2017 Alcohol Profile.docx|www/2017 Cocaine Profile.docx|www/2017 Heroin Profile.docx|www/2017 Marijuana Profile.docx|www/2017 Opioid Profile.docx|www/2017 Prescription Drug Profile.docx|www/2017 Tobacco and ENDS Profile.docx|www/About CPES.docx|www/About-CPES.pdf|www/About the SEOW.doc|www/About-the-SEOW.pdf

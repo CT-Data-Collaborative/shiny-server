@@ -1,0 +1,18 @@
+Source,Data Set,Geography Level,Available Dimensions,Measure,Priority Problem,Key Terms
+State Department of Education,Chronic Absenteeism by All Students,Town/District,Grade,Number,,
+Department of Emergency Services and Public Protection,UCR Crime Index,Town,"Age Group, Gender, Race/Ethnicity",Number,"Alcohol
+Marijuana
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs
+Problem Gambling",
+Department of Emergency Services and Public Protection,Liquor Law Arrests,Town,"Age Group, Gender, Race/Ethnicity",Number,Alcohol,
+Department of Public Health,Drug-induced Deaths,Individual,"Age, Age Group, Gender, Race/Ethnicity",Number,"Alcohol
+Prescription Drugs
+Heroin
+Cocaine
+Other Illicit Drugs",
+Office of the Chief Medical Examiner,Accidental Drug Related Deaths by Drug Type,Individual,"Age, Age Group, Gender, Race/Ethnicity",Number,"Prescription Drugs
+Heroin",
+Office of the Chief Medical Examiner,Accidental Drug Related Deaths by Individual Drugs Detected,Individual,"Age, Age Group, Gender, Race/Ethnicity",Number,Heroin,

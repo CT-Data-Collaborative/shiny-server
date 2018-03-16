@@ -1,15 +1,16 @@
+
 body {
   background: #fff;
 }
 
 #header {
-  text-align: center;
-  color: #fdfdfd;
-  text-shadow: 0 0 1px #000;
+  text-align: left;
+  color: #FFF;
+  text-shadow: 0 0 1px #ffffff;
   padding: 20px 0 80px;
-  background: #0088cc url('ctdata-health.jpg');
+  background: #ffffff url('header-midnightBlue.jpg');
   border-bottom: 1px solid #ddd;
-  margin: 0 -15px;
+ /* margin: 0 15px;*/
   word-wrap: break-word;
 }
 
@@ -40,4 +41,9 @@ body {
   word-wrap: break-word; 
   /*width: 1200px;*/
   padding: 20px;
+}
+
+#home li[class=active] a{
+  color: red;
+  background-color: #000;
 }
