@@ -10,46 +10,22 @@
 # Define server logic
 shinyServer(function(input, output, session) {
   cols <- c("1" = "darkblue")
-    region_map_reactive <- reactive({
-		if(input$select=="Statewide") {
-        ggplot() + geom_polygon(data = dcf_regions_CT, aes(x = long, y = lat, group = group, fill = Value, col="yellow"), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + scale_colour_manual(values = cols) +  theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="Southwest Region") {
-        ggplot() + geom_polygon(data = dcf_regions_1, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="South Central Region") {
-        ggplot() + geom_polygon(data = dcf_regions_2, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="Eastern Region") {
-        ggplot() + geom_polygon(data = dcf_regions_3, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="North Central Region") {
-        ggplot() + geom_polygon(data = dcf_regions_4, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="Western Region") {
-        ggplot() + geom_polygon(data = dcf_regions_5, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		} else if (input$select=="Central Region") {
-        ggplot() + geom_polygon(data = dcf_regions_6, aes(x = long, y = lat, group = group, fill = Value), color = "black") + 
-        scale_fill_distiller(guide=FALSE, direction=1) + theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
-        axis.text.y = element_blank()) +
-        labs(x="", y="")
-		  }
-	})
-
-  output$gg_regions <- renderPlot({region_map_reactive()}, height = 200, width = 300)  
+  region_map_reactive <- reactive({
+    data <- dcf_regions_CT
+    selected <- input$select
+    if (input$select != "Statewide") {
+      data <- data %>% mutate(Value = ifelse(grepl(paste0("^", selected), Region), 1, 0)) #get exact match
+    } else {
+      data <- data %>% mutate(Value = 1)
+    }
+  })
+  
+  output$gg_regions <- renderPlot({
+    ggplot() + geom_polygon(data = region_map_reactive(), aes(x = long, y = lat, group = group, fill = Value, col="yellow"), color = "black") + 
+    scale_fill_distiller(guide=FALSE, direction=1) + scale_colour_manual(values = cols) +  theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
+    axis.text.y = element_blank()) +
+    labs(x="", y="")
+  }, height = 200, width = 300)
   ###########################
   region_text_reactive <- reactive({
     if(input$select=="Statewide") {
@@ -78,96 +54,100 @@ shinyServer(function(input, output, session) {
   ###########################
   output$region_list <- renderUI({region_list_reactive()})
   ###########################
+  health_reactive <- reactive({
+    selected<- input$select
+    h_plot1 <- health_regions
+    h_plot1 <- subset(h_plot1, `Measure Type` == "Rate" & Region == selected & Year == max_year_health_regions)
+    h_plot1 <- unique(h_plot1 %>%
+                     group_by(Type) %>% 
+                     mutate(avg_Value = round(mean(Value), 1)) %>% 
+                     select(-Town, -Value, -FIPS)) %>% 
+                     rename(Value = avg_Value)
+  })
+  
   output$HPlot1 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
-    selected<- input$select
-    h_plot1 <- health_regions[health_regions$`Measure Type` == "Rate" & health_regions$Region == selected & 
-                               health_regions$Year == max_year_health_regions,]
-    h_plot1 <- unique(h_plot1 %>%
-                       group_by(Type) %>% 
-                       mutate(avg_Value = round(mean(Value), 1)) %>% 
-                       select(-Town, -Value, -FIPS)) %>% 
-                       rename(Value = avg_Value)
-    #color palette = "Paired"
+        #color palette = "Paired"
 # [1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C" "#FB9A99" "#E31A1C"
 # [7] "#FDBF6F" "#FF7F00" "#CAB2D6" "#6A3D9A" "#FFFF99" "#B15928"
-    h_plot1 <- spread(h_plot1, Type, Value)
-    m <- list(b=50) # l = left; r = right; t = top; b = bottom
-    hplot1 <- plot_ly(h_plot1, x = "Fetal", y = ~Fetal, name = 'Fetal', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace(x = "Infant", y = ~Infant, name = 'Infant', text = ~paste0(Infant), 
-                     marker = list(color = "#1F78B4")) %>%
-             add_trace(x = "Neonatal", y = ~Neonatal, name = 'Neonatal', text = ~paste0(Neonatal), 
-                     marker = list(color = "#B2DF8A")) %>%
-             add_trace(x = "Postneonatal", y = ~Postneonatal, name = 'Postneonatal', text = ~paste0(Postneonatal), 
-                     marker = list(color = "#33A02C")) %>%
-     layout(margin=m, title = paste(paste0(unique(h_plot1$Region), ","), "All Races,", max_year_health_regions, sep = " "),
-         #xaxis = list(title = "Type"),
-         yaxis = list(title = "Rate per 1000 births"), 
-         showlegend = FALSE, 
-         annotations = list(x = 1, y = -0.15, text = "Source: Connecticut Department of Public Health", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     hplot1
+    selected<- input$select
+    hplot1 <- ggplot(health_reactive(), aes(x=Type, y=Value, fill = Type, text=sprintf("%s<br>%s", Type, Value))) +
+              geom_bar(stat="identity", position = "dodge") + xlab ("") + ylab("Rate per 1000 births") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line())+
+              scale_fill_brewer(palette="Paired") +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              hplot1 <- ggplotly(hplot1, tooltip="text")
+              hplot1 <- hplot1 %>% 
+                layout(margin=list(t=30, b=60, l=40), 
+                       title = paste(paste0(selected, ","), "All Races,", max_year_health_regions, sep = " "),
+                       annotations = list(x = 1, y = -0.15, 
+                                          text = HTML("Source: Connecticut Department of Public Health, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3,
+                       showlegend = FALSE
+                )
+              hplot1
   })
   ###########################
   health_rates_regions$Total.Births <- as.numeric(health_rates_regions$Total.Births)
   
-  output$HPlot2 <- renderPlotly({
-    shiny::validate(
-      need(input$select != "", "Please select a Region to populate the chart")
-    )    
+  health_rates_reactive <- reactive({
     selected<- input$select
-    h_plot2 <- health_rates_regions[health_rates_regions$Region == selected & health_rates_regions$RR_YR == max_year_health_rates_regions &
-                                      health_rates_regions$Type %in% c("Fetal", "Infant") & health_rates_regions$Race != "All",]
-
-    if (selected == "Statewide") {
-    h_plot2 <- unique(h_plot2 %>%
-      select(Race, Type, Death.Rate, Region))      
-    h_plot2 <- spread(h_plot2, Type, Death.Rate)
-    } else {
+    h_plot2 <- health_rates_regions
+    h_plot2 <- subset(h_plot2, Region == selected & RR_YR == max_year_health_rates_regions &
+                                      Type %in% c("Fetal", "Infant") & Race != "All")
+    if (selected != "Statewide") {
     h_plot2 <- h_plot2 %>%
       group_by(Region, Race, Type) %>%
       mutate(Total_Births = sum(Total.Births),  #per race
              Total_Deaths = sum(Value))  #per race/type
-    
-    h_plot2$Death_Rate <- round(h_plot2$Total_Deaths*1000/h_plot2$Total_Births,2)
-    
+    h_plot2$Death.Rate <- round(h_plot2$Total_Deaths*1000/h_plot2$Total_Births,2)
     h_plot2 <- unique(h_plot2 %>% 
-      select(Race, Type, Death_Rate, Region))
-    h_plot2 <- spread(h_plot2, Type, Death_Rate)
-      
+      select(Race, Type, Death.Rate, Region))
+    } else {
+    h_plot2 <- unique(h_plot2 %>%
+      select(Race, Type, Death.Rate, Region)) 
     }
-    h_plot2$Fetal <- as.numeric(h_plot2$Fetal)
-    h_plot2$Infant <- as.numeric(h_plot2$Infant)
-    m <- list(b=50) # l = left; r = right; t = top; b = bottom
-    hplot2 <- plot_ly(h_plot2, x = ~Race, y = ~Fetal, name = 'Fetal', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Fetal), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace(y = ~Infant, name = 'Infant', text = ~paste0(Infant), 
-                     marker = list(color = "#1F78B4")) %>%
-    layout(margin=m, title = paste(paste0(unique(h_plot2$Region), ","), 
-                                    max_year_health_rates_regions, sep = " "),
-         xaxis = list(title = ""),
-         yaxis = list(title = "Rate per 1000 births"), 
-         legend = list(x = 0.8, y = 0.85), 
-         annotations = list(x = 1, y = -0.15, text = "Source: Connecticut Department of Public Health", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     hplot2
-  })  
-  ###########################
-  output$ECPlot1 <- renderPlotly({
+  })
+  
+  output$HPlot2 <- renderPlotly({
+    selected<- input$select
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
+    hplot2 <- ggplot(health_rates_reactive(), aes(x=Race, y=Death.Rate, fill = Type, text=sprintf("%s<br>%s<br>%s", Type, Race, Death.Rate))) +
+              geom_bar(stat="identity", position = "dodge") + xlab ("") + ylab("Rate per 1000 births") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              hplot2 <- ggplotly(hplot2, tooltip="text")
+              hplot2 <- hplot2 %>% 
+                layout(margin=list(t=30, b=60, l=40), 
+                       title = paste(paste0(selected, ","), max_year_health_rates_regions, sep = " "),
+                       annotations = list(x = 1, y = -0.15, 
+                                          text = HTML("Source: Connecticut Department of Public Health, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3
+                )
+              hplot2      
+  })  
+  ###########################
+  ecplot1_reactive <- reactive({
     selected<- input$select
-    ec_plot1 <- b23_regions[b23_regions$Region == selected & b23_regions$Year == max_year_b23_regions,]
+    ec_plot1 <- b23_regions
+    ec_plot1 <- subset(ec_plot1, Region == selected & Year == max_year_b23_regions)
     ec_plot1 <- unique(ec_plot1 %>%
                        group_by(Indicator) %>% 
                        mutate(tot_Value = round(sum(Value), 0)) %>% 
@@ -175,54 +155,43 @@ shinyServer(function(input, output, session) {
                        rename(Value = tot_Value)
     
     ec_plot1$ValueC <- format(ec_plot1$Value, big.mark=",", scientific=FALSE) 
-    
-    ec_plot1 <- ec_plot1 %>% 
-       gather(Value, ValueC, -(Indicator:Region)) %>%
-       unite(temp, Indicator, Value) %>%
-       spread(temp, ValueC)
-    cols <- c("Evaluations_Value", "Exited to Early Childhood Special Education_Value", 
-              "Individual Family Service Plans_Value", "Referrals_Value", "Total Eligible_Value", 
-              "Total Served_Value")
-    ec_plot1[cols] <- sapply(ec_plot1[cols],as.numeric)
-    m <- list(b=80) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0) 
-    ecplot1 <- plot_ly(ec_plot1, x = "Evaluations", y = ~Evaluations_Value, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations_ValueC), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
-                       y = ~`Exited to Early Childhood Special Education_Value`, 
-                       name = 'Exited to<br>Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education_ValueC`), 
-                     marker = list(color = "#1F78B4")) %>%
-             add_trace(x = "Individual<br>Family Service<br>Plans", 
-                       y = ~`Individual Family Service Plans_Value`, name = 'Individual<br>Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans_ValueC`), 
-                     marker = list(color = "#B2DF8A")) %>%
-             add_trace(x = "Referrals", y = ~Referrals_Value, name = 'Referrals', text = ~paste0(Referrals_ValueC), 
-                     marker = list(color = "#33A02C")) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible_Value`, name = 'Total Eligible', text = ~paste0(`Total Eligible_ValueC`), 
-                     marker = list(color = "#FB9A99")) %>%
-             add_trace(x = "Total Served", y = ~`Total Served_Value`, name = 'Total Served', text = ~paste0(`Total Served_ValueC`), 
-                     marker = list(color = "#E31A1C")) %>%
-     layout(margin=m, title = paste(paste0(unique(ec_plot1$Region), ","), max_year_b23_regions, sep = " "),
-         xaxis = x, #list(title = "Indicator"),
-         yaxis = list(title = "Number"), 
-         showlegend = FALSE, 
-         annotations = list(x = 1, y = -0.25, text = "Source: Connecticut Office of Early Childhood", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     ecplot1
-  })    
-  ###########################
-  output$ECPlot2 <- renderPlotly({
+    ec_plot1
+  })
+  
+  output$ECPlot1 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
     selected<- input$select
+    ecplot1 <- ggplot(ecplot1_reactive(), aes(x=Indicator, y=Value, fill = Indicator, text=sprintf("%s<br>%s", Indicator, ValueC))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              ecplot1 <- ggplotly(ecplot1, tooltip="text", textposition = 'auto')
+              ecplot1 <- ecplot1 %>% 
+                layout(margin=list(t=30, b=70, l=50), 
+                       title = paste(paste0(selected, ","), max_year_b23_regions, sep = " "),
+                       annotations = list(x = 1, y = -0.2, 
+                                          text = HTML("Source: Connecticut Office of Early Childhood, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, showlegend = FALSE
+                )
+              ecplot1         
+  })    
+  ###########################
+  ecplot2_reactive <- reactive({
+    selected<- input$select
     b23c_regions$`Total Births` <- as.numeric(b23c_regions$`Total Births`)
-    ec_plot2 <- b23c_regions[b23c_regions$Region == selected & b23c_regions$Year == max_year_b23c_regions 
-                             & b23c_regions$`Measure Type` == "Number",]
+    ec_plot2 <- b23c_regions
+    ec_plot2 <- subset(ec_plot2, Region == selected & Year == max_year_b23c_regions & `Measure Type` == "Number")
     ec_plot2 <- unique(ec_plot2 %>% 
                          group_by(Indicator) %>% 
                          mutate(tot_Value = round(sum(Value), 0), 
@@ -231,294 +200,265 @@ shinyServer(function(input, output, session) {
                          select(-`% Cohort`, -Value, -`Total Births`, -FIPS, -Year, -`Measure Type`, -Variable, -Town, -total_Births))
 
     ec_plot2$ValueC <- format(ec_plot2$tot_Value, big.mark=",", scientific=FALSE) 
-    
-    ec_plot2 <- ec_plot2 %>% 
-       gather(tot_Value, ValueC, -(Indicator:Region)) %>%
-       unite(temp, Indicator, tot_Value) %>%
-       spread(temp, ValueC)
-    
-    cols <- c("Evaluations_tot_Value", "Exited to Early Childhood Special Education_tot_Value", 
-              "Individual Family Service Plans_tot_Value", "Referrals_tot_Value", "Total Eligible_tot_Value", 
-              "Total Served_tot_Value")
-    ec_plot2[cols] <- sapply(ec_plot2[cols],as.numeric)
-    
-    m <- list(b=80) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0) 
-    ecplot2 <- plot_ly(ec_plot2, x = "Evaluations", y = ~Evaluations_tot_Value, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations_ValueC), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
-                       y = ~`Exited to Early Childhood Special Education_tot_Value`, 
-                       name = 'Exited to Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education_ValueC`), 
-                     marker = list(color = "#1F78B4")) %>%
-             add_trace(x = "Individual Family<br>Service Plans", 
-                       y = ~`Individual Family Service Plans_tot_Value`, name = 'Individual Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans_ValueC`), 
-                     marker = list(color = "#B2DF8A")) %>%
-             add_trace(x = "Referrals", y = ~Referrals_tot_Value, name = 'Referrals', text = ~paste0(Referrals_ValueC), 
-                     marker = list(color = "#33A02C")) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible_tot_Value`, name = 'Total Eligible', text = ~paste0(`Total Eligible_ValueC`), 
-                     marker = list(color = "#FB9A99")) %>%
-             add_trace(x = "Total Served", y = ~`Total Served_tot_Value`, name = 'Total Served', text = ~paste0(`Total Served_ValueC`), 
-                     marker = list(color = "#E31A1C")) %>%
-     layout(margin=m, title = paste(paste0(unique(ec_plot2$Region), ","), max_year_b23c_regions, "Birth Cohort", sep = " "),
-         xaxis = x, #list(title = "Indicator"),
-         yaxis = list(title = "Number"), 
-         showlegend = FALSE, 
-         annotations = list(x = 1, y = -0.25, text = "Source: Connecticut Office of Early Childhood", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     ecplot2    
+    ec_plot2
   })
-  ###########################
-  output$ECPlot3 <- renderPlotly({
+  
+  output$ECPlot2 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
-        selected<- input$select
+
+    selected<- input$select
+    ecplot2 <- ggplot(ecplot2_reactive(), aes(x=Indicator, y=tot_Value, fill = Indicator, text=sprintf("%s<br>%s", Indicator, ValueC))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              ecplot2 <- ggplotly(ecplot2, tooltip="text", textposition = 'auto')
+              ecplot2 <- ecplot2 %>% 
+                layout(margin=list(t=30, b=70, l=50), 
+                       title = paste(paste0(selected, ","), max_year_b23c_regions, "Birth Cohort", sep = " "),
+                       annotations = list(x = 1, y = -0.2, 
+                                          text = HTML("Source: Connecticut Office of Early Childhood, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, showlegend = FALSE
+                )
+              ecplot2 
+  })
+  ###########################
+  ecplot3_reactive <- reactive({
+    selected<- input$select
     b23c_regions$`Total Births` <- as.numeric(b23c_regions$`Total Births`)
-    ec_plot3 <- b23c_regions[b23c_regions$Region == selected & b23c_regions$Year == max_year_b23c_regions 
-                             & b23c_regions$`Measure Type` == "Number",]
+    ec_plot3 <- b23c_regions
+    ec_plot3 <- subset(ec_plot3, Region == selected & Year == max_year_b23c_regions & `Measure Type` == "Number")
     ec_plot3 <- unique(ec_plot3 %>% 
                          group_by(Indicator) %>% 
                          mutate(tot_Value = round(sum(Value), 0), 
                                 total_Births = sum(`Total Births`), 
                                 `% Cohort` = round((tot_Value / total_Births)*100, 1)) %>% 
                          select(-tot_Value, -Value, -`Total Births`, -FIPS, -Year, -`Measure Type`, -Variable, -Town, -total_Births))
-
-    ec_plot3 <- spread(ec_plot3, Indicator, `% Cohort`)
-    m <- list(b=80) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0)
-    ecplot3 <- plot_ly(ec_plot3, x = "Evaluations", y = ~Evaluations, name = 'Evaluations', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Evaluations, '%'), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace(x = "Exited to<br>Early Childhood<br>Special Education", 
-                       y = ~`Exited to Early Childhood Special Education`, 
-                       name = 'Exited to<br>Early<br>Childhood<br>Special<br>Education', 
-                       text = ~paste0(`Exited to Early Childhood Special Education`, '%'), 
-                     marker = list(color = "#1F78B4")) %>%
-             add_trace(x = "Individual<br>Family Service<br>Plans", 
-                       y = ~`Individual Family Service Plans`, name = 'Individual<br>Family<br>Service<br>Plans', 
-                       text = ~paste0(`Individual Family Service Plans`, '%'), 
-                     marker = list(color = "#B2DF8A")) %>%
-             add_trace(x = "Referrals", y = ~Referrals, name = 'Referrals', text = ~paste0(Referrals, '%'), 
-                     marker = list(color = "#33A02C")) %>%
-             add_trace(x = "Total Eligible", y = ~`Total Eligible`, name = 'Total Eligible', text = ~paste0(`Total Eligible`, '%'), 
-                     marker = list(color = "#FB9A99")) %>%
-             add_trace(x = "Total Served", y = ~`Total Served`, name = 'Total Served', text = ~paste0(`Total Served`, '%'), 
-                     marker = list(color = "#E31A1C")) %>%
-     layout(margin=m, title = paste(paste0(unique(ec_plot3$Region), ","), "% of", max_year_b23c_regions, "Birth Cohort", sep = " "),
-         xaxis = x, #list(title = "Indicator"),
-         yaxis = list(title = "Percent"), 
-         showlegend = FALSE, 
-         annotations = list(x = 1, y = -0.25, text = "Source: Connecticut Office of Early Childhood", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     ecplot3 
+    ec_plot3
   })
-  ###########################  
-  output$JJPlot1 <- renderPlotly({
+  
+  
+  output$ECPlot3 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
-        selected<- input$select
-    jj_plot1 <- jj_regions[jj_regions$Year == max_year_jj_regions & jj_regions$Region == selected & 
-                               jj_regions$Variable == "Juvenile Arrests" & jj_regions$`Measure Type` == "Number" &
-                               jj_regions$Crime != "Total" & jj_regions$`Age Range` != "Total",]
+    selected<- input$select
+    ecplot3 <- ggplot(ecplot3_reactive(), aes(x=Indicator, y=`% Cohort`, fill = Indicator, text=sprintf("%s<br>%s", Indicator, paste0(`% Cohort`, "%")))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              ecplot3 <- ggplotly(ecplot3, tooltip="text", textposition = 'auto')
+              ecplot3 <- ecplot3 %>% 
+                layout(margin=list(t=30, b=70, l=50), 
+                      title = paste(paste0(selected, ","), "% of", max_year_b23c_regions, "Birth Cohort", sep = " "),
+                       annotations = list(x = 1, y = -0.2, 
+                                          text = HTML("Source: Connecticut Office of Early Childhood, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, showlegend = FALSE
+                )
+              ecplot3
+  })
+  ###########################  
+  jj_reactive1 <- reactive({
+    selected<- input$select
+    jj_plot1 <- jj_regions
+    jj_plot1 <- subset(jj_plot1, Year == max_year_jj_regions & Region == selected & 
+                               Variable == "Juvenile Arrests" & `Measure Type` == "Number" &
+                               Crime != "Total" & `Age Range` != "Total")
     jj_plot1 <- unique(jj_plot1 %>% 
                          group_by(`Age Range`, Crime) %>% 
                          mutate(tot_Value = sum(Value)) %>% 
                          select(-Town, -Value, -FIPS, -Year, -Variable, -`Measure Type`))
-    jj_plot1 <- spread(jj_plot1, `Age Range`, tot_Value)    
     jj_plot1 <- jj_plot1[jj_plot1$Crime %in% c("Drugs", "Other", "Disorderly Conduct", "Larceny", "Other Assault (Simple)"),]
-    jj_plot1$`15 to 17 yearsC` <- format(unique(jj_plot1$`15 to 17 years`), big.mark=",", scientific=FALSE) 
-
-    m <- list(b=110) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0) 
-    jjplot1 <- plot_ly(jj_plot1, x = ~str_wrap(Crime, width=15), y = ~`0 to 9 years`, name = '0 to 9 years', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-             add_trace( y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`), 
-                     marker = list(color = "#1F78B4")) %>%
-             add_trace( y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 yearsC`), 
-                     marker = list(color = "#B2DF8A")) %>%
-     layout(margin=m, title = paste(paste0(unique(jj_plot1$Region), ","), max_year_jj_regions, sep = " "),
-         xaxis = list(title = ""),
-         yaxis = list(title = "Number"), 
-         barmode = 'group', legend = list(orientation = 'h', x = 0.2, y = -0.15),
-         annotations = list(x = 1, y = -0.35, text = "Source: Connecticut Uniform Crime Report", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     jjplot1    
+    jj_plot1
+  })
+  
+  output$JJPlot1 <- renderPlotly({
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )    
+    selected<- input$select
+    jjplot1 <- ggplot(jj_reactive1(), aes(x=Crime, y=tot_Value, fill = `Age Range`, text=sprintf("%s<br>%s<br>%s", Crime, `Age Range`, tot_Value))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              jjplot1 <- ggplotly(jjplot1, tooltip="text", textposition = 'auto')
+              jjplot1 <- jjplot1 %>% 
+                layout(margin=list(t=30, b=90, l=50), 
+                      title = paste(paste0(selected, ","), max_year_jj_regions, sep = " "),
+                       annotations = list(x = 1, y = -0.3, 
+                                          text = HTML("Source: Connecticut Uniform Crime Report, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, legend = list(orientation = 'h', x = 0, y = -0.1)
+                )
+              jjplot1
   })
   ###########################  
-  # jj_reactive2 <- reactive({
-
-  #   return(jj_plot2)
-  # })
+  jj_reactive2 <- reactive({
+    selected<- input$select
+    jj_plot2 <- jj_regions
+    jj_plot2 <- subset(jj_plot2, Year == max_year_jj_regions & Region == selected & Variable == "Juvenile Arrests" & 
+                             `Measure Type` == "Rate (per 100,000)" & Crime == "Total")
+    jj_plot2 <- unique(jj_plot2 %>% 
+                         group_by(`Age Range`, Crime) %>% 
+                         mutate(avg_Value = round(mean(Value), 1)) %>% 
+                         select(-Town, -Value, -FIPS))
+    jj_plot2
+  })
   output$JJPlot2 <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
     selected<- input$select
-    jj_plot2 <- jj_regions[jj_regions$Year == max_year_jj_regions & jj_regions$Region == selected & 
-                             jj_regions$Variable == "Juvenile Arrests" & 
-                             jj_regions$`Measure Type` == "Rate (per 100,000)" & 
-                             jj_regions$Crime == "Total",]
-    jj_plot2 <- unique(jj_plot2 %>% 
-                         group_by(`Age Range`, Crime) %>% 
-                         mutate(avg_Value = round(mean(Value), 1)) %>% 
-                         select(-Town, -Value, -FIPS))
-    jj_plot2 <- spread(jj_plot2, `Age Range`, avg_Value)
-    m <- list(b=90) # l = left; r = right; t = top; b = bottom
-    x <- list(tickangle = 0)
-    jjplot2 <- plot_ly(jj_plot2, x = "0 to 9 years", y = ~`0 to 9 years`, name = '0 to 9 years', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(`0 to 9 years`), textposition = 'auto', 
-                     marker = list(color = "#A6CEE3")) %>%
-               add_trace(x = "10 to 14 years", y = ~`10 to 14 years`, name = '10 to 14 years', text = ~paste0(`10 to 14 years`), 
-                     marker = list(color = "#1F78B4")) %>%
-               add_trace(x = "15 to 17 years", y = ~`15 to 17 years`, name = '15 to 17 years', text = ~paste0(`15 to 17 years`), 
-                     marker = list(color = "#B2DF8A")) %>%
-               add_trace(x = "Total", y = ~`Total`, name = 'Total', text = ~paste0(Total), 
-                     marker = list(color = "#33A02C")) %>%
-     layout(margin=m, title = paste(paste0(unique(jj_plot2$Region), ","), max_year_jj_regions, sep = " "),
-         xaxis = x, #list(title = "Indicator"),
-         yaxis = list(title = "Rate per 100,000 Persons"), 
-         showlegend = FALSE, 
-         annotations = list(x = 1, y = -0.2, text = "Source: Connecticut Uniform Crime Report", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     jjplot2 
+    jjplot2 <- ggplot(jj_reactive2(), aes(x=`Age Range`, y=avg_Value, fill = `Age Range`, text=sprintf("%s<br>%s", `Age Range`, avg_Value))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("") + ylab("Rate per 100,000 Persons") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              jjplot2 <- ggplotly(jjplot2, tooltip="text", textposition = 'auto')
+              jjplot2 <- jjplot2 %>% 
+                layout(margin=list(t=30, b=90, l=50), 
+                      title = paste(paste0(selected, ","), max_year_jj_regions, sep = " "),
+                       annotations = list(x = 1, y = -0.3, 
+                                          text = HTML("Source: Connecticut Uniform Crime Report, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, legend = list(orientation = 'h', x = 0, y = -0.1)
+                )
+              jjplot2
   })
   ###########################  
   cols <- c("0 to 3 Years", "4 to 6 Years", "7 to 12 Years", "13 to 17 Years", "18 Years and Over", "Total")
   cw_age_final[cols] <- sapply(cw_age_final[cols],as.numeric)
-
+  
+  cw_table_reactive <- reactive({
+    placement <- input$rd
+    selected <- input$select
+    table <- cw_age_final
+    table <- subset(table, Region == selected & `Location of Placement` == placement)
+    table <- table %>% 
+      select(-Region, -`Location of Placement`)
+  })
+  
    output$CWTable <- renderTable({
       placement <- input$rd
       selected<- input$select
-    if(input$select=="Statewide") {
-      if(input$rd == "In State") {
-       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
-       table <- table %>% select(-Region, -`Location of Placement`)
-      } else {       
-       table  <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
-       table <- table %>% select(-Region, -`Location of Placement`)
-        }
-    } else if (input$select=="Southwest Region") {
-      if(input$rd == "In State") {
-       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-       table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-       table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-       table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    } else if (input$select=="South Central Region") {
-      if(input$rd == "In State") {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
-        table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    } else if (input$select=="Eastern Region") {
-      if(input$rd == "In State") {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    } else if (input$select=="North Central Region") {
-      if(input$rd == "In State") {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    } else if (input$select=="Western Region") {
-      if(input$rd == "In State") {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,]
-        table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    } else if (input$select=="Central Region") {
-      if(input$rd == "In State") {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      } else {
-        table <- cw_age_final[cw_age_final$Region == selected & cw_age_final$`Location of Placement` == placement,] 
-        table <- table %>% select(-Region, -`Location of Placement`)
-      }
-    }
-  }, digits = 0, caption = "Source: CT Dept of Children and Families, accessed via data.ct.gov", 
+      cw_table_reactive()
+   }, digits = 0, caption = "Source: CT Dept of Children and Families, accessed via data.ct.gov", 
      striped=T, hover=T, condensed=T, responsive=T, spacing="xs", width= "auto")
   ########################### 
-
+  cwgender_reactive <- reactive ({
+    selected<- input$select
+    placement <- input$rd
+    cw_plot1 <- cw_gender_final
+    cw_plot1 <- subset(cw_plot1, Region == selected & `Location of Placement` == placement & `Type of Placement` != "Total")
+    cw_plot1$`Type of Placement` <- gsub(" Placement", "", cw_plot1$`Type of Placement`)
+    cw_plot1 <- gather(cw_plot1, Gender, Value, 4:6, factor_key = FALSE)
+    cw_plot1 <- filter(cw_plot1, Gender != "Total")
+    cw_plot1
+  }) 
+  
   output$CW_gender <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
     selected<- input$select
     placement <- input$rd
-    cw_plot1 <- cw_gender_final[cw_gender_final$Region == selected & 
-                             cw_gender_final$`Location of Placement` == placement &
-                             cw_gender_final$`Type of Placement` != "Total",]
-    cw_plot1$`Type of Placement` <- gsub(" Placement", "", cw_plot1$`Type of Placement`)
-    m <- list(l=220, b=110) # l = left; r = right; t = top; b = bottom
-    cwplot1 <- plot_ly(cw_plot1, y = ~str_wrap(`Type of Placement`, width=40), x = ~Female, name = 'Female', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Female), textposition = 'auto', marker = list(color = 'rgba(222,45,38,0.8)')) %>%
-             add_trace( x = ~Male, name = 'Male', text = ~paste0(Male), marker = list(color = 'rgb(49,130,189)')) %>%
-     layout(margin=m, title = paste(paste0(unique(cw_plot1$Region), ","), max_year_cw_gender, "-", placement, sep = " "),
-         xaxis = list(title = "Number", tickangle = 0),
-         yaxis = list(title = "Type of Placement"), 
-         barmode = 'group', legend = list(x = -0.2, y = -0.1, orientation = 'h'),
-         annotations = list(x = 1, y = -0.35, text = "Source: CT Dept of Children and Families, accessed via data.ct.gov", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     cwplot1 
+    cwplot1 <- ggplot(cwgender_reactive(), aes(x=`Type of Placement`, y=Value, fill = Gender, text=sprintf("%s<br>%s<br>%s", Gender, `Type of Placement`, Value))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("Type of Placement") + ylab("") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_manual(values = c('#F84740', '#3182bd')) +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              cwplot1 <- ggplotly(cwplot1, tooltip="text", textposition = 'auto')
+              cwplot1 <- cwplot1 %>% 
+                layout(margin=list(l=220, b=80, t=30), 
+                      title = paste(paste0(selected, ","), max_year_cw_gender, "-", placement, sep = " "),
+                       annotations = list(x = 1, y = -0.2, 
+                                          text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, legend = list(x = 1, y = 1)
+                )
+              cwplot1
   })
   ########################### 
-
+  cwrace_reactive <- reactive ({
+    selected<- input$select
+    placement <- input$rd
+    cwplot2 <- cw_race_final
+    cwplot2 <- subset(cwplot2, Region == selected & `Location of Placement` == placement & `Type of Placement` != "Total")
+    cwplot2$`Type of Placement` <- gsub(" Placement", "", cwplot2$`Type of Placement`)
+    cwplot2 <- gather(cwplot2, `Race/Ethnicity`, Value, 4:8, factor_key = FALSE)
+    cwplot2 <- filter(cwplot2, `Race/Ethnicity` != "Total")
+    cwplot2
+  })
+  
   output$CW_race <- renderPlotly({
     shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
     )    
     selected<- input$select
     placement <- input$rd
-    
-    cw_plot2 <- cw_race_final[cw_race_final$Region == selected & 
-                             cw_race_final$`Location of Placement` == placement &
-                             cw_race_final$`Type of Placement` != "Total",]
-
-    #cw_plot2 <- spread(cw_plot2, `Race/Ethnicity`, Value)
-    cw_plot2$`Type of Placement` <- gsub(" Placement", "", cw_plot2$`Type of Placement`)
-
-    m <- list(l=220, b=110) # l = left; r = right; t = top; b = bottom  
-    cwplot2 <- plot_ly(cw_plot2, y = ~str_wrap(`Type of Placement`, width=40), x = ~Other, name = 'Other', type = 'bar', 
-                     hoverinfo = 'text', text = ~paste0(Other), textposition = 'auto', marker = list(color='#33A02C')) %>%
-             add_trace( x = ~Black, name = 'Black or African American', text = ~paste0(Black), marker = list(color='#B2DF8A')) %>%
-             add_trace( x = ~Hispanic, name = 'Hispanic or Latino', text = ~paste0(Hispanic), marker = list(color = '#1F78B4')) %>%
-             add_trace( x = ~White, name = 'White', text = ~paste0(White), marker = list(color = '#A6CEE3')) %>%
-     layout(margin=m, title = paste(paste0(unique(cw_plot2$Region), ","), max_year_cw_race, "-", 
-                                    placement, sep = " "),
-         xaxis = list(title = "Number", tickangle = 0),
-         yaxis = list(title = "Type of Placement"), 
-         barmode = 'group', legend = list(x = -0.2, y = -0.39, traceorder='reversed'),
-         annotations = list(x = 1, y = -0.4, text = "Source: CT Dept of Children and Families, accessed via data.ct.gov", 
-                            showarrow = F, xref='paper', yref='paper', 
-                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                            font=list(size=15, color="grey")))
-     cwplot2    
+    cwplot2 <- ggplot(cwrace_reactive(), aes(x=`Type of Placement`, y=Value, fill = `Race/Ethnicity`, text=sprintf("%s<br>%s<br>%s", `Race/Ethnicity`, `Type of Placement`, Value))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("Type of Placement") + ylab("") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              cwplot2 <- ggplotly(cwplot2, tooltip="text", textposition = 'auto')
+              cwplot2 <- cwplot2 %>% 
+                layout(margin=list(l=220, b=80, t=30, r=130), 
+                      title = paste(paste0(selected, ","), max_year_cw_race, "-", placement, sep = " "),
+                       annotations = list(x = 1, y = -0.2, 
+                                          text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, legend = list(x = 1, y = 1)
+                )
+              cwplot2
   })
   ###########################  
   output$eey_text <- renderText({
@@ -720,7 +660,7 @@ shinyServer(function(input, output, session) {
                   "85 years and over_Sum_Pop"),
       autorange = TRUE),
                        yaxis = list(title = "Number"), 
-                       annotations = list(x = 1, y = -0.3, text = "Source: U.S. Census", 
+                       annotations = list(x = 1, y = -0.3, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")),
@@ -797,7 +737,7 @@ shinyServer(function(input, output, session) {
                        title = paste(paste0(unique(d_plot_age_calc_plot$Region), ","),
                                      max_year_pop_regions,  
                                      sep = " "),
-                       annotations = list(x = 1, y = -0.3, text = "Source: U.S. Census", 
+                       annotations = list(x = 1, y = -0.3, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")),
@@ -890,7 +830,7 @@ shinyServer(function(input, output, session) {
                        title = paste(paste0(unique(d_plot_race_calc_plot$Region), ","),
                                      max_year_pop_regions,  
                                      sep = " "),
-                       annotations = list(x = 1, y = -0.3, text = "Source: U.S. Census", 
+                       annotations = list(x = 1, y = -0.3, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")),
@@ -922,7 +862,7 @@ shinyServer(function(input, output, session) {
          yaxis = list(title = "Median Household Income ($)"), 
          barmode = 'group', 
          legend = list(x = 0.7, y = 0.95),
-         annotations = list(x = 1, y = -0.35, text = "Source: U.S. Census", 
+         annotations = list(x = 1, y = -0.35, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")))
@@ -1097,7 +1037,7 @@ shinyServer(function(input, output, session) {
          xaxis = list(title = ""),
          yaxis = list(title = "Number"), 
          barmode = 'group', legend = list(orientation = 'h', x = 0.2, y = -0.15),
-         annotations = list(x = 1, y = -0.35, text = "Source: US Census; Calculations by CONNECT project", 
+         annotations = list(x = 1, y = -0.35, text = HTML("Source: US Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>; Calculations by CONNECT project"), 
                             showarrow = F, xref='paper', yref='paper', 
                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
                             font=list(size=15, color="grey")))
@@ -1204,49 +1144,33 @@ shinyServer(function(input, output, session) {
   })
   ########################### 
   
-dd <- unique(edu$District)
-# dd.col <- cm.colors(length(dd))
-# set.seed(001)
-# dd.col.random <- sample(dd.col)
-# #names(dd.col.random)  <- dd
-# 
-# brewerplot <- function (palette) {
-#   p + scale_fill_brewer(palette = palette) 
-# }
-# brewerplot ("Set1")
-  
-  
+  dd <- unique(edu$District)
   values = list("#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462",
                 "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f",
                 "#e6194b", "#3cb44b", "#ffe119", "#0082c8", "#f58231")
-  
-    #scale_fill_brewer palette Set3
-
-  # , "#911eb4", 
-  #               "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#008080", "#e6beff", 
-  #               "#aa6e28", "#fffac8", "#800000", "#aaffc3", "#808000", "#ffd8b1", 
-  #               "#000080", "#808080", "#FFFFFF", "#000000", "#a6cee3", "#1f78b4")
-  #   
-  #scale_fill_brewer palette Set1
-  # values = list("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", 
-  #               "#fdbf6f", "#ff7f00", "#cab2d6", "#6a3d9a", "#ffff99", "#b15928")
-  
   dups <- list(values)[rep(1,12)] #<- repeats it 17 times to create list of 204
   dups2 <- do.call(c, unlist(dups, recursive=FALSE))
   set.seed(007)
   dd.col.random <- sample(dups2)
   names(dd.col.random)  <- dd #ensures both charts have same colors assigned to same districts
-
-   output$EPlot1 <- renderPlotly({
-     shiny::validate(
-       need(input$select_edu != "", "Please select a District to populate the chart")
-     )
-     selected<- input$select_edu
-     edu_plot <- edu[edu$`Measure Type` == "Percent" & edu$District %in% selected & 
+  
+  eplot1_reactive <- reactive ({
+    selected<- input$select_edu
+    edu_plot <- edu[edu$`Measure Type` == "Percent" & edu$District %in% selected & 
                        edu$Value != -9999.0 &
                        edu$Year == max_year_edu,]
-     e_plot1 <- ggplot(edu_plot, aes(`Indicator of Educational Need`, y=Value, fill=District, 
-                                     text=sprintf("%s<br>%s<br>%s", District, `Indicator of Educational Need`, paste0(Value, "%"))))+
+  })
+
+  output$EPlot1 <- renderPlotly({
+    shiny::validate(
+      need(input$select_edu != "", "Please select a District to populate the chart")
+    )
+    shiny::validate(
+      need(nrow(eplot1_reactive()) != 0, "No data are available for your selection, try selecting another District")
+    )    
+    e_plot1 <- ggplot(eplot1_reactive(), 
+                      aes(`Indicator of Educational Need`, y=Value, fill=District, 
+                          text=sprintf("%s<br>%s<br>%s", District, `Indicator of Educational Need`, paste0(Value, "%"))))+
          geom_bar(stat="identity", position = "dodge") + 
          theme_bw() +
          xlab("Indicator of Educational Need") + ylab("Percent") +
@@ -1255,29 +1179,30 @@ dd <- unique(edu$District)
          theme(axis.text = element_text(size=8), 
  			         plot.title = element_text(size=10, face="bold"),
                axis.title = element_text(size=10), 
- 			         plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +
-         labs(caption = "Source: Connecticut State Department of Education")
+ 			         plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
          e_plot1 <- ggplotly(e_plot1, tooltip="text")
          e_plot1 <- e_plot1 %>% 
            layout(margin=list(l=40, b=90), 
-                  annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+                  annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                   showarrow = F, xref='paper', yref='paper', 
                   xanchor='right', yanchor='auto', xshift=0, yshift=0,
                   font=list(size=15, color="grey")))
          e_plot1
    })
   ###########################  
+  eplot2_reactive <- reactive ({
+    selected<- input$select_edu
+    edu2_plot <- edu2[edu2$`Measure Type` == "Percent" & edu2$District %in% selected & 
+                        edu2$Value != -6666 & edu2$Value != -9999 & edu2$Year == max_year_edu2,]
+  })
   output$EPlot2 <- renderPlotly({
     shiny::validate(
       need(input$select_edu != "", "Please select a District to populate the chart")
     )    
-    selected<- input$select_edu
-    edu2_plot <- edu2[edu2$`Measure Type` == "Percent" & edu2$District %in% selected & 
-                        edu2$Value != -6666 & edu2$Value != -9999 & edu2$Year == max_year_edu2,]
     shiny::validate(
-      need(nrow(edu2_plot) != 0, "No data are available for your selection, try selecting another District")
+      need(nrow(eplot2_reactive()) != 0, "No data are available for your selection, try selecting another District")
     )
-    e_plot2 <- ggplot(data=edu2_plot, aes(x=`Race/Ethnicity`, y=Value, fill=District,
+    e_plot2 <- ggplot(eplot2_reactive(), aes(x=`Race/Ethnicity`, y=Value, fill=District,
                                           text=sprintf("%s<br>%s<br>%s", District, `Race/Ethnicity`, paste0(Value, "%")))) +
       geom_bar(stat="identity", position = "dodge") + ylab("Percent") +
       theme_bw() + 
@@ -1286,12 +1211,11 @@ dd <- unique(edu$District)
       theme(axis.text = element_text(size=8),
 			      plot.title = element_text(size=10, face="bold"), 
             axis.title=element_text(size=10), 
- 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-      labs(caption = "Source: Connecticut State Department of Education")
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
       e_plot2 <- ggplotly(e_plot2, tooltip="text")
       e_plot2 <- e_plot2 %>% layout(
         margin=list(l=40, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),
@@ -1302,18 +1226,19 @@ dd <- unique(edu$District)
       e_plot2        
     })
   ###########################  
-
+  eplot3_reactive <- reactive ({
+    selected<- input$select_edu
+    edu3_plot <- edu3[edu3$District %in% selected & edu3$Value != -6666 & edu3$Value != -9999 & 
+                        edu3$Year == max_year_edu3,]
+  })
   output$EPlot3 <- renderPlotly({
     shiny::validate(
       need(input$select_edu != "", "Please select a District to populate the chart")
     )    
-    selected<- input$select_edu
-    edu3_plot <- edu3[edu3$District %in% selected & edu3$Value != -6666 & edu3$Value != -9999 & 
-                        edu3$Year == max_year_edu3,]
     shiny::validate(
-      need(nrow(edu3_plot) != 0, "No data are available for your selection, try selecting another District")
+      need(nrow(eplot3_reactive()) != 0, "No data are available for your selection, try selecting another District")
     )
-    e_plot3 <- ggplot(data=edu3_plot, aes(x=`Sanction Type`, y=Value, fill=District,
+    e_plot3 <- ggplot(eplot3_reactive(), aes(x=`Sanction Type`, y=Value, fill=District,
                                           text=sprintf("%s<br>%s<br>%s", District, `Sanction Type`, paste0(Value)))) +
       geom_bar(stat="identity", position = "dodge") + ylab("Number") +
       theme_bw() + 
@@ -1322,12 +1247,11 @@ dd <- unique(edu$District)
       theme(axis.text = element_text(size=8),
 			      plot.title = element_text(size=10, face="bold"), 
             axis.title=element_text(size=10), 
- 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-      labs(caption = "Source: Connecticut State Department of Education")
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
       e_plot3 <- ggplotly(e_plot3, tooltip="text")
       e_plot3 <- e_plot3 %>% layout(
         margin=list(l=50, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),
@@ -1338,18 +1262,19 @@ dd <- unique(edu$District)
       e_plot3        
     })
   ########################### 
-
+  eplot4_reactive <- reactive ({
+    selected<- input$select_edu
+    edu4_plot <- edu4[edu4$District %in% selected & edu4$Value != -6666 & edu4$Value != -9999 & 
+                        edu4$Year == max_year_edu4,]
+  })
   output$EPlot4 <- renderPlotly({
     shiny::validate(
       need(input$select_edu != "", "Please select a District to populate the chart")
     )    
-    selected<- input$select_edu
-    edu4_plot <- edu4[edu4$District %in% selected & edu4$Value != -6666 & edu4$Value != -9999 & 
-                        edu4$Year == max_year_edu4,]
     shiny::validate(
-      need(nrow(edu4_plot) != 0, "No data are available for your selection, try selecting another District")
+      need(nrow(eplot4_reactive()) != 0, "No data are available for your selection, try selecting another District")
     )
-    e_plot4 <- ggplot(data=edu4_plot, aes(x=`Incident Type`, y=Value, fill=District,
+    e_plot4 <- ggplot(eplot4_reactive(), aes(x=`Incident Type`, y=Value, fill=District,
                                           text=sprintf("%s<br>%s<br>%s", District, `Incident Type`, paste0(Value)))) +
       geom_bar(stat="identity", position = "dodge") + ylab("Number") +
       theme_bw() + 
@@ -1358,12 +1283,11 @@ dd <- unique(edu$District)
       theme(axis.text = element_text(size=8),
 			      plot.title = element_text(size=10, face="bold"), 
             axis.title=element_text(size=10), 
- 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) +     
-      labs(caption = "Source: Connecticut State Department of Education")
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
       e_plot4 <- ggplotly(e_plot4, tooltip="text")
       e_plot4 <- e_plot4 %>% layout(
         margin=list(l=50, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = "Source: Connecticut State Department of Education", 
+        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),

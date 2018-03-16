@@ -6,7 +6,6 @@
 #
 #    http://shiny.rstudio.com/
 #
-
 library(shiny) 
 library(shinyBS)
 library(shinyLP)
@@ -29,8 +28,17 @@ library(censusr)
 library(RColorBrewer)
 
 ##Read in data
-#######HEALTH#####################################################################################################################################
+#######HEALTH####################################################################################################################################
 source('./scripts/read_in_data.R')
+
+#using this to add ctdata logo at top right
+navbarPageWithText <- function(..., text) {
+  navbar <- navbarPage(...)
+  textEl <- tags$p(class = "navbar-text", text)
+  navbar[[3]][[1]]$children[[1]] <- htmltools::tagAppendChild(
+    navbar[[3]][[1]]$children[[1]], textEl)
+  navbar
+}
 
 # Define UI for application
 shinyUI(
@@ -38,16 +46,31 @@ shinyUI(
       title = "CONNECT Dashboard",
       tags$head(
         tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-        tags$link(rel = "shortcut icon", type="image/x-icon", href="https://raw.githubusercontent.com/CT-Data-Collaborative/shiny-server/master/images/favicon.ico")
+        tags$link(rel = "shortcut icon", type="image/x-icon", href="https://raw.githubusercontent.com/CT-Data-Collaborative/shiny-server/master/images/favicon.ico"), 
+        #Google analytics script
+        includeScript("google-analytics.js")
       ),
     div(style="padding: 1px 0px; width: '100%'", titlePanel(title="", windowTitle="CONNECT Dashboard")),
-    navbarPage(title=div(img(src="transparent_dots.png"), "CONNECT Dashboard"), inverse = F, # for diff color view
-      theme = shinytheme("lumen"),
-      tabPanel(
-        "Home", 
-        icon = icon("home"),
-        HTML("<h1>A Dashboard of Data Indicators About Your Community.</h1><p>Use this dashboard to explore data by Department of Children and Families (DCF) region and education data by district.</p><hr>"),
-        #wells(content = "Use this dashboard to explore DCF data by region and educational data by district.", size = "default"),
+    tags$head(
+      tags$style(".navbar-default  {
+                    min-height:80px !important;
+                    font-size: 20px;
+                    background-color: #272869 !important;
+                 }", 
+                 ".navbar .navbar-text {
+                    float: right;
+                 }"
+      )
+    ),
+    navbarPageWithText( #custom function
+      inverse=T, 
+      text = HTML("<a href='http://ctdata.org/' target='_blank'><img border='0' alt='ctdata' src='logo2.png' width='115' height='50'></a>"),
+      title=div(img(src="CONNECTing.png", height = "60px", style = "padding:0px 0px", align="left")),
+      #theme = shinytheme("lumen"),
+      tabPanel(title = h4(style="text-align:center", "Home", icon("home")), 
+        HTML("<h1>A Dashboard of Data Indicators About Your Community.</h1>
+             <p>Use this dashboard to explore data by Department of Children and Families (DCF) 
+             region and education data by district.</p><hr>"),
         fluidRow(
           column(12, panel_div(class_type = "primary", 
                               panel_title = "About CONNECT",
@@ -66,34 +89,26 @@ shinyUI(
                               "Need Help? Email Us!",
                               "Ask a question or provide feedback to the <a href='mailto:info@ctdata.org?Subject=CONNECT%20Dashboard' target='_top'>Connecticut Data Collaborative</a>"))
         ),  
-        #### FAVICON TAGS SECTION ####
-        tags$head(tags$link(rel="shortcut icon", href="favicon.ico")),
-        #### JAVASCRIPT TAGS SECTION #### - ENABLE WHEN READY
-        #tags$head(tags$script(src='pl.js')),
-        #   # bsModal("modalExample", "Instructional Video", "tabBut", size = "large" ,
-        #   #         p("Additional text and widgets can be added in these modal boxes. Video plays in chrome browser"),
-        #   #         iframe(width = "560", height = "315", url_link = "https://www.youtube.com/embed/0fKg7e37bQE")
-        #   #         )
-        # 
-        # )
-                tags$footer(
-                      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-                      HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
-                           "Copyright © 2018 CT Data Collaborative", 
-                           sep="<br/>")), 
-                      align = "center"
-               )
+        tags$footer(
+          tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+          HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
+                     "Copyright © 2018 CT Data Collaborative", 
+                     sep="<br/>")), 
+          align = "center"
+        )
       ),
       tabPanel(
-        "Dashboard", 
-        icon = icon("cog"),
+        title = h4(style="text-align:center", "Dashboard", icon("cog")), 
         fluidRow(
-          column(12, panel_div(class_type = "primary", 
-                               panel_title = "Directions",
-                               content = HTML('<ul><li>Use the pull down menu on the left to select the Region or statewide data you wish to explore.
-                                          <li>Click through the category tabs along the top to explore the various categories.
-                                          <li>Use the Education tab to select data by District.
-                                          <li>Town/District level data is available by clicking on the <font size="4" color="dodgerblue">Explore the Data</font> link.</li><ul/>')))
+          column(12, 
+                 bsCollapsePanel("Click Here for Directions", 
+                                 HTML('<ul><li>Use the pull down menu on the left to select the Region or statewide data you wish to explore.
+                                       <li>Click through the category tabs along the top to explore the various categories.
+                                       <li>Use the Education tab to select data by District.
+                                       <li>Town/District level data is available by clicking on the <font size="4" color="dodgerblue">Explore the Data</font> link.</li><ul/>'),
+                                 style="primary"
+                 )
+          )
         ),
         dashboardPage(
           dashboardHeader(disable = TRUE),
@@ -117,7 +132,7 @@ shinyUI(
                                        -webkit-column-gap: 20;
                                        column-count: 3;
                                        column-gap: 20;}",
-                           HTML(".skin-blue .main-sidebar {
+                           ".skin-blue .main-sidebar {
                                        color: #000000;
                                        background-color: #ffffff;}",
                                 ".selectize-input {
@@ -125,15 +140,9 @@ shinyUI(
                                        font-size: 14px;}
                                 .selectize-dropdown {
                                        font-size: 14px; }"
-                           )
-               ), 
-              tags$script(HTML('$(document).ready(function() {
-                                            $("header").find("nav").append(\'<div class="myClass"> Text Here </div>\');
-                                            })
-                                            '))
+                           
+               )
             ),
-            
-
             width = 350,
             sidebarPanel(
               width=300,
@@ -178,24 +187,19 @@ shinyUI(
             ) 
           ), #end of side bar
           dashboardBody(
-            tags$head(
-              #tags$style(type='text/css',".nav-tabs {font-size: 10px} ")
-              #tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-              # tags$style("#eey_moe {color:grey;
-              #                       font-size: 0.67em;}, 
-              #             #mhi_moe {color:grey;
-              #                       font-size: 0.67em;}") 
-            ),
+            #tags$head(),
             tabsetPanel(
               tabPanel("Health", value = 1,
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates - ", HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town?v=table&f={%22Town%22:%20%22Hartford%22,%20%22Variable%22:%20%22Fetal%20Mortality%22,%20%22Race%22:%20%22All%22,%20%22Year%22:%20%222010-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                         plotlyOutput("HPlot1", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates by Race/Ethnicity - ", HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town?v=table&f={%22Town%22:%20%22Hartford%22,%20%22Variable%22:%20%22Fetal%20Mortality%22,%20%22Race%22:%20%22All%22,%20%22Year%22:%20%222010-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates by Race/Ethnicity - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/fetal-and-infant-mortality---5-year-aggregations-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                       plotlyOutput("HPlot2", width="100%"), 
                       collapsible = T
                   )
@@ -203,19 +207,22 @@ shinyUI(
               ),
               tabPanel("Early Childhood", value = 2,
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Annual - ", HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-annual-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%222016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Annual - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-annual-data" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                          plotlyOutput("ECPlot1", width="100%"), 
                          collapsible = T
                   )
                 ), 
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Cohort - ", HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Year%22:%20%222013%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, Cohort - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                           plotlyOutput("ECPlot2", width="100%"), 
                           collapsible = T
                   )
                 ),
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, % Cohort - ", HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20%22Birth%20to%20Three%20Indicators%22,%20%22Indicator%22:%20%22Total%20Eligible%22,%20%22Year%22:%20%222013%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Birth To Three Services, % Cohort - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/birth-to-three-birth-cohort-data" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                          plotlyOutput("ECPlot3", width="100%"),
                          collapsible = T
                   ) 
@@ -223,7 +230,8 @@ shinyUI(
               ),
               tabPanel("Juvenile Justice", value = 3, 
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Selected Crimes - ", HTML('<a href="http://data.ctdata.org/visualization/juvenile-arrests?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Juvenile%20Arrests%22,%20%22Margins%20of%20Error%22],%20%22Crime%22:%20%22Total%22,%20%22Age%20Range%22:%20%22Total%22,%20%22Year%22:%20%222015%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Selected Crimes - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/juvenile-arrests" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                     box(width=8,plotlyOutput("JJPlot1", width="100%")
                     ),
                     tabBox(width=4, id = "tabset3", height = "100px",
@@ -235,7 +243,8 @@ shinyUI(
                            )
                     ), collapsible=T
                   ), 
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Rate per 100,000 Persons - ", HTML('<a href="http://data.ctdata.org/visualization/juvenile-arrests?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Juvenile%20Arrests%22,%20%22Margins%20of%20Error%22],%20%22Crime%22:%20%22Total%22,%20%22Age%20Range%22:%20%22Total%22,%20%22Year%22:%20%222015%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Rate per 100,000 Persons - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/juvenile-arrests" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                     box(width=8, plotlyOutput("JJPlot2", width="100%")
                     ),                    
                     tabBox(width=4,id = "tabset4", height = "100px",
@@ -251,19 +260,22 @@ shinyUI(
                     tabsetPanel(
                       tabPanel("Age", value = 1,
                         box(width="200%",
-                          title =  tagList(shiny::icon("table"), HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-age?v=table&f={%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Region%22:%20%22Region%201:%20Southwest%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%22SFY%202013-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                          title =  tagList(shiny::icon("table"), 
+                                           HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-age?v=table&f={%22Location%20of%20Placement%22:%20%22In%20State%22,%20%22Age%20Group%22:%20%22Total%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Type%20of%20Placement%22:%20%22Total%22,%20%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Region%22:%20[%22Region%201:%20Southwest%22,%20%22Region%202:%20South%20Central%22,%20%22Region%203:%20Eastern%22,%20%22Region%204:%20North%20Central%22,%20%22Region%205:%20Western%22,%20%22Region%206:%20Central%22],%20%22Year%22:%20%22SFY%202016-2017%22}}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                           tableOutput("CWTable")
                         )
                       ),
                       tabPanel("Gender", value=2,
                         box(width="100%",
-                          title = tagList(shiny::icon("bar-chart"), HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-gender?v=table&f={%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Region%22:%20%22Region%201:%20Southwest%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%22SFY%202013-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                          title = tagList(shiny::icon("bar-chart"), 
+                                          HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-gender?v=table&f={%22Location%20of%20Placement%22:%20%22In%20State%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Type%20of%20Placement%22:%20%22Total%22,%20%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Gender%22:%20%22Total%22,%20%22Region%22:%20[%22Region%201:%20Southwest%22,%20%22Region%202:%20South%20Central%22,%20%22Region%203:%20Eastern%22,%20%22Region%204:%20North%20Central%22,%20%22Region%205:%20Western%22,%20%22Region%206:%20Central%22],%20%22Year%22:%20%22SFY%202016-2017%22}}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                           plotlyOutput("CW_gender", width="100%")
                         ) 
                       ), 
                       tabPanel("Race/Ethnicity", value=3,
                         box(width="100%",
-                          title = tagList(shiny::icon("bar-chart"), HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-race-and-ethnicity?v=table&f={%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Region%22:%20%22Region%201:%20Southwest%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%22SFY%202013-2014%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                          title = tagList(shiny::icon("bar-chart"), 
+                                          HTML('<a href="http://data.ctdata.org/visualization/children-in-placement-by-race-and-ethnicity?v=table&f={%22Location%20of%20Placement%22:%20%22In%20State%22,%20%22Race/Ethnicity%22:%20%22Total%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Type%20of%20Placement%22:%20%22Total%22,%20%22Variable%22:%20%22Children%20in%20Placement%22,%20%22Region%22:%20[%22Region%201:%20Southwest%22,%20%22Region%202:%20South%20Central%22,%20%22Region%203:%20Eastern%22,%20%22Region%204:%20North%20Central%22,%20%22Region%205:%20Western%22,%20%22Region%206:%20Central%22],%20%22Year%22:%20%22SFY%202016-2017%22}}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                           plotlyOutput("CW_race", width="100%")
                         ) 
                       )
@@ -299,13 +311,14 @@ shinyUI(
                     infoBox(title= "Total", value = textOutput("eey_value_t"), subtitle = textOutput("eey_moe_t"),
                             icon = shiny::icon("users"), color = "black", width = 4,
                             href = NULL, fill = FALSE),
-                    HTML("<font color='grey'>Source: U.S. Census</font>")
+                    HTML("<font color='grey'>Source: U.S. Census<br>accessed via ctdata.org</font>")
                          ), collapsible=T
                 )
               ),
               tabPanel("Demographics", value = 5,
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                   column(9,
                     box(width="100%",
                         plotlyOutput("DPlot_age_race", width="100%")
@@ -331,62 +344,60 @@ shinyUI(
                 )
                 ),  
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Gender - ", HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Gender - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                         plotlyOutput("DPlot_age", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Race/Ethnicity and Gender - ", HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Race/Ethnicity and Gender - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                         plotlyOutput("DPlot_race", width="100%"),
                         collapsible = T
                   )
                 ),
                 fluidRow(
                   box(width=12, 
-                      title = tagList(shiny::icon("bar-chart"), "Median Household Income - ", HTML('<a href="http://data.ctdata.org/visualization/median-household-income-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Median%20Household%20Income%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%222012-2016%22}]}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-              conditionalPanel(
-                condition="input.select=='Statewide'",
-                  column(9,
-                    box(width="100%",
-                      HTML('<h4 style="color:black;">Connecticut Median Household Income</h4>'),
-                      HTML('<h3><span id="mhi_value" class="shiny-text-output"></span>&nbsp;<span id="mhi_moe"
-                           style="color:grey;font-size:0.67em;"
-                           class="shiny-text-output"></span></h3>'), 
-                      HTML('<h5 align="right" style="color:grey;">Source: U.S. Census</h5>')
-
+                      title = tagList(shiny::icon("bar-chart"), "Median Household Income - ", 
+                                      HTML('<a href="http://data.ctdata.org/visualization/median-household-income-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Median%20Household%20Income%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22Year%22:%20%222012-2016%22}]}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    conditionalPanel(
+                      condition="input.select=='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 HTML('<h4 style="color:black;">Connecticut Median Household Income</h4>'),
+                                 HTML('<h3><span id="mhi_value" class="shiny-text-output"></span>&nbsp;<span id="mhi_moe"
+                                       style="color:grey;font-size:0.67em;"
+                                       class="shiny-text-output"></span></h3>'), 
+                                 HTML('<h5 align="right" style="color:grey;">Source: U.S. Census<br>accessed via ctdata.org</h5>')
+                             )
+                      ), collapsible=T
+                    ), 
+                    conditionalPanel(
+                      condition="input.select!='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 plotlyOutput("Dplot_mhi", width="100%")
+                             )
+                      ),
+                      column(3,
+                             box(width="100%",
+                                 HTML('<h4 style="color:black;"> Max Median Household Income</h4>'),
+                                 h3(textOutput("max_mhi_town")),
+                                 HTML('<h3><span id="max_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="max_mhi_moe" 
+                                       style="color:grey;font-size:0.67em;" 
+                                       class="shiny-text-output"></span></h3>')
+                             ),
+                             box(width="100%",
+                                 HTML('<h4 style="color:black;">Min Median Household Income</h4>'),
+                                 h3(textOutput("min_mhi_town")),
+                                 HTML('<h3><span id="min_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="min_mhi_moe"
+                                       style="color:grey;font-size:0.67em;"
+                                       class="shiny-text-output"></span></h3>')
+                             )
+                      ), collapsible=T
                     )
-                  ), collapsible=T
-              ), 
-              conditionalPanel(
-                condition="input.select!='Statewide'",
-                   column(9,
-                     box(width="100%",
-                         plotlyOutput("Dplot_mhi", width="100%")
-                     )
-                   ),
-                  column(3,
-                    box(width="100%",
-                      HTML('<h4 style="color:black;"> Max Median Household Income</h4>'),
-                      h3(textOutput("max_mhi_town")),
-                      HTML('<h3><span id="max_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="max_mhi_moe" 
-                           style="color:grey;font-size:0.67em;" 
-                           class="shiny-text-output"></span></h3>')
-                    ),
-                    box(width="100%",
-                      HTML('<h4 style="color:black;">Min Median Household Income</h4>'),
-                      h3(textOutput("min_mhi_town")),
-                      HTML('<h3><span id="min_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="min_mhi_moe"
-                           style="color:grey;font-size:0.67em;"
-                           class="shiny-text-output"></span></h3>')
-                    )
-                  ), collapsible=T
-              )
-                      
-                      
-                      
-
-                )
+                  )
                 ) 
               ),
               tabPanel("Behavioral Health", value = 6,
@@ -412,7 +423,6 @@ shinyUI(
               ),              
               tabPanel("Education", value = 7,
                fluidRow(
-                # column(12,
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Educational Need", max_year_edu, HTML('<a href="http://data.ctdata.org/visualization/educational-need?v=table&f={%22Variable%22:%20%22Indicator%20of%20Educational%20Need%22,%20%22Measure%20Type%22:%20%22Percent%22,%20%22Indicator%20of%20Educational%20Need%22:%20[%22Special%20Education%22,%20%22English%20Language%20Learner%22,%20%22Eligible%20for%20Free%20or%20Reduced%20Price%20Lunch%22],%20%22District%22:%20%22Hartford%20School%20District%22,%20%22Year%22:%20[%222014-2015%22,%20%222015-2016%22,%20%222016-2017%22]}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot1"),
                        collapsible = T
@@ -433,7 +443,6 @@ shinyUI(
                    #     uiOutput("kei_plots"),
                    #     collapsible = T, collapsed = T
                    # )
-                # )
                 )
               ),
               id = "tabselected"
@@ -441,16 +450,15 @@ shinyUI(
           )
         ),
         tags$footer(
-              tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-              HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
-                   "Copyright © 2018 CT Data Collaborative", 
-                   sep="<br/>")), 
-              align = "center"
+          tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+          HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
+                     "Copyright © 2018 CT Data Collaborative", 
+                     sep="<br/>")), 
+          align = "center"
         )
       ),
       tabPanel(
-        "Additional Resources", 
-        icon = icon("info-circle"),
+        title = h4(style="text-align:center", "Additional Resources", icon("info-circle")), 
         fluidRow(
           column(12, 
                  panel_div(class_type = "primary", 
@@ -464,26 +472,26 @@ shinyUI(
                  ),                  
                  panel_div(class_type = "info", 
                            panel_title = "Data Processing",
-                           content = "<ul>
-                                      <li>Click <a href='https://docs.google.com/spreadsheets/d/1qDh0Vg6RWLerTAzlF2A1xoyUGWxCB4Cq_rppfnl6Vek/edit?usp=sharing' target='_blank'> here</a> 
-                                          to see when data is added to the Dashboard!
-                                      <ul/>"
+                           content = "<ul>Click <a href='https://docs.google.com/spreadsheets/d/1qDh0Vg6RWLerTAzlF2A1xoyUGWxCB4Cq_rppfnl6Vek/edit?usp=sharing' target='_blank'> here</a> 
+                                          to see when data is added to the Dashboard!<ul/>"
                  ), 
                  panel_div(class_type = "primary", 
                            panel_title = "Additional Resources",
                            content = "<b>The Child Health and Development Institute of Connecticut</b> - <a href='https://www.chdi.org/' target='_blank'> www.chdi.org</a><hr>
-                                      <b>Network of Care Analysis:</b>"
+                                      <b>Network of Care Analysis</b>
+                                      <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/CCMC_AAP+Final+Report+10_24_17.pdf' target='_blank'>Assessment of the System of Mental Health Care for Children: a Focus on Pediatric Primary Care</a></ul>
+                                      <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/Brief+Report+SSM.pdf' target='_blank'>System Support Mapping and Schools Pilot Project</a></ul>
+                                      <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/Collaboration+survey+Overall+Summary+and+All+Reports.pdf' target='_blank'>Collaboration Survey - Overall Summary and All Reports</a></ul>
+                                      <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/2017+Community+Conversations+Summary+FINAL+9+27+2017.pdf' target='_blank'>2017 Community Conversations Summary</a></ul>"
                  )                  
           ) 
-
- 
         ),
         tags$footer(
-              tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-              HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
-                   "Copyright © 2018 CT Data Collaborative", 
-                   sep="<br/>")), 
-              align = "center"
+          tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+          HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
+                     "Copyright © 2018 CT Data Collaborative", 
+                     sep="<br/>")), 
+          align = "center"
         )
       )
     )

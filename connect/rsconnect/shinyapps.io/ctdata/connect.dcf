@@ -1,0 +1,13 @@
+name: connect
+title:
+username:
+account: ctdata
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 288580
+bundleId: 1240644
+url: https://ctdata.shinyapps.io/connect/
+when: 1519660455.84747
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|scripts/download_jsons_from_s3.R|scripts/process_data_create_csvs.R|www/2017 Community Conversations Summary FINAL 9 27 2017.pdf|www/Brief Report SSM.pdf|www/CCMC_AAP Final Report 10_24_17.pdf|www/Collaboration survey Overall Summary and All Reports.pdf|www/ctdata-logo2.png|www/ctdata-logo.png|www/logo.svg|www/.Rhistory|www/transparent_dots.png

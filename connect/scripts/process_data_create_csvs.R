@@ -23,37 +23,45 @@ region_list2 <- c("Other", "Region 1: Southwest",  "Region 2: South Central", "R
 #######REGION MAPS############################################################################################################################
 CT_towns_shp <- readOGR(dsn = "./Shapefile", layer = "cb_2016_09_cousub_500k", verbose = FALSE)
 CT_towns <- fortify(CT_towns_shp, region = "NAME")
-dcf_regions <- read.csv(paste0(path_to_raw, "/", "dcf-regions.csv"), stringsAsFactors = F, header=T, check.names = F)
-dcf_regions_CT <- dcf_regions %>% 
-  mutate(Value = 1)
-dcf_regions_1 <- dcf_regions %>% 
-  mutate(Value = ifelse(grepl("1", Region), 1, 0))
-dcf_regions_2 <- dcf_regions %>% 
-    mutate(Value = ifelse(grepl("2", Region), 1, 0))
-dcf_regions_3 <- dcf_regions %>% 
-    mutate(Value = ifelse(grepl("3", Region), 1, 0))
-dcf_regions_4 <- dcf_regions %>% 
-    mutate(Value = ifelse(grepl("4", Region), 1, 0))
-dcf_regions_5 <- dcf_regions %>% 
-    mutate(Value = ifelse(grepl("5", Region), 1, 0))
-dcf_regions_6 <- dcf_regions %>% 
-    mutate(Value = ifelse(grepl("6", Region), 1, 0))
-dcf_regions_CT<-merge(CT_towns, dcf_regions_CT, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_1<-merge(CT_towns, dcf_regions_1, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_2<-merge(CT_towns, dcf_regions_2, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_3<-merge(CT_towns, dcf_regions_3, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_4<-merge(CT_towns, dcf_regions_4, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_5<-merge(CT_towns, dcf_regions_5, by.x="id", by.y = "Town", all=TRUE)
-dcf_regions_6<-merge(CT_towns, dcf_regions_6, by.x="id", by.y = "Town", all=TRUE)
+dcf_regions <- read.csv(paste0(path_to_data, "/", "dcf-regions.csv"), stringsAsFactors = F, header=T, check.names = F)
+dcf_regions_CT<-merge(CT_towns, dcf_regions, by.x="id", by.y = "Town", all=TRUE)
+dcf_regions_CT$Region <- mylist[match(dcf_regions_CT$Region, region_list)]
+
 ############################################################################
 # Write to File
 write.table(dcf_regions_CT, file.path(path_to_data, "dcf_regions_CT.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_1, file.path(path_to_data, "dcf_regions_1.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_2, file.path(path_to_data, "dcf_regions_2.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_3, file.path(path_to_data, "dcf_regions_3.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_4, file.path(path_to_data, "dcf_regions_4.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_5, file.path(path_to_data, "dcf_regions_5.csv"), sep = ",", row.names = F)
-write.table(dcf_regions_6, file.path(path_to_data, "dcf_regions_6.csv"), sep = ",", row.names = F)
+
+
+# dcf_regions_CT <- dcf_regions %>% 
+#   mutate(Value = 1)
+# dcf_regions_1 <- dcf_regions %>% 
+#   mutate(Value = ifelse(grepl("1", Region), 1, 0))
+# dcf_regions_2 <- dcf_regions %>% 
+#     mutate(Value = ifelse(grepl("2", Region), 1, 0))
+# dcf_regions_3 <- dcf_regions %>% 
+#     mutate(Value = ifelse(grepl("3", Region), 1, 0))
+# dcf_regions_4 <- dcf_regions %>% 
+#     mutate(Value = ifelse(grepl("4", Region), 1, 0))
+# dcf_regions_5 <- dcf_regions %>% 
+#     mutate(Value = ifelse(grepl("5", Region), 1, 0))
+# dcf_regions_6 <- dcf_regions %>% 
+#     mutate(Value = ifelse(grepl("6", Region), 1, 0))
+# dcf_regions_CT<-merge(CT_towns, dcf_regions_CT, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_1<-merge(CT_towns, dcf_regions_1, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_2<-merge(CT_towns, dcf_regions_2, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_3<-merge(CT_towns, dcf_regions_3, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_4<-merge(CT_towns, dcf_regions_4, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_5<-merge(CT_towns, dcf_regions_5, by.x="id", by.y = "Town", all=TRUE)
+# dcf_regions_6<-merge(CT_towns, dcf_regions_6, by.x="id", by.y = "Town", all=TRUE)
+############################################################################
+# Write to File
+write.table(dcf_regions_CT, file.path(path_to_data, "dcf_regions_CT.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_1, file.path(path_to_data, "dcf_regions_1.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_2, file.path(path_to_data, "dcf_regions_2.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_3, file.path(path_to_data, "dcf_regions_3.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_4, file.path(path_to_data, "dcf_regions_4.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_5, file.path(path_to_data, "dcf_regions_5.csv"), sep = ",", row.names = F)
+# write.table(dcf_regions_6, file.path(path_to_data, "dcf_regions_6.csv"), sep = ",", row.names = F)
 #######HEALTH############################################################################################################################
 print("health")
 health <- read.csv("./raw/all_years_FM_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
