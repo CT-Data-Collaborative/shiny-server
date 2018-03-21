@@ -8,14 +8,6 @@ data_location <- grep("data$", sub_folders, value=T)
 path_to_data <- (paste0(getwd(), "/", data_location))
 all_xls <- dir(path_to_data, pattern = ".xls")
 
-#indicator_csv <- read.csv(paste0(path_to_data, "/", "indicator_table.csv"), stringsAsFactors = F, header=T, check.names=F)
-# indicator_csv$slug <- gsub(" ", "-", tolower(indicator_csv$`Data Set`))
-# indicator_csv$Source <- factor(indicator_csv$Source, levels = c("State Department of Education", 
-#                                                                 "Department of Emergency Services and Public Protection", 
-#                                                                 "Department of Public Health", 
-#                                                                 "Office of the Chief Medical Examiner"))
-# 
-
 dataset_csv <- read.csv(paste0(path_to_data, "/", "dataset_table.csv"), stringsAsFactors = F, header=T, check.names=F)
 dataset_csv$slug <- gsub(" ", "-", tolower(dataset_csv$`Data Set`))
 dataset_csv$Source <- factor(dataset_csv$Source, levels = c("State Department of Education", 
@@ -23,35 +15,9 @@ dataset_csv$Source <- factor(dataset_csv$Source, levels = c("State Department of
                                                                 "Department of Public Health", 
                                                                 "Office of the Chief Medical Examiner"))
 
-
 sources <- unique(dataset_csv$Source)
 
 indicator_list <- read.xls(paste0(path_to_data, "/", "Updated_IndicatorList_03.01.18_update.xlsx"), sheet = 3)
-indicator_list$Source[indicator_list$Source == ""] <- NA
-indicator_list$Smallest.Geo.Area[indicator_list$Smallest.Geo.Area == ""] <- NA
-indicator_list$Most.Recent.Year..s..Available[indicator_list$Most.Recent.Year..s..Available == ""] <- NA
-
-##Clean up indicator list
-
-#Convert "ü" to "1"
-#indicator_list <- data.frame(lapply(indicator_list, function(x) {gsub("ü", "1", x)}))
-
-#populate blank rows in columns, with carry over values from populated rows
-#we're populating these columns
-col_indices <- c(1,13,21)
-
-for (j in col_indices) {
-  index <- j
-  currentvalue = indicator_list[1,j]  
-  for (i in 1:nrow(indicator_list)) {
-    if(is.na(indicator_list[i,j])) { #give it a starting point [row,col]
-      indicator_list[i,j] <- currentvalue
-    } else {
-      currentvalue <- indicator_list[i,j]
-    }
-  }
-  j = j+1
-}
 
 indicator_list <- data.frame(lapply(indicator_list, as.character), stringsAsFactors=FALSE)
 
@@ -116,29 +82,20 @@ indicator_list$Dimensions <- gsub(", NA", "", indicator_list$Dimensions)
 indicator_list$Dimensions <- gsub("NA, ", "", indicator_list$Dimensions)
 indicator_list$Dimensions <- gsub("NA", NA, indicator_list$Dimensions)
 
-#Bring in keywords data
-keywords <- read_excel(paste0(path_to_data, "/", all_xls[1]), sheet = 2, skip=0)
-
-currentvalue = keywords[1,1]  
-for (i in 1:nrow(keywords)) {
-  if(is.na(keywords[i,1])) { #give it a starting point [row,col]
-    keywords[i,1] <- currentvalue
-  } else {
-    currentvalue <- keywords[i,1]
-  }
-}
-#Merge indicators and keywords
-indicators_with_keywords <- merge(indicator_list, keywords, by = c("Source", "Indicator"), all=T)
-
 # combine Keywords columns
-cols <- c('Key Word 1', 'Key Word 2', 'Key Word 3')
-indicators_with_keywords$Keywords <- apply( indicators_with_keywords[ , cols ] , 1 , paste , collapse = ", " )
-indicators_with_keywords <- indicators_with_keywords[ , !( names( indicators_with_keywords ) %in% cols ) ]
-indicators_with_keywords$Keywords <- gsub(", NA", "", indicators_with_keywords$Keywords)
-indicators_with_keywords$Keywords <- gsub("NA", NA, indicators_with_keywords$Keywords)
+cols <- c('Key.Word.1', 'Key.Word.2', 'Key.Word.3')
+indicator_list$Keywords <- apply( indicator_list[ , cols ] , 1 , paste , collapse = ", " )
+indicator_list <- indicator_list[ , !( names( indicator_list ) %in% cols ) ]
+indicator_list$Keywords <- gsub(", NA", "", indicator_list$Keywords)
+indicator_list$Keywords <- gsub("NA", NA, indicator_list$Keywords)
+indicator_list$Keywords <- gsub(", $", "", indicator_list$Keywords)
+indicator_list$Keywords <- gsub(",$", "", indicator_list$Keywords)
+indicator_list$Keywords <- gsub("\\?", "", indicator_list$Keywords)
+indicator_list$Keywords <- gsub("^, ", NA, indicator_list$Keywords)
+indicator_list$Keywords <- gsub(", $", "", indicator_list$Keywords)
 
 #Clean up a bit
-clean <- indicators_with_keywords %>% 
+clean <- indicator_list %>% 
   select(Indicator, Source, Smallest.Geo.Area, Most.Recent.Year..s..Available, Dimensions, `Age/Grade Available`, `Priority Problem`, Keywords, Form2, Link) %>% 
   rename(`Data Set` = Source, `Geography Level` = Smallest.Geo.Area, `Year(s) Available` = Most.Recent.Year..s..Available, Form = Form2)
 
@@ -147,3 +104,7 @@ clean$Link[clean$Link == ""] <- NA
 clean$`Data Set` <- as.factor(clean$`Data Set`)
 clean$`Geography Level` <- as.factor(clean$`Geography Level`)
 clean$Form <- as.factor(clean$Form)
+
+
+
+
