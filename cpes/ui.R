@@ -148,62 +148,7 @@ shinyUI(
       div(icon("table"), "Data Sets"), value="datasets", 
         dashboardPage(
           dashboardHeader(disable=T),
-          dashboardSidebar(
-            tags$head(
-              tags$style("ol {columns: 2;
-                              -webkit-columns: 2;
-                              -moz-columns: 2;},
-                          li {list-style-type: none;
-                              /*width: 100px;*/
-                              overflow-x: auto; /* change to hidden if that's what you want */
-                              float: left;
-                              margin-right: 20px;},
-                          #region_text{color: black;
-                                       font-size: 20px;
-                                       font-style: bold;}",
-                          HTML(".skin-blue .main-sidebar {
-                                      color: #000000;
-                                      background-color: #ffffff;}",
-                               ".selectize-input {
-                                      color: #000000;
-                                      font-size: 14px;}
-                               .selectize-dropdown {
-                                      font-size: 14px; }"
-                          )
-              ),
-              tags$script(HTML('$(document).ready(function() {
-                                            $("header").find("nav").append(\'<div class="myClass"> Text Here </div>\');
-                                            })
-                                            '))
-           ),
-            sidebarPanel(
-              conditionalPanel(
-               condition="input.tabselected==2",
-                fluidRow(
-                  column(12, div(style="padding: 0px 0px",
-                      sidebarMenu(
-                        selectInput("select",
-                        label = HTML('<h3 style="color:black;">Select Source</h3>'),
-                        choices = sources)
-                        )
-                      )
-                   )
-                )
-              ),
-              width=300,
-                fluidRow(
-                  column(12, div(style="padding: 0px 0px",
-                      sidebarMenu(
-                        selectInput("select", 
-                        label = HTML('<h4>Source</h4>'),
-                        choices = sources, selected="YRBS")
-                        )
-                      )
-                   )
-                )
-            ),  
-            textOutput("result")
-          ), #end of side bar
+          dashboardSidebar(disable = T),
           dashboardBody(
             fluidRow(
               column(12,
