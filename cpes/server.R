@@ -58,9 +58,11 @@ shinyServer(function(input, output, session) {
    )
    
    output$dataset_table <- renderDataTable({
-     my_table <- dataset_csv
-     my_table$`Data Set` <- createDataSetLink(my_table$slug, my_table$`Data Set`)
-     my_table$slug <- NULL
+     my_table <- dataset_table
+     my_table$`Data Set` <- createDataSetLink(my_table$name, my_table$title)
+     my_table$name <- NULL
+     my_table$title <- NULL
+     my_table <- my_table %>% select(Source, `Data Set`, Geography, Dimensions, `Measure Type`, `Priority Problem`, `Key Terms`)
      return(my_table)
    }, escape = FALSE, 
       filter='top', 

@@ -4,13 +4,13 @@ body {
 }
 
 #header {
-  text-align: left;
+  text-align: center;
   color: #FFF;
   text-shadow: 0 0 1px #ffffff;
-  padding: 20px 0 80px;
+  padding: 20px 20px 80px;
   background: #ffffff url('header-midnightBlue.jpg');
   border-bottom: 1px solid #ddd;
- /* margin: 0 15px;*/
+  margin: 15px 0px;
   word-wrap: break-word;
 }
 
@@ -43,7 +43,7 @@ body {
   padding: 20px;
 }
 
-#home li[class=active] a{
+#h1 a{
   color: red;
   background-color: #000;
 }
