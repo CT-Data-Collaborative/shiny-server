@@ -77,10 +77,79 @@ names(health_rates)[names(health_rates) == "GEOG_name"] <- "Town"
 health_rates_regions <- merge(health_rates, dcf_regions, by = c("Town"), all.y=T)
 max_year_health_rates_regions <- "2010-2014"
 health_rates_regions$Region <- mylist[match(health_rates_regions$Region, region_list)]
+
+############################################################################
+# #sub-abuse-total
+# SA_data1 <- getURL('http://data.ctdata.org/dataset/be1ffa14-19ef-4251-899c-d5ecfbf9c066/resource/a3a52654-65de-44d7-81e7-dfb3012d42f6/download/dmhas-admissionssubstance-abuse.csv')
+# SA1 <- read.csv(textConnection(SA_data1), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+# SA1_regions <- merge(SA1, dcf_regions, by = c("Town", "FIPS"))
+# max_year_SA1_regions <- max(SA1_regions$Year)
+# SA1_regions$Region <- mylist[match(SA1_regions$Region, region_list)]
+# SA1_regions$Substance <- "All"
+# SA1_regions$`Admission Type` <- NULL
+
+#sub-abuse-drugs
+SA_data <- getURL('http://data.ctdata.org/dataset/e7241d2a-e316-4f90-bad8-daf0b6a91949/resource/7bbdac5b-b88a-4269-b9d3-bdaca9ac25f7/download/substance-treatmentadmissionsbydrugtype2013-2016.csv')
+SA <- read.csv(textConnection(SA_data), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+SA_regions <- merge(SA, dcf_regions, by = c("Town", "FIPS"))
+
+SA_regions$Region <- mylist[match(SA_regions$Region, region_list)]
+
+#SA_regions <- rbind(SA1_regions, SA2_regions)
+#assign SFY
+SA_regions$Year <- as.numeric(SA_regions$Year)
+SA_regions <- SA_regions %>% 
+  mutate(SFY = ifelse(Month %in% c("July", "August", "September", "October", "November", "December"), Year+1, Year))
+SA_regions[SA_regions == -9999] <- NA
+
+SA_regions <- SA_regions %>% filter(SFY == max_year_SA_regions)
+
+SA_regions <- SA_regions %>% 
+  group_by(Town, Substance) %>% 
+  mutate(Total_Adm = sum(Value, na.rm=T))
+
+
+SA_regions_calc_wide <- spread(SA_regions_calc, Substance, Value)
+
+
+SA_regions_wide <- spread(SA_regions, Substance, Value)
+
+
+
+SA_regions_wide <- SA_regions_wide[SA_regions_wide$Total != 0,]
+#calc indiv drug %
+SA_regions_wide[SA_regions_wide == -9999] <- NA
+SA_regions_wide <- SA_regions_wide %>% 
+  mutate(`% Alcohol` = (Alcohol      /Total)*100,               
+         `% Amphetamines` = (Amphetamines    /Total)*100,            
+         `% Barbiturates` = (Barbiturates    /Total)*100,            
+         `% Benzodiazepines` = (Benzodiazepines/Total)*100,             
+         `% Cocaine` = (Cocaine        /Total)*100,
+         `% Cocaine/Crack` = (Cocaine/Crack/Total)*100,
+         `% Crack` = (Crack        /Total)*100,
+         `% Hallucinogens: LSD, DMS, STP, etc` = (`Hallucinogens: LSD, DMS, STP, etc`/Total)*100,
+         `% Heroin` = (Heroin                      /Total)*100,
+         `% Inhalants` = (Inhalants                   /Total)*100,
+         `% Marijuana, Hashish, THC` = (`Marijuana, Hashish, THC`/Total)*100,
+         `% Methamphetamines` = (Methamphetamines            /Total)*100,
+         `% Non-Prescriptive Methadone` = (`Non-Prescriptive Methadone`/Total)*100,
+         `% Other` = (Other                       /Total)*100,
+         `% Other Opiates and Synthetics` = (`Other Opiates and Synthetics`/Total)*100,
+         `% Other Sedatives or Hypnotics` = (`Other Sedatives or Hypnotics`/Total)*100,
+         `% Other Stimulants` = (`Other Stimulants`/Total)*100,
+         `% Over-the-Counter` = (`Over-the-Counter`/Total)*100,
+         `% PCP` = (PCP             /Total)*100,
+         `% Tobacco` = (Tobacco         /Total)*100,
+         `% Tranquilizers` = (Tranquilizers   /Total)*100)
+
+SA_regions_long <- gather(SA_regions_wide, Substance, Value, 9:51, factor_key = F)
 ############################################################################
 #Write to File
 write.table(health_regions, file.path(path_to_data, "health_regions.csv"), sep = ",", row.names = F)
 write.table(health_rates_regions, file.path(path_to_data, "health_rates_regions.csv"), sep = ",", row.names = F)
+write.table(SA_regions, file.path(path_to_data, "SA_regions.csv"), sep = ",", row.names = F)
+write.table(SA_regions_long, file.path(path_to_data, "SA_regions_long.csv"), sep = ",", row.names = F)
+write.table(SA_regions_wide, file.path(path_to_data, "SA_regions_wide.csv"), sep = ",", row.names = F)
 #######EARLY CHILDHOOD############################################################################################################################
 print("early childhood")
 b23 <- read.csv("./raw/birth_to_three_annual_2016_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
@@ -412,6 +481,17 @@ max_year_edu3 <- max(edu3$Year)
 myfile4 <- getURL('http://data.ctdata.org/dataset/f6c789e8-fabc-467c-8441-dc639621ff0b/resource/bdfe5fe1-af80-4500-9e1f-5b842bbcb978/download/incidents2010-2017.csv')
 edu4 <- read.csv(textConnection(myfile4), header=T, stringsAsFactors = FALSE, check.names=FALSE)
 max_year_edu4 <- max(edu4$Year)
+myfile5 <- getURL('http://data.ctdata.org/dataset/a6ebce7b-73fa-48cd-82f4-56b7c44fbb38/resource/fa0a2433-1a56-4dd7-a7a8-2a1f32579b17/download/fouryeargradratebyraceethnicity2011-2016.csv')
+edu5 <- read.csv(textConnection(myfile5), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_edu5 <- max(edu5$Year)
+myfile6 <- getURL('http://data.ctdata.org/dataset/d57c0e47-170a-4146-94f3-c8587ff6db34/resource/8b3091fb-291e-4d67-a9a8-1d0c36c71cc8/download/chronicabsenteeismbyraceethnicity2012-2017.csv')
+edu6 <- read.csv(textConnection(myfile6), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_edu6 <- max(edu6$Year)
+myfile7 <- getURL('http://data.ctdata.org/dataset/9572f54c-b1c3-4153-8ead-e5b16e678d90/resource/99a54e37-a66d-4642-a499-c6b3953d8be8/download/studentenrollmentbyraceethnicity2011-2018.csv')
+edu7 <- read.csv(textConnection(myfile7), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_edu7 <- max(edu7$Year)
+
+
 # kei <- read.csv("./raw/kindergarten-entrance-inventory-2017_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
 # max_year_kei <- max(kei$Year)
 ############################################################################
@@ -421,5 +501,9 @@ write.table(edu, file.path(path_to_data, "edu.csv"), sep = ",", row.names = F)
 write.table(edu2, file.path(path_to_data, "edu2.csv"), sep = ",", row.names = F)
 write.table(edu3, file.path(path_to_data, "edu3.csv"), sep = ",", row.names = F)
 write.table(edu4, file.path(path_to_data, "edu4.csv"), sep = ",", row.names = F)
+write.table(edu5, file.path(path_to_data, "edu5.csv"), sep = ",", row.names = F)
+write.table(edu6, file.path(path_to_data, "edu6.csv"), sep = ",", row.names = F)
+write.table(edu7, file.path(path_to_data, "edu7.csv"), sep = ",", row.names = F)
+
 print("End reading data")
 

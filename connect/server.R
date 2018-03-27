@@ -144,6 +144,44 @@ shinyServer(function(input, output, session) {
               hplot2      
   })  
   ###########################
+  output$sa_ct_value <- renderText({
+    selected = input$select
+    sa_ct <- sa_regions[sa_regions$Region == selected,]
+    sa_ct$Total_Admc <- format(sa_ct$Total_Adm, big.mark=",", scientific=FALSE)
+    sa_ct_num <- unique(sa_ct$Total_Admc)
+    SFY <- unique(sa_ct$SFY)
+    paste("SFY", paste0(SFY-1, "-", SFY), ":", sa_ct_num, sep = " ")
+  })
+  ###########################
+  sa_regions$Value <- as.numeric(sa_regions$Value)
+  output$HPlot3 <- renderPlotly({
+    selected<- input$select
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )   
+    hplot3 <- sa_regions %>% filter(Substance != "Total", Region == selected, !is.na(Total_Adm), Total_Adm != 0)
+    hplot3 <- ggplot(hplot3, aes(y=Town, x=Substance, group= Substance, text=sprintf("%s<br>%s", Town, paste(Total_Adm, Substance, "Admissions", sep = " ")))) +
+                  geom_point(aes(size = Value, color = Substance)) + ylab ("Town") + xlab("Substance") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8)) +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=10)) 
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              hplot3 <- ggplotly(hplot3, tooltip="text")
+              hplot3 <- hplot3 %>% 
+                layout(margin=list(t=30, b=120, l=90), 
+                       title = paste(paste0(selected, ","), "SFY", paste0(max_year_SA_regions-1, "-", max_year_SA_regions), sep = " "),
+                       annotations = list(x = 1, y = -0.27, 
+                                          text = HTML("Source: Connecticut DMHAS, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, showlegend = FALSE
+                )
+              hplot3   
+  })  
+  ###########################
   ecplot1_reactive <- reactive({
     selected<- input$select
     ec_plot1 <- b23_regions
@@ -398,16 +436,17 @@ shinyServer(function(input, output, session) {
     placement <- input$rd
     cwplot1 <- ggplot(cwgender_reactive(), aes(x=`Type of Placement`, y=Value, fill = Gender, text=sprintf("%s<br>%s<br>%s", Gender, `Type of Placement`, Value))) +
               geom_bar(stat="identity", position = "dodge") + 
-              xlab ("Type of Placement") + ylab("") + theme_minimal() +
-              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              xlab ("Type of Placement") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), 
+                    plot.title = element_text(size=8)) +
               scale_fill_manual(values = c('#F84740', '#3182bd')) +
               scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
               scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
               cwplot1 <- ggplotly(cwplot1, tooltip="text", textposition = 'auto')
               cwplot1 <- cwplot1 %>% 
-                layout(margin=list(l=220, b=80, t=30), 
+                layout(margin=list(l=220, b=82, t=30), 
                       title = paste(paste0(selected, ","), max_year_cw_gender, "-", placement, sep = " "),
-                       annotations = list(x = 1, y = -0.2, 
+                       annotations = list(x = 1, y = -0.27, 
                                           text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
                                           showarrow = F, 
                                           xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
@@ -439,16 +478,16 @@ shinyServer(function(input, output, session) {
     placement <- input$rd
     cwplot2 <- ggplot(cwrace_reactive(), aes(x=`Type of Placement`, y=Value, fill = `Race/Ethnicity`, text=sprintf("%s<br>%s<br>%s", `Race/Ethnicity`, `Type of Placement`, Value))) +
               geom_bar(stat="identity", position = "dodge") + 
-              xlab ("Type of Placement") + ylab("") + theme_minimal() +
+              xlab ("Type of Placement") + ylab("Number") + theme_minimal() +
               theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
               scale_fill_brewer(palette="Paired") +
               scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
               scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
               cwplot2 <- ggplotly(cwplot2, tooltip="text", textposition = 'auto')
               cwplot2 <- cwplot2 %>% 
-                layout(margin=list(l=220, b=80, t=30, r=130), 
+                layout(margin=list(l=220, b=82, t=30, r=130), 
                       title = paste(paste0(selected, ","), max_year_cw_race, "-", placement, sep = " "),
-                       annotations = list(x = 1, y = -0.2, 
+                       annotations = list(x = 1, y = -0.27, 
                                           text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
                                           showarrow = F, 
                                           xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
@@ -582,7 +621,66 @@ shinyServer(function(input, output, session) {
     paste("+/-", moe, sep = " ")
   }) 
   ########################### 
-
+  output$race_sel_text1 <- renderText({
+    if (input$race == "All" & input$select == "Statewide") {
+      paste0("Total Population in CT: ") 
+    } else if (input$race != "All" & input$select == "Statewide") {
+      paste0("Total Population of Race in CT: ") 
+    } else if (input$race == "All" & input$select != "Statewide") {
+      paste0("Total Population in Region: ") 
+    } else if (input$race != "All" & input$select != "Statewide") {
+      paste0("Total Population of Race in Region: ") 
+    }
+  })
+  ########################### 
+  output$race_sel_text2 <- renderText({
+    if (input$race == "All" & input$select == "Statewide") {
+      paste0("Percent Population in CT: ") 
+    } else if (input$race != "All" & input$select == "Statewide") {
+      paste0("Percent Race in CT: ") 
+    } else if (input$race == "All" & input$select != "Statewide") {
+      paste0("Percent of CT Population in Region: ") 
+    } else if (input$race != "All" & input$select != "Statewide") {
+      paste0("Percent Race in Region: ") 
+    }
+  })
+  ########################### 
+  output$race_sel_value1 <- renderText({
+    selected<- input$select
+    race_sel <- input$race
+    d_plot_age_race <- subset(pop_by_age_race_regions, Region == selected & `Race/Ethnicity` == race_sel & Variable == "Population" & `Age Cohort` == "Total")
+    d_plot_age_race <- d_plot_age_race %>% summarise(Total_Value = sum(Value))
+    d_plot_age_race$Total_Valuec <- format(d_plot_age_race$Total_Value, big.mark = ",", scientific = FALSE)
+    pop_num <- d_plot_age_race$Total_Valuec
+  })
+  ###########################  
+  output$race_sel_value2 <- renderText({
+    selected<- input$select
+    race_sel <- input$race
+    race_region <- subset(pop_by_age_race_regions, Region == selected & `Race/Ethnicity` == race_sel & Variable == "Population" & `Age Cohort` == "Total")
+    race_region <- unique(race_region %>% mutate(Total_Value = sum(Value)) %>% select(-Town, -Value, -FIPS))
+    total_region <- subset(pop_by_age_race_regions, Region == selected & `Race/Ethnicity` == "All" & Variable == "Population" & `Age Cohort` == "Total")
+    total_region <- unique(total_region %>% mutate(Total_Value = sum(Value)) %>% select(-Town, -Value, -FIPS))
+    race_state <- subset(pop_by_age_race_regions, Region == "Statewide" & `Race/Ethnicity` == race_sel & Variable == "Population" & `Age Cohort` == "Total")
+    total_state <- subset(pop_by_age_race_regions, Region == "Statewide" & `Race/Ethnicity` == "All" & Variable == "Population" & `Age Cohort` == "Total")
+    total_region_state <- merge(total_region, total_state, by = c("Race/Ethnicity", "Age Cohort", "Measure Type", "Variable", "Gender", "Year"))
+    total_region_state$Percent <- round((total_region_state$Total_Value / total_region_state$Value)*100,2)
+    total_race_region <- merge(race_region, total_region, by = c("Region", "Age Cohort", "Measure Type", "Variable", "Gender", "Year"))
+    total_race_region$Percent <- round((total_race_region$Total_Value.x / total_race_region$Total_Value.y)*100,2)
+    total_race_state <- merge(race_state, total_state, by = c("Town", "Region", "Age Cohort", "Measure Type", "Variable", "Gender", "Year")) 
+    total_race_state$Percent <- round((total_race_state$Value.x / total_race_state$Value.y)*100,2)
+    
+    if (input$race == "All" & input$select == "Statewide") { #num = all people in CT, denom = all people in CT (100%)
+      "100%"
+    } else if (input$race != "All" & input$select == "Statewide") { #num = all white in CT, denom = all people in CT
+      paste0(total_race_state$Percent, "%")
+    } else if (input$race == "All" & input$select != "Statewide") { #num = all people in region 1, denom = all people in CT
+      paste0(total_region_state$Percent, "%")
+    } else if (input$race != "All" & input$select != "Statewide") { #num = all white in region 1, denom = all people in region 1
+      paste0(total_race_region$Percent, "%")
+    }
+  })
+  ###########################   
   output$DPlot_age_race <- renderPlotly({
       shiny::validate(
       need(input$select != "", "Please select a Region to populate the chart")
@@ -854,7 +952,7 @@ shinyServer(function(input, output, session) {
 
     dplot3 <- plot_ly(mhi_df_towns, x = ~Town, y = ~`Median Household Income`, 
                      name = 'Median Household Income', type = 'scatter', mode = 'markers',
-                     hoverinfo = 'text', text = ~paste(paste0("$", `Median Household IncomeC`), "+/-", `Margins of ErrorC`, sep = " "), 
+                     hoverinfo = 'text', text = ~paste(paste0(Town, ":"), paste0("$", `Median Household IncomeC`), "+/-", `Margins of ErrorC`, sep = " "), 
                      error_y = ~list(array = `Margins of Error`, color = '#000000')) %>%
      layout(margin=list(b=100, r=45),
             title = paste(selected, max_year_mhi_regions, sep = ", "),
@@ -1138,10 +1236,6 @@ shinyServer(function(input, output, session) {
        # scroll_box(height = "400px")
     }
    }
-  ###########################  
-  output$edu_text <- renderUI({
-    HTML(paste("<font color=\"#000000\"><b>", "<p>&nbsp;</p>", " - Calculated percents resulting from counts of less than 5 students have been suppressed.", "<p>&nbsp;</p>", " - Be aware that as the number of districts selected increases, visibility/usability of this chart may decrease.", "</b></font>"))
-  })
   ########################### 
   
   dd <- unique(edu$District)
@@ -1226,20 +1320,20 @@ shinyServer(function(input, output, session) {
       e_plot2        
     })
   ###########################  
-  eplot3_reactive <- reactive ({
+  output$EPlot3 <- renderPlotly({
     selected<- input$select_edu
     edu3_plot <- edu3[edu3$District %in% selected & edu3$Value != -6666 & edu3$Value != -9999 & 
                         edu3$Year == max_year_edu3,]
-  })
-  output$EPlot3 <- renderPlotly({
+    edu3_plot$Valuec <- format(edu3_plot$Value, big.mark = ",", scientific = FALSE)
+    
     shiny::validate(
       need(input$select_edu != "", "Please select a District to populate the chart")
     )    
     shiny::validate(
-      need(nrow(eplot3_reactive()) != 0, "No data are available for your selection, try selecting another District")
+      need(nrow(edu3_plot) != 0, "No data are available for your selection, try selecting another District")
     )
-    e_plot3 <- ggplot(eplot3_reactive(), aes(x=`Sanction Type`, y=Value, fill=District,
-                                          text=sprintf("%s<br>%s<br>%s", District, `Sanction Type`, paste0(Value)))) +
+    e_plot3 <- ggplot(edu3_plot, aes(x=`Sanction Type`, y=Value, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", District, `Sanction Type`, paste0(Valuec)))) +
       geom_bar(stat="identity", position = "dodge") + ylab("Number") +
       theme_bw() + 
       scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
@@ -1262,20 +1356,20 @@ shinyServer(function(input, output, session) {
       e_plot3        
     })
   ########################### 
-  eplot4_reactive <- reactive ({
+  output$EPlot4 <- renderPlotly({
     selected<- input$select_edu
     edu4_plot <- edu4[edu4$District %in% selected & edu4$Value != -6666 & edu4$Value != -9999 & 
                         edu4$Year == max_year_edu4,]
-  })
-  output$EPlot4 <- renderPlotly({
+    edu4_plot$Valuec <- format(edu4_plot$Value, big.mark = ",", scientific = FALSE)
+    
     shiny::validate(
       need(input$select_edu != "", "Please select a District to populate the chart")
     )    
     shiny::validate(
-      need(nrow(eplot4_reactive()) != 0, "No data are available for your selection, try selecting another District")
+      need(nrow(edu4_plot) != 0, "No data are available for your selection, try selecting another District")
     )
-    e_plot4 <- ggplot(eplot4_reactive(), aes(x=`Incident Type`, y=Value, fill=District,
-                                          text=sprintf("%s<br>%s<br>%s", District, `Incident Type`, paste0(Value)))) +
+    e_plot4 <- ggplot(edu4_plot, aes(x=`Incident Type`, y=Value, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", District, `Incident Type`, paste0(Valuec)))) +
       geom_bar(stat="identity", position = "dodge") + ylab("Number") +
       theme_bw() + 
       scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
@@ -1297,6 +1391,135 @@ shinyServer(function(input, output, session) {
         legend = list(x = 100, y = 0.9, font = list(size=10)))
       e_plot4        
     })   
+  ########################### 
+  output$EPlot5 <- renderPlotly({
+    selected <- input$select_edu
+    edu5_plot <- edu5[edu5$District %in% selected & edu5$Value != -6666 & edu5$Value != -9999 & 
+                        edu5$Year == max_year_edu5,]
+    cols <- c("Four Year Graduation Rate", "Total Cohort Count")
+
+    if (nrow(edu5_plot) != 0) {
+      edu5_plot <- edu5_plot %>% select(-c(`Measure Type`)) %>% spread(Variable, Value)
+    } else {
+      dat <- data.frame(matrix(ncol = 2, nrow=0))
+      colnames(dat) <- cols
+      edu5_plot <- cbind(edu5_plot, dat)
+    }
+    if (!"Four Year Graduation Rate" %in% colnames(edu5_plot)) {
+      edu5_plot["Four Year Graduation Rate"[!("Four Year Graduation Rate" %in% colnames(edu5_plot))]] = NA
+    }
+    if (!"Total Cohort Count" %in% colnames(edu5_plot)) {
+      edu5_plot["Total Cohort Count"[!("Total Cohort Count" %in% colnames(edu5_plot))]] = NA
+    }
+    
+    shiny::validate(
+      need(input$select_edu != "", "Please select a District to populate the chart")
+    )    
+    shiny::validate(
+      need(nrow(edu5_plot) != 0, "No data are available for your selection, try selecting another District")
+    )
+    e_plot5 <- ggplot(edu5_plot, aes(x=`Race/Ethnicity`, y=`Four Year Graduation Rate`, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", 
+                                                       District, 
+                                                       paste0(`Race/Ethnicity`, " Cohort Count: ", `Total Cohort Count`),
+                                                       paste0("4-Year Grad Rate: ", `Four Year Graduation Rate`, "%")))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Percent") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
+      e_plot5 <- ggplotly(e_plot5, tooltip="text")
+      e_plot5 <- e_plot5 %>% layout(
+        margin=list(l=50, b=110), 
+        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)),
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot5        
+    })     
+  ########################### 
+  eplot6_reactive <- reactive ({
+    selected <- input$select_edu
+    edu6_plot <- edu6[edu6$District %in% selected & edu6$Value != -6666 & edu6$Value != -9999 & 
+                        edu6$Year == max_year_edu6,]
+  })
+  output$EPlot6 <- renderPlotly({
+
+    shiny::validate(
+      need(input$select_edu != "", "Please select a District to populate the chart")
+    )    
+    shiny::validate(
+      need(nrow(eplot6_reactive()) != 0, "No data are available for your selection, try selecting another District")
+    )
+    e_plot6 <- ggplot(eplot6_reactive(), aes(x=`Race/Ethnicity`, y=`Value`, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", 
+                                                       District, `Race/Ethnicity`, paste0(`Value`, "%")))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Percent") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
+      e_plot6 <- ggplotly(e_plot6, tooltip="text")
+      e_plot6 <- e_plot6 %>% layout(
+        margin=list(l=50, b=140), 
+        annotations = list(x = 1, y = -0.49, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)),
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot6        
+    })    
+  ########################### 
+  output$EPlot7 <- renderPlotly({
+    selected <- input$select_edu
+    edu7_plot <- edu7[edu7$District %in% selected & edu7$Value != -6666 & edu7$Value != -9999 & 
+                        edu7$Year == max_year_edu7,]
+    edu7_plot$Valuec <- format(edu7_plot$Value, big.mark = ",", scientific = FALSE)
+    
+    shiny::validate(
+      need(input$select_edu != "", "Please select a District to populate the chart")
+    )    
+    shiny::validate(
+      need(nrow(edu7_plot) != 0, "No data are available for your selection, try selecting another District")
+    )
+    
+    e_plot7 <- ggplot(edu7_plot, aes(x=`Race/Ethnicity`, y=`Value`, fill=District,
+                                          text=sprintf("%s<br>%s<br>%s", 
+                                                       District, `Race/Ethnicity`, `Valuec`))) +
+      geom_bar(stat="identity", position = "dodge") + ylab("Number") +
+      theme_bw() + 
+      scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
+      scale_fill_manual(values = dd.col.random)+ 
+      theme(axis.text = element_text(size=8),
+			      plot.title = element_text(size=10, face="bold"), 
+            axis.title=element_text(size=10), 
+ 			      plot.margin = unit(c(0.1,0.1,1,0.1), "cm")) 
+      e_plot7 <- ggplotly(e_plot7, tooltip="text")
+      e_plot7 <- e_plot7 %>% layout(
+        margin=list(l=50, b=140), 
+        annotations = list(x = 1, y = -0.49, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        showarrow = F, xref='paper', yref='paper', 
+        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+        font=list(size=15, color="grey")),
+        barmode = 'group',
+        xaxis = list(tickfont = list(size = 10)),
+        bargap = 0.3,
+        legend = list(x = 100, y = 0.9, font = list(size=10)))
+      e_plot7        
+    })     
   ###########################
    # edu5_plot <- kei[kei$FixedDistrict %in% selected & kei$`Level 1` != -9999 & !is.na(kei$`Level 1`) & kei$Year == max_year_kei,]
    # edu5_plot$`Level 1` <- round(edu5_plot$`Level 1`, 0)

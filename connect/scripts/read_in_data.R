@@ -17,6 +17,11 @@ dcf_regions_6 <- read.csv(paste0(path_to_data, "/", "dcf_regions_6.csv"), string
 print("health")
 health_regions <- read.csv(paste0(path_to_data, "/", "health_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
 health_rates_regions <- read.csv(paste0(path_to_data, "/", "health_rates_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
+sa_regions <- read.csv(paste0(path_to_data, "/", "SA_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
+substance_list <- unique(sa_regions$Substance)
+max_year_SA_regions <- max(sa_regions$Year)
+sa_regions_long <- read.csv(paste0(path_to_data, "/", "SA_regions_long.csv"), stringsAsFactors=F, header=T, check.names=F)
+sa_regions_wide <- read.csv(paste0(path_to_data, "/", "SA_regions_wide.csv"), stringsAsFactors=F, header=T, check.names=F)
 
 print("early childhood")
 b23_regions <- read.csv(paste0(path_to_data, "/", "b23_regions.csv"), stringsAsFactors=F, header=T, check.names=F)
@@ -62,6 +67,10 @@ edu <- read.csv(paste0(path_to_data, "/", "edu.csv"), stringsAsFactors=F, header
 edu2 <- read.csv(paste0(path_to_data, "/", "edu2.csv"), stringsAsFactors=F, header=T, check.names=F)
 edu3 <- read.csv(paste0(path_to_data, "/", "edu3.csv"), stringsAsFactors=F, header=T, check.names=F)
 edu4 <- read.csv(paste0(path_to_data, "/", "edu4.csv"), stringsAsFactors=F, header=T, check.names=F)
+edu5 <- read.csv(paste0(path_to_data, "/", "edu5.csv"), stringsAsFactors=F, header=T, check.names=F)
+edu6 <- read.csv(paste0(path_to_data, "/", "edu6.csv"), stringsAsFactors=F, header=T, check.names=F)
+edu7 <- read.csv(paste0(path_to_data, "/", "edu7.csv"), stringsAsFactors=F, header=T, check.names=F)
+
 districts <- read.csv(paste0(path_to_data, "/", "ct-school-district-list-with-fips.csv"), stringsAsFactors = F, header=T, check.names = F)
 district_list <- unique(districts$FixedDistrict)
 district_list <- district_list[district_list != "Connecticut"]
@@ -81,6 +90,8 @@ max_year_edu <- max(edu$Year)
 max_year_edu2 <- max(edu2$Year)
 max_year_edu3 <- max(edu3$Year)
 max_year_edu4 <- max(edu4$Year)
-
+max_year_edu5 <- max(edu5$Year)
+max_year_edu6 <- max(edu6$Year)
+max_year_edu7 <- max(edu7$Year)
 
 print("Done!")

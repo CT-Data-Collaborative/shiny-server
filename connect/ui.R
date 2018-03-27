@@ -145,6 +145,7 @@ shinyUI(
             ),
             width = 350,
             sidebarPanel(
+             # style = "position:fixed;",
               width=300,
               conditionalPanel(
                 condition="input.tabselected==1 || input.tabselected==2 || input.tabselected==3 || 
@@ -180,9 +181,13 @@ shinyUI(
                         )
                       )
                     )
-                  )
-                ),
-                uiOutput("edu_text")
+                  ), 
+                    tabBox(width = "100%", 
+                           tabPanel("Notes", div(HTML("<p style='color:black;'>Calculated percents resulting from counts of less than 5 students have been suppressed.
+                                   <br>Be aware that as the number of districts selected increases, visibility/usability of this chart may decrease.</p>"))
+                           )
+                    ), collapsible=T
+                )
               )
             ) 
           ), #end of side bar
@@ -203,7 +208,46 @@ shinyUI(
                       plotlyOutput("HPlot2", width="100%"), 
                       collapsible = T
                   )
-                )
+                ),
+                fluidRow(
+                  box(width=12, 
+                      title = tagList(shiny::icon("bar-chart"), "Substance Abuse Treatment Admissions - ", 
+                      HTML('<a href="http://data.ctdata.org/visualization/substance-treatment-admissions-by-drug-type" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    conditionalPanel(
+                      condition="input.select=='Statewide'",
+                      fluidRow(
+                             box(width = 9, 
+                                 HTML('<h4 style="color:black;">Total Connecticut Substance Abuse Treatment Admissions</h4>'),
+                                 HTML('<h3><span id="sa_ct_value" class="shiny-text-output"></span></h3>'),
+                                 HTML('<h5 align="right" style="color:grey;">Source: CT DMHAS accessed via ctdata.org</h5>')
+                             ),                               
+                             tabBox(width=3, id = "tabset6",
+                                    tabPanel("Suppression", div(HTML("DMHAS reports number of admissions per month, per town,
+                                                                         per substance, resulting in some months with suppressed values. Therefore,
+                                                                         the ANNUAL TOTAL FOR CONNECTICUT DOES NOT INCLUDE SUPPRESSED VALUES and is lower than the actual value.")))
+                             )
+
+                      ) 
+                    ), collapsible=T,
+                    conditionalPanel(
+                      condition="input.select!='Statewide'",
+                      column(12,
+                             tabBox(width="100%", id = "tabset6",
+                                    tabPanel("Suppression", div(HTML("This chart includes values only for those substances where more than zero 
+                                                                         admissions were reported. The substances listed on the x-axis may 
+                                                                         change based on the selected Region. The values represent the aggregated annual total number 
+                                                                         of admissions, per town, per substance. DMHAS reports number of admissions per month, per town, 
+                                                                         per substance, resulting in some months with suppressed values. Therefore, 
+                                                                         the ANNUAL TOTALS DO NOT INCLUDE SUPPRESSED VALUES and are lower than the actual value.")))
+                             ),
+                             box(width="100%",
+                                 plotlyOutput("HPlot3", width="100%", height = "600px")
+                             ) 
+  
+                      ), collapsible = T
+                    )
+                  ) 
+                ), collapsible=T 
               ),
               tabPanel("Early Childhood", value = 2,
                 fluidRow(
@@ -319,12 +363,12 @@ shinyUI(
                 fluidRow(
                   box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", 
                                                 HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Population%22,%20%22Margins%20of%20Error%22],%20%22Race/Ethnicity%22:%20%22All%22,%20%22Age%20Cohort%22:%20%22Total%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                  column(9,
+                  column(8,
                     box(width="100%",
                         plotlyOutput("DPlot_age_race", width="100%")
                     )
                   ),
-                  column(3,
+                  column(4,
                     box(width="100%",
                       selectInput("race", 
                                    label = HTML('<h4 style="color:black;">Select Race/Ethnicity:</h4>'),
@@ -339,8 +383,22 @@ shinyUI(
                                                   "American Indian and Alaska Native Alone",
                                                   "Native Hawaiian and Other Pacific Islander"), selected = "All"), 
                       size = "default"
-                    )
-                  ), collapsible=T
+                    ), 
+                      fluidRow(width=4,
+                               infoBox(value= textOutput("race_sel_text1"),
+                                       subtitle = textOutput("race_sel_value1"),
+                                       title = "",
+                                       icon = shiny::icon("hashtag"), color = "navy", width = NULL,
+                                       href = NULL, fill = FALSE)),
+                      fluidRow(width=4,
+                               infoBox(value= textOutput("race_sel_text2"), 
+                                       subtitle = textOutput("race_sel_value2"),
+                                       title = "",
+                                       icon = shiny::icon("percent"), color = "navy", width = NULL,
+                                       href = NULL, fill = FALSE))
+
+                  ), 
+                  collapsible=T
                 )
                 ),  
                 fluidRow(
@@ -396,7 +454,7 @@ shinyUI(
                                        class="shiny-text-output"></span></h3>')
                              )
                       ), collapsible=T
-                    )
+                    ), collapsible=T
                   )
                 ) 
               ),
@@ -423,20 +481,32 @@ shinyUI(
               ),              
               tabPanel("Education", value = 7,
                fluidRow(
-                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Educational Need", max_year_edu, HTML('<a href="http://data.ctdata.org/visualization/educational-need?v=table&f={%22Variable%22:%20%22Indicator%20of%20Educational%20Need%22,%20%22Measure%20Type%22:%20%22Percent%22,%20%22Indicator%20of%20Educational%20Need%22:%20[%22Special%20Education%22,%20%22English%20Language%20Learner%22,%20%22Eligible%20for%20Free%20or%20Reduced%20Price%20Lunch%22],%20%22District%22:%20%22Hartford%20School%20District%22,%20%22Year%22:%20[%222014-2015%22,%20%222015-2016%22,%20%222016-2017%22]}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Educational Need", max_year_edu, HTML('<a href="http://data.ctdata.org/visualization/educational-need" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot1"),
                        collapsible = T
                    ),
-                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Suspension Rate by Race", max_year_edu2, HTML('<a href="http://data.ctdata.org/visualization/suspension-rate-by-race?v=table&f={%22Variable%22:%20%22Suspensions%22,%20%22Measure%20Type%22:%20%22Percent%22,%20%22District%22:%20%22Connecticut%22,%20%22Year%22:%20%222015-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Suspension Rate by Race", max_year_edu2, HTML('<a href="http://data.ctdata.org/visualization/suspension-rate-by-race" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot2"),
                        collapsible = T
                    ),
-                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Sanctions by Type", max_year_edu3, HTML('<a href="http://data.ctdata.org/visualization/sanctions?v=table&f={%22Variable%22:%20%22Sanctions%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22District%22:%20%22Connecticut%22,%20%22Year%22:%20%222015-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Sanctions by Type", max_year_edu3, HTML('<a href="http://data.ctdata.org/visualization/sanctions" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot3"),
                        collapsible = T
                    ), 
-                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Incidents by Type", max_year_edu4, HTML('<a href="http://data.ctdata.org/visualization/incidents?v=table&f={%22Variable%22:%20%22Incidents%22,%20%22Measure%20Type%22:%20%22Number%22,%20%22District%22:%20%22Connecticut%22,%20%22Year%22:%20%222015-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Incidents by Type", max_year_edu4, HTML('<a href="http://data.ctdata.org/visualization/incidents" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot4"),
+                       collapsible = T
+                   ), 
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Four-Year Graduation Rates by Race", max_year_edu5, HTML('<a href="http://data.ctdata.org/visualization/four-year-grad-rates-by-race-ethnicity" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                       plotlyOutput("EPlot5"),
+                       collapsible = T
+                   ), 
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Chronic Absenteeism by Race", max_year_edu6, HTML('<a href="http://data.ctdata.org/visualization/chronic-absenteeism-by-race-ethnicity" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                       plotlyOutput("EPlot6"),
+                       collapsible = T
+                   ), 
+                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Student Enrollment by Race", max_year_edu6, HTML('<a href="http://data.ctdata.org/visualization/student-enrollment-by-race-ethnicity" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                       plotlyOutput("EPlot7"),
                        collapsible = T
                    )
                    # box(width=12,title =  tagList(shiny::icon("bar-chart"), "Kindergarten Entrance Inventory", max_year_kei, HTML('<a href="http://data.ctdata.org/visualization/kindergarten-entrance-inventory-results?v=table&f={%22Variable%22:%20%22Kindergarten%20Entrance%20Inventory%20Results%22,%20%22Measure%20Type%22:%20%22Percent%22,%20%22District%22:%20%22Connecticut%22,%20%22Year%22:%20%222016-2017%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
