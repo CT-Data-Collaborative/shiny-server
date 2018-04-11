@@ -9,6 +9,11 @@
 
 # Define server logic
 shinyServer(function(input, output, session) {
+  
+  observeEvent(input$toTop, {
+    js$toTop();
+ })
+  
   cols <- c("1" = "darkblue")
   region_map_reactive <- reactive({
     data <- dcf_regions_CT
@@ -25,7 +30,7 @@ shinyServer(function(input, output, session) {
     scale_fill_distiller(guide=FALSE, direction=1) + scale_colour_manual(values = cols) +  theme(rect = element_blank(), axis.ticks = element_blank(), axis.text.x = element_blank(), 
     axis.text.y = element_blank()) +
     labs(x="", y="")
-  }, height = 200, width = 300)
+  }, height = 150, width = 225)
   ###########################
   region_text_reactive <- reactive({
     if(input$select=="Statewide") {
@@ -38,17 +43,17 @@ shinyServer(function(input, output, session) {
   ###########################
   region_list_reactive <- reactive({
     if(input$select=="Southwest Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Bridgeport</li><li>Darien</li><li>Easton</li><li>Fairfield</li><li>Greenwich</li><li>Monroe</li><li>New Canaan</li><li>Norwalk</li><li>Stamford</li><li>Stratford</li><li>Trumbull</li><li>Weston</li><li>Westport</li><li>Wilton</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Bridgeport</li><li>Darien</li><li>Easton</li><li>Fairfield</li><li>Greenwich</li><li>Monroe</li><li>New Canaan</li><li>Norwalk</li><li>Stamford</li><li>Stratford</li><li>Trumbull</li><li>Weston</li><li>Westport</li><li>Wilton</li></ol>", "</font>"))
     } else if (input$select=="South Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Ansonia</li><li>Bethany</li><li>Branford</li><li>Derby</li><li>East Haven</li><li>Hamden</li><li>Milford</li><li>New Haven </li><li>North Branford</li><li>North Haven</li><li>Orange</li><li>Seymour</li><li>Shelton</li><li>West Haven</li><li>Woodbridge</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Ansonia</li><li>Bethany</li><li>Branford</li><li>Derby</li><li>East Haven</li><li>Hamden</li><li>Milford</li><li>New Haven </li><li>North Branford</li><li>North Haven</li><li>Orange</li><li>Seymour</li><li>Shelton</li><li>West Haven</li><li>Woodbridge</li></ol>", "</font>"))
     } else if (input$select=="Eastern Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Ashford</li><li>Bozrah </li><li>Brooklyn </li><li>Canterbury </li><li>Chaplin </li><li>Chester </li><li>Clinton </li><li>Colchester </li><li>Columbia </li><li>Coventry </li><li>Cromwell </li><li>Deep River </li><li>Durham </li><li>East Haddam </li><li>East Hampton </li><li>East Lyme </li><li>Eastford </li><li>Essex </li><li>Franklin </li><li>Griswold </li><li>Groton </li><li>Guilford </li><li>Haddam </li><li>Hampton </li><li>Killingly </li><li>Killingworth </li><li>Lebanon </li><li>Ledyard </li><li>Lisbon </li><li>Lyme </li><li>Madison </li><li>Mansfield </li><li>Middlefield  </li><li>Middletown </li><li>Montville </li><li>New London</li><li>North Stonington </li><li>Norwich </li><li>Old Lyme </li><li>Old Saybrook </li><li>Plainfield </li><li>Pomfret </li><li>Portland </li><li>Preston </li><li>Putnam </li><li>Salem </li><li>Scotland </li><li>Sprague </li><li>Sterling </li><li>Stonington </li><li>Thompson </li><li>Union </li><li>Voluntown </li><li>Waterford </li><li>Westbrook </li><li>Willington </li><li>Windham </li><li>Woodstock</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Ashford</li><li>Bozrah </li><li>Brooklyn </li><li>Canterbury </li><li>Chaplin </li><li>Chester </li><li>Clinton </li><li>Colchester </li><li>Columbia </li><li>Coventry </li><li>Cromwell </li><li>Deep River </li><li>Durham </li><li>East Haddam </li><li>East Hampton </li><li>East Lyme </li><li>Eastford </li><li>Essex </li><li>Franklin </li><li>Griswold </li><li>Groton </li><li>Guilford </li><li>Haddam </li><li>Hampton </li><li>Killingly </li><li>Killingworth </li><li>Lebanon </li><li>Ledyard </li><li>Lisbon </li><li>Lyme </li><li>Madison </li><li>Mansfield </li><li>Middlefield  </li><li>Middletown </li><li>Montville </li><li>New London</li><li>North Stonington </li><li>Norwich </li><li>Old Lyme </li><li>Old Saybrook </li><li>Plainfield </li><li>Pomfret </li><li>Portland </li><li>Preston </li><li>Putnam </li><li>Salem </li><li>Scotland </li><li>Sprague </li><li>Sterling </li><li>Stonington </li><li>Thompson </li><li>Union </li><li>Voluntown </li><li>Waterford </li><li>Westbrook </li><li>Willington </li><li>Windham </li><li>Woodstock</li></ol>", "</font>"))
     } else if (input$select=="North Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Andover</li><li>Bloomfield</li><li>Bolton</li><li>East Granby</li><li>East Hartford</li><li>East Windsor</li><li>Ellington</li><li>Enfield</li><li>Glastonbury</li><li>Granby</li><li>Hartford</li><li>Hebron</li><li>Manchester</li><li>Marlborough</li><li>Somers</li><li>South Windsor</li><li>Stafford</li><li>Suffield</li><li>Tolland</li><li>Vernon</li><li>West Hartford</li><li>Windsor</li><li>Windsor Locks</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Andover</li><li>Bloomfield</li><li>Bolton</li><li>East Granby</li><li>East Hartford</li><li>East Windsor</li><li>Ellington</li><li>Enfield</li><li>Glastonbury</li><li>Granby</li><li>Hartford</li><li>Hebron</li><li>Manchester</li><li>Marlborough</li><li>Somers</li><li>South Windsor</li><li>Stafford</li><li>Suffield</li><li>Tolland</li><li>Vernon</li><li>West Hartford</li><li>Windsor</li><li>Windsor Locks</li></ol>", "</font>"))
     } else if (input$select=="Western Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Barkhamsted</li><li>Beacon Falls</li><li>Bethel</li><li>Bethlehem</li><li>Bridgewater</li><li>Brookfield</li><li>Canaan</li><li> Cheshire</li><li>Colebrook</li><li>Cornwall</li><li>Danbury</li><li>Goshen</li><li>Hartland</li><li>Harwinton</li><li>Kent</li><li> Litchfield</li><li>Middlebury</li><li>Morris</li><li>Naugatuck</li><li>New Fairfield</li><li>New Hartford</li><li>New Milford</li><li> Newtown</li><li>Norfolk</li><li>North Canaan</li><li>Oxford</li><li>Prospect</li><li>Redding</li><li>Ridgefield</li><li>Roxbury</li><li> Salisbury</li><li>Sharon</li><li>Sherman</li><li>Southbury</li><li>Thomaston</li><li>Torrington</li><li>Warren</li><li>Washington</li><li> Waterbury</li><li>Watertown</li><li>Winchester</li><li>Wolcott</li><li>Woodbury</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Barkhamsted</li><li>Beacon Falls</li><li>Bethel</li><li>Bethlehem</li><li>Bridgewater</li><li>Brookfield</li><li>Canaan</li><li> Cheshire</li><li>Colebrook</li><li>Cornwall</li><li>Danbury</li><li>Goshen</li><li>Hartland</li><li>Harwinton</li><li>Kent</li><li> Litchfield</li><li>Middlebury</li><li>Morris</li><li>Naugatuck</li><li>New Fairfield</li><li>New Hartford</li><li>New Milford</li><li> Newtown</li><li>Norfolk</li><li>North Canaan</li><li>Oxford</li><li>Prospect</li><li>Redding</li><li>Ridgefield</li><li>Roxbury</li><li> Salisbury</li><li>Sharon</li><li>Sherman</li><li>Southbury</li><li>Thomaston</li><li>Torrington</li><li>Warren</li><li>Washington</li><li> Waterbury</li><li>Watertown</li><li>Winchester</li><li>Wolcott</li><li>Woodbury</li></ol>", "</font>"))
     } else if (input$select=="Central Region") {
-            HTML(paste("<font color=\"#000000\">", "<ol style='list-style: none;'><li>Avon</li><li>Berlin</li><li>Bristol</li><li>Burlington</li><li>Canton</li><li>Farmington</li><li>Meriden</li><li>New Britain</li><li> Newington</li><li>Plainville</li><li>Plymouth</li><li>Rocky Hill</li><li>Simsbury</li><li>Southington</li><li>Wallingford</li><li> Wethersfield</li></ol>", "</font>"))
+            HTML(paste("<font color=\"#000000\" size = 1px;>", "<ol style='list-style: none;'><li>Avon</li><li>Berlin</li><li>Bristol</li><li>Burlington</li><li>Canton</li><li>Farmington</li><li>Meriden</li><li>New Britain</li><li> Newington</li><li>Plainville</li><li>Plymouth</li><li>Rocky Hill</li><li>Simsbury</li><li>Southington</li><li>Wallingford</li><li> Wethersfield</li></ol>", "</font>"))
     }
   })
   ###########################
@@ -181,6 +186,21 @@ shinyServer(function(input, output, session) {
                 )
               hplot3   
   })  
+  ###########################
+
+  mhsa_table_reactive <- reactive({
+    selected <- input$select
+    table <- sa_mh_regions_long
+    table <- subset(sa_mh_regions_long, Region == selected)
+    table <- table %>% 
+      select(-Region, -Year)
+  })
+  
+   output$MHSATable <- renderTable({
+      selected<- input$select
+      mhsa_table_reactive()
+   }, digits = 0, caption = "Source: CT DMHAS, accessed via ctdata.org", 
+     striped=T, hover=T, condensed=T, responsive=T, spacing="s", align = 'lccc', width = "100%")
   ###########################
   ecplot1_reactive <- reactive({
     selected<- input$select
@@ -1102,6 +1122,38 @@ shinyServer(function(input, output, session) {
      paste0("+/-", moe)
   })  
   ###########################
+  output$DPlot_pov <- renderPlotly({
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )    
+    selected<- input$select
+    d_plot_pov <- pov_df_regions
+    d_plot_pov <- subset(d_plot_pov, Region == selected)
+    
+    dplotpov <- ggplot(d_plot_pov, aes(fill = Age, text=sprintf("%s<br>%s<br>%s", `Age`, `Race/Ethnicity`, paste0(`Percent Below Poverty Level`, "%")))) + 
+      geom_bar(position = 'dodge', stat='identity') +
+      xlab ("Percent Below Poverty Level") + ylab("Race/Ethnicity") + theme_minimal() + 
+      aes(x = `Race/Ethnicity`, y=`Percent Below Poverty Level`) + 
+      facet_grid(~Age, scales = "free_y", space = "free") + 
+      coord_flip() +
+      theme(legend.position="none",  panel.grid.major.y = element_blank(),  plot.title = element_text(size=8), 
+            panel.spacing.x = unit(1E-5, "lines")) +
+      scale_fill_brewer(palette="Paired") +
+      scale_y_continuous(breaks=seq(0,40,5))
+    dplotpov <- ggplotly(dplotpov, tooltip = "text", textposition = "auto")
+    dplotpov <- dplotpov %>%
+      layout(margin=list(l=260, t=50, b=90), 
+      title = paste(paste0(selected, ","), unique(d_plot_pov$Year), sep = " "),
+      annotations = list(x = 1, y = -0.2, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+                         showarrow = F, 
+                         xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                         font=list(size=15, color="grey", align="right")
+                    )
+      )
+    dplotpov  
+  })
+  ###########################
+
   cols <- c("White", "Black", "Hispanic", "Other", "Total")
   bh_plot1[cols] <- sapply(bh_plot1[cols],as.numeric)
 
@@ -1521,83 +1573,34 @@ shinyServer(function(input, output, session) {
       e_plot7        
     })     
   ###########################
-   # edu5_plot <- kei[kei$FixedDistrict %in% selected & kei$`Level 1` != -9999 & !is.na(kei$`Level 1`) & kei$Year == max_year_kei,]
-   # edu5_plot$`Level 1` <- round(edu5_plot$`Level 1`, 0)
-   # edu5_plot$`Level 2` <- round(edu5_plot$`Level 2`, 0)
-   # edu5_plot$`Level 3` <- round(edu5_plot$`Level 3`, 0)
-   # #Create list of plots
-   # for (i in 1:length(selected)) {
-   #   df <- edu5_plot[edu5_plot$FixedDistrict == selected[i],]
-   #   plotname <- plot_ly(df,
-   #                       y = ~str_wrap(`Domain`, width=15),
-   #                       x = ~`Level 1`,
-   #                       name = 'Level 1',
-   #                       type = 'bar',
-   #                       hoverinfo = 'text',
-   #                       text = ~paste0(`Level 1`, '%'),
-   #                       textposition = 'auto') %>%
-   #              add_trace(x = ~`Level 2`, name = 'Level 2', text = ~paste0(`Level 2`, '%')) %>%
-   #              add_trace(x = ~`Level 3`, name = 'Level 3', text = ~paste0(`Level 3`, '%')) %>%
-   #              layout(margin=m,
-   #                     #title = paste(unique(df$FixedDistrict), max_year_kei, sep = " "),
-   #                     xaxis = list(title = "Percentage of Students"),
-   #                     yaxis = list(title = "Skill Domain"),
-   #                     barmode = 'stack', legend = list(orientation = 'h', x = 0.2, y = -0.25, traceorder='normal'),
-   #                     annotations = list(list(x = 1, y = -0.35, text = "Source: Connecticut State Department of Education",
-   #                                 showarrow = F, xref='paper', yref='paper',
-   #                                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
-   #                                 font=list(size=15, color="grey")),
-   #                                 list(x = 0.4, y = 1.1, text = selected[i],
-   #                                 showarrow = F, xref='paper', yref='paper',
-   #                                 xanchor='right', yanchor='auto', xshift=0, yshift=0))
-   #             )
-   #        assign(paste0("kei_plot", i), plotname)
-   # 
-   # }
-   # #Combine plots for subplot
-   # 
-   # do.call("<-",list(get_kei_plot_only[1], "parameter_value"))
-   # 
-   # get_kei_plot_only <- grep("^kei_plot", lists, value=T)
-   # 
-   # 
-   # eval(parse(text=paste("df$", get_kei_plot_only, sep = "")))
-   # 
-   # thisName = get_kei_plot_only[i]
-   # #plotList[[thisName]] = plot_ly(name=thisName, evaluate=TRUE)
-   # 
-   # 
-   # eval(get_kei_plot_only) %>% 
-   #   subplot(nrows = NROW(.), shareX = TRUE)
-   # 
-   # eval(get_kei_plot_only)
+  output$kei <- renderPlotly({
+   selected = input$select_edu
+   kei_plot <- kei[kei$FixedDistrict %in% selected,]
 
-   # lists <- ls()[sapply(mget(ls(), .GlobalEnv), is.list)]
-   # get_kei_plot_only <- list(grep("^kei_plot", lists, value=T) )        
-   #          
-   # economics_long %>%
-   #   split(.$variable) %>%
-   #   lapply(function(d) plot_ly(d, x = ~date, y = ~value)) %>%
-   #   subplot(nrows = NROW(.), shareX = TRUE)
-   # 
-   # 
-   # 
-   # 
-   # 
-   # 
-   # library(plotly)
-   # plotList = list()
-   # 
-   # for (i in 1:length(get_kei_plot_only)){
-   #   plot = get_kei_plot_only[i]
-   #   sbp <- 
-   # }
-   # 
-   # sbp = subplot(kei_plot1, kei_plot2)
-   # print(sbp)
-   #   
-   #          thisName = get_kei_plot_only[i]
-   #     plotList[[thisName]] = plot_ly(name=thisName, evaluate=TRUE)
-   # 
-   
+    shiny::validate(
+      need(input$select_edu != "", "Please select a District to populate the chart")
+    )    
+    shiny::validate(
+      need(nrow(kei_plot) != 0, "No data are available for your selection, try selecting another District")
+    )
+   kei_plot <- gather(kei_plot, Level, Percent, 4:6, factor_key = FALSE)
+   kei_plot$Level <- gsub("Level ", "", kei_plot$Level)   
+   kei_total_plot <- ggplot(kei_plot, aes(x=Level, y=Percent, fill = FixedDistrict, 
+                                          text=sprintf("%s<br>%s<br>%s", FixedDistrict, paste0(Domain, ": ", paste0("Level ", Level)), paste0(Percent, "%")))) +
+      geom_bar(stat="identity", position = "dodge") + labs(x= "Level", y="Percent") +
+           scale_fill_manual(values = dd.col.random) + 
+      theme_bw() + theme(axis.title.y = element_text(margin = margin(t = 0, r = 0, b = 0, l = 0)), legend.position = "none", 
+                         panel.spacing.x=unit(0.0, "lines")) +
+      facet_grid(FixedDistrict~Domain, scales = "free", labeller = label_wrap_gen(width = 10, multi_line = TRUE))
+    kei_total_plot <- ggplotly(kei_total_plot, tooltip = "text")
+    kei_total_plot <- kei_total_plot %>% 
+      layout(margin=list(l=70, b=90, r=150),
+             annotations = list(x = 1, y = -0.24,
+                            text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                            showarrow = F, xref='paper', yref='paper',
+                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                            font=list(size=15, color="grey")),
+             showlegend = FALSE)
+    kei_total_plot
+  })
 })
