@@ -1,5 +1,5 @@
 ---
-title: "My Website"
+title: "Documentation"
 ---
 
-Hello, Website!
+Documentation coming soon!
