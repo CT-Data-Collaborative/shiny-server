@@ -2,5 +2,5 @@
 title: "Contact"
 ---
 
-More about this website.
+Please contact <a href="mailto:jdaly@ctdata.org?subject=CTData%20Shiny%20Apps">Jenna Daly</a> for any questions/feedback/comments.
 
