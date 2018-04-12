@@ -9,6 +9,7 @@ navbar:
     href: doc.html
   - text: Our Code
     href: https://github.com/CT-Data-Collaborative/shiny-server
+    target: _blank
   - text: Contact
     href: contact.html
 output:
