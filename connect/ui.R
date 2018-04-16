@@ -363,19 +363,31 @@ shinyUI(
                   )
                 ),
                 fluidRow(
-                    box(width=12, title = tagList(shiny::icon("info-circle"), "Employed or Enrolled Youth - ", HTML('<a href="http://data.ctdata.org/visualization/employed-or-enrolled-youth?v=table&f={%22Town%22:%20%22Connecticut%22,%20%22Variable%22:%20[%22Employed%20or%20Enrolled%20Youth%22,%20%22Margins%20of%20Error%22],%20%22Measure%20Type%22:%20%22Percent%22,%20%22Year%22:%20%222012-2016%22}" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    box(width=12, title = tagList(shiny::icon("info-circle"), "Disengaged Youth - ", HTML('<a href="http://data.ctdata.org/visualization/disengaged-youth" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                          #red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black.
-                    infoBox(title= "Female", value = textOutput("eey_value_f"), subtitle = textOutput("eey_moe_f"),
+                    infoBox(title= "Female", value = textOutput("dy_value_f"), subtitle = textOutput("dy_moe_f"),
                             icon = shiny::icon("female"), color = "red", width = 4,
                             href = NULL, fill = FALSE),
-                    infoBox(title= "Male", value = textOutput("eey_value_m"), subtitle = textOutput("eey_moe_m"),
+                    infoBox(title= "Male", value = textOutput("dy_value_m"), subtitle = textOutput("dy_moe_m"),
                             icon = shiny::icon("male"), color = "blue", width = 4,
                             href = NULL, fill = FALSE),
-                    infoBox(title= "Total", value = textOutput("eey_value_t"), subtitle = textOutput("eey_moe_t"),
+                    infoBox(title= "Total", value = textOutput("dy_value_t"), subtitle = textOutput("dy_moe_t"),
                             icon = shiny::icon("users"), color = "black", width = 4,
                             href = NULL, fill = FALSE),
                     HTML("<font color='grey'>Source: U.S. Census<br>accessed via ctdata.org</font>")
                          ), collapsible=T
+                ), 
+                fluidRow(
+                  box(width=12, 
+                    title = tagList(shiny::icon("bar-chart"), "Child Abuse and Neglect - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/child-abuse-and-neglect" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
+                    ),
+                    column(8,
+                      box(width="100%",
+                        plotlyOutput("CWPlot_neglect", width="100%")
+                      )
+                    )
+                  )
                 )
               ),
               tabPanel("Demographics", value = 5,

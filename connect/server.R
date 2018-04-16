@@ -524,122 +524,95 @@ shinyServer(function(input, output, session) {
      input$select
   })  
   ########################### 
-  output$eey_value_f <- renderText({
+  output$dy_value_f <- renderText({
     selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Female_tot_Value <- round(cw_plot3_calc$Female_tot_Value, 0)
-    value <- format(unique(cw_plot3_calc$Female_tot_Value), big.mark=",", scientific=FALSE) 
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Female",]
+    value <- paste0(cw_plot3$`Percent Disengaged`, "%")
   })   
   ########################### 
-  output$eey_value_m <- renderText({
+  output$dy_moe_f <- renderText({
     selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Male_tot_Value <- round(cw_plot3_calc$Male_tot_Value, 0)
-    value <- format(unique(cw_plot3_calc$Male_tot_Value), big.mark=",", scientific=FALSE) 
-  })   
-  ########################### 
-  output$eey_value_t <- renderText({
-    selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Total_tot_Value <- round(cw_plot3_calc$Total_tot_Value, 0)
-    value <- format(unique(cw_plot3_calc$Total_tot_Value), big.mark=",", scientific=FALSE) 
-  })    
-  ########################### 
-  output$eey_moe_f <- renderText({
-    selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Female_tot_moe <- round(cw_plot3_calc$Female_tot_moe, 0)
-    moe <- format(unique(cw_plot3_calc$Female_tot_moe), big.mark=",", scientific=FALSE) 
-    paste("+/-", moe, sep = " ")
-  })     
-  ########################### 
-  output$eey_moe_m <- renderText({
-    selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Male_tot_moe <- round(cw_plot3_calc$Male_tot_moe, 0)
-    moe <- format(unique(cw_plot3_calc$Male_tot_moe), big.mark=",", scientific=FALSE) 
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Female",]
+    moe <- cw_plot3$`Percent Disengaged MOE`
     paste("+/-", moe, sep = " ")
   })  
   ########################### 
-  output$eey_moe_t <- renderText({
+  output$dy_value_m <- renderText({
     selected<- input$select
-    cw_plot3 <- cw_eey_regions[cw_eey_regions$Region == selected & cw_eey_regions$`Measure Type` == "Number",]
-    cw_plot3 <- spread(cw_plot3, Variable, Value)
-    
-    cw_plot3_calc <- unique(cw_plot3 %>% 
-      group_by(Gender) %>% 
-      mutate(tot_Value = sum(`Employed or Enrolled Youth`), 
-             tot_moe = aggregate_moe(`Margins of Error`)) %>% 
-      select(Gender, `Measure Type`, Region, tot_Value, tot_moe))
-    
-    cw_plot3_calc <- cw_plot3_calc %>% 
-       gather(variable, value, -(Region:Gender)) %>%
-       unite(temp, Gender, variable) %>%
-       spread(temp, value)
-    cw_plot3_calc$Total_tot_moe <- round(cw_plot3_calc$Total_tot_moe, 0)
-    moe <- format(unique(cw_plot3_calc$Total_tot_moe), big.mark=",", scientific=FALSE) 
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Male",]
+    value <- paste0(cw_plot3$`Percent Disengaged`, "%")
+  })   
+  ########################### 
+  output$dy_moe_m <- renderText({
+    selected<- input$select
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Male",]
+    moe <- cw_plot3$`Percent Disengaged MOE`
     paste("+/-", moe, sep = " ")
-  }) 
+  })  
+  ########################### 
+  output$dy_value_t <- renderText({
+    selected<- input$select
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Total",]
+    value <- paste0(cw_plot3$`Percent Disengaged`, "%")
+  })   
+  ########################### 
+  output$dy_moe_t <- renderText({
+    selected<- input$select
+    cw_plot3 <- cw_dy_regions_calc2[cw_dy_regions_calc2$Region == selected & cw_dy_regions_calc2$Gender == "Total",]
+    moe <- cw_plot3$`Percent Disengaged MOE`
+    paste("+/-", moe, sep = " ")
+  })  
+  ########################### 
+  cwneglect_reactive <- reactive ({
+    selected<- input$select
+    town_sel <- input$town_select
+    cwplot5 <- cw_can_regions
+    cwplot5 <- subset(cwplot5, Region == selected & Town == town_sel & Value != -9999 & Category != "All")
+    cwplot5
+  })
+  
+  cw_plot5 <- ggplot(cwplot5, aes(Category, Value, text=sprintf("%s<br>%s<br>%s<br>%s<br>%s", Town, Region, Category, `Allegation Type`, Value))) + 
+    geom_bar(aes(fill = `Allegation Type`),
+                width = 0.4, position = position_dodge(width=0.5), stat="identity")
+  
+  cw_plot5 <- ggplotly(cw_plot5, tooltip = "text")
+  
+  
+  output$CWPlot_neglect <- renderPlotly({
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )    
+    selected<- input$select
+    cw_plot5 <- ggplot(cwneglect_reactive(), aes(x=`Type of Placement`, y=Value, fill = `Race/Ethnicity`, text=sprintf("%s<br>%s<br>%s", `Race/Ethnicity`, `Type of Placement`, Value))) +
+              geom_bar(stat="identity", position = "dodge") + 
+              xlab ("Type of Placement") + ylab("Number") + theme_minimal() +
+              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+              scale_fill_brewer(palette="Paired") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
+              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+              cwplot2 <- ggplotly(cwplot2, tooltip="text", textposition = 'auto')
+              cwplot2 <- cwplot2 %>% 
+                layout(margin=list(l=220, b=82, t=30, r=130), 
+                      title = paste(paste0(selected, ","), max_year_cw_race, "-", placement, sep = " "),
+                       annotations = list(x = 1, y = -0.27, 
+                                          text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
+                                          showarrow = F, 
+                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                          font=list(size=15, color="grey", align="right")
+                       ),                       
+                       barmode = 'group',
+                       xaxis = list(tickfont = list(size = 12)), 
+                       bargap = 0.3, legend = list(x = 1, y = 1)
+                )
+              cwplot2
+  })
+  
+  
+  
+  
+  
+  
+  
   ########################### 
   output$race_sel_text1 <- renderText({
     if (input$race == "All" & input$select == "Statewide") {
