@@ -8,7 +8,7 @@ library(datapkg)
 library(tidyr)
 library(plotly)
 library(rgdal)
-library(censusr)
+library(censusr) 
 
 ######################################################################################################################################
 mylist <- c("Statewide", "Southwest Region","South Central Region",
@@ -18,6 +18,11 @@ region_list <- c("Connecticut", "Region 1:Southwest",  "Region 2:South Central",
 
 region_list2 <- c("Other", "Region 1: Southwest",  "Region 2: South Central", "Region 3: Eastern", 
                   "Region 4: North Central", "Region 5: Western", "Region 6: Central")
+
+#Setup env
+sub_folders <- list.files()
+data_location <- grep("data$", sub_folders, value=T)
+path_to_data <- (paste0(getwd(), "/", data_location))
 
 ##Read in data
 #######REGION MAPS############################################################################################################################
@@ -79,43 +84,54 @@ max_year_health_rates_regions <- "2010-2014"
 health_rates_regions$Region <- mylist[match(health_rates_regions$Region, region_list)]
 
 ############################################################################
-# #sub-abuse-total
-# SA_data1 <- getURL('http://data.ctdata.org/dataset/be1ffa14-19ef-4251-899c-d5ecfbf9c066/resource/a3a52654-65de-44d7-81e7-dfb3012d42f6/download/dmhas-admissionssubstance-abuse.csv')
-# SA1 <- read.csv(textConnection(SA_data1), header=T, stringsAsFactors = FALSE, check.names=FALSE)
-# SA1_regions <- merge(SA1, dcf_regions, by = c("Town", "FIPS"))
-# max_year_SA1_regions <- max(SA1_regions$Year)
-# SA1_regions$Region <- mylist[match(SA1_regions$Region, region_list)]
-# SA1_regions$Substance <- "All"
-# SA1_regions$`Admission Type` <- NULL
+#sub-abuse-total
+SA_total_data <- getURL('http://data.ctdata.org/dataset/be1ffa14-19ef-4251-899c-d5ecfbf9c066/resource/a3a52654-65de-44d7-81e7-dfb3012d42f6/download/dmhas-admissionssubstance-abuse.csv')
+SA_total <- read.csv(textConnection(SA_total_data), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+SA_total_regions <- merge(SA_total, dcf_regions, by = c("Town", "FIPS"))
+SA_total_regions$Region <- mylist[match(SA_total_regions$Region, region_list)]
+
+#assign SFY
+SA_total_regions$Year <- as.numeric(SA_total_regions$Year)
+SA_total_regions <- SA_total_regions %>% 
+  mutate(SFY = ifelse(Month %in% c("July", "August", "September", "October", "November", "December"), Year+1, Year))
+SA_total_regions[SA_total_regions == -9999] <- NA
+SA_total_regions <- SA_total_regions %>% filter(SFY == max_year_SA_regions)
+
+SA_total_regions_calc <- unique(SA_total_regions %>% 
+  group_by(Town) %>% 
+  mutate(Total_Adm = sum(Value, na.rm=T)) %>% 
+  select(-Month, -Value, -Year))
+
+
 
 #sub-abuse-drugs
 SA_data <- getURL('http://data.ctdata.org/dataset/e7241d2a-e316-4f90-bad8-daf0b6a91949/resource/7bbdac5b-b88a-4269-b9d3-bdaca9ac25f7/download/substance-treatmentadmissionsbydrugtype2013-2016.csv')
 SA <- read.csv(textConnection(SA_data), header=T, stringsAsFactors = FALSE, check.names=FALSE)
 SA_regions <- merge(SA, dcf_regions, by = c("Town", "FIPS"))
-
 SA_regions$Region <- mylist[match(SA_regions$Region, region_list)]
 
-#SA_regions <- rbind(SA1_regions, SA2_regions)
 #assign SFY
 SA_regions$Year <- as.numeric(SA_regions$Year)
 SA_regions <- SA_regions %>% 
   mutate(SFY = ifelse(Month %in% c("July", "August", "September", "October", "November", "December"), Year+1, Year))
 SA_regions[SA_regions == -9999] <- NA
-
 SA_regions <- SA_regions %>% filter(SFY == max_year_SA_regions)
 
-SA_regions <- SA_regions %>% 
+
+SA_regions_calc <- unique(SA_regions %>% 
+  filter(Substance == "Total") %>% 
   group_by(Town, Substance) %>% 
-  mutate(Total_Adm = sum(Value, na.rm=T))
+  mutate(Total_Adm = sum(Value, na.rm=T)) %>% 
+  select(-Month, -Value, -Year))
+
+SA_regions_calc_drugs <- unique(SA_regions %>% 
+  group_by(Town, Substance) %>% 
+  mutate(Total_Adm = sum(Value, na.rm=T)) %>% 
+  select(-Month, -Value, -Year))
 
 
 SA_regions_calc_wide <- spread(SA_regions_calc, Substance, Value)
-
-
 SA_regions_wide <- spread(SA_regions, Substance, Value)
-
-
-
 SA_regions_wide <- SA_regions_wide[SA_regions_wide$Total != 0,]
 #calc indiv drug %
 SA_regions_wide[SA_regions_wide == -9999] <- NA
@@ -141,8 +157,122 @@ SA_regions_wide <- SA_regions_wide %>%
          `% PCP` = (PCP             /Total)*100,
          `% Tobacco` = (Tobacco         /Total)*100,
          `% Tranquilizers` = (Tranquilizers   /Total)*100)
-
 SA_regions_long <- gather(SA_regions_wide, Substance, Value, 9:51, factor_key = F)
+############################################################################
+#sub abuse and mental health
+sa_mh <- read.csv("./raw/MH-SA_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
+sa_mh_regions <- merge(sa_mh, dcf_regions, by = c("Town"), all.y=T)
+sa_mh_regions <- sa_mh_regions[!is.na(sa_mh_regions$Year),]
+max_year_sa_mh_regions <- max(sa_mh_regions$Year)
+sa_mh_regions$Region <- mylist[match(sa_mh_regions$Region, region_list)]
+sa_mh_regions <- sa_mh_regions[sa_mh_regions$Year == max_year_sa_mh_regions,]
+sa_mh_regions <- sa_mh_regions[!is.na(sa_mh_regions$`Age Range`),]
+
+# Helper function for MOE
+calcMOE <- function(x, y, moex, moey) {
+  moex2 <- moex^2
+  moey2 <- moey^2
+  d <- x/y
+  d2 <- d^2
+  
+  radicand <- ifelse(
+    moex2 < (d2 * moey2),
+    moex2 + (d2 * moey2),
+    moex2 - (d2 * moey2)
+  )
+  
+  return(sqrt(radicand)/y)
+}
+
+library(purrr)
+#taken from tidycensus (https://github.com/walkerke/tidycensus/blob/master/R/moe.R)
+moe_sum <- function(moe, estimate = NULL) {
+  if (!is.null(estimate)) {
+    # ID those MOE values with 0 estimates
+    zeros <- estimate == 0
+    # Reduce the vector and keep the first one
+    onezero <- unique(moe[zeros])
+    # Combine with the non-zeros
+    forcalc <- c(onezero, moe[!zeros])
+  } else if (is.null(estimate)) {
+    warning("You have not specified the estimates associated with the margins of error.  In the event that your calculation involves multiple zero estimates, this will unnaturally inflate the derived margin of error.", call. = FALSE)
+    forcalc <- moe
+  }
+  squared <- map_dbl(forcalc, function(x) x^2)
+  result <- sqrt(sum(squared))
+  return(result)
+}
+
+sa_mh_regions_calc <- unique(sa_mh_regions %>% 
+  group_by(Region) %>% 
+  mutate(`Mental Health` = sum(`Mental Health`, na.rm=T),
+         `Substance Abuse` = sum(`Substance Abuse`, na.rm=T),
+         `Mental Health and Substance Abuse` = sum(`Mental Health and Substance Abuse`, na.rm=T),
+         `Total Num` = sum(`Total Num`, na.rm=T),
+         `Total Pop` = sum(Pop, na.rm=T),
+         `Total MOE` = moe_sum(MOE, Pop),
+         `% MH` = (`Mental Health` / `Total Num`)*100, 
+         `% SA` = (`Substance Abuse` / `Total Num`)*100,  
+         `% MH-SA` = (`Mental Health and Substance Abuse` / `Total Num`)*100) %>% 
+    select(Region, Year, `Region`, `Mental Health`, `Substance Abuse`, `Mental Health and Substance Abuse`, 
+           `Total Num`, `% MH`, `% SA`, `% MH-SA`, `Total Pop`, `Total MOE`))
+
+
+
+
+#rates are calculated per 10,000
+sa_mh_regions_calc <- sa_mh_regions_calc %>% 
+  mutate(`Total Pop` = (`Total Pop`/1e4), 
+         `Total MOE` = (`Total MOE`/1e4))
+
+sa_mh_regions_calc <- sa_mh_regions_calc %>% 
+  mutate(`MH Rate` = round((`Mental Health` / `Total Pop`), 2),
+         `MH Rate MOE` = round((calcMOE(`Mental Health`, `Total Pop`, 0, `Total MOE`)), 2),
+         `SA Rate` = round((`Substance Abuse` / `Total Pop`), 2),
+         `SA Rate MOE` = round((calcMOE(`Substance Abuse`, `Total Pop`, 0, `Total MOE`)), 2),
+         `MHSA Rate` = round((`Mental Health and Substance Abuse` / `Total Pop`), 2),
+         `MHSA Rate MOE` = round((calcMOE(`Mental Health and Substance Abuse`, `Total Pop`, 0, `Total MOE`)), 2),
+         `Total Rate` = round((`Total Num` / `Total Pop`), 2),
+         `Total Rate MOE` = round((calcMOE(`Total Num`, `Total Pop`, 0, `Total MOE`)), 2))
+
+sa_mh_regions_long <- gather(sa_mh_regions_calc, Variable, Value, 3:19, factor_key = FALSE)
+
+
+sa_mh_regions_long <- sa_mh_regions_long[!grepl("MOE", sa_mh_regions_long$Variable),]
+sa_mh_regions_long <- sa_mh_regions_long[!grepl("Pop", sa_mh_regions_long$Variable),]
+
+#Assign `Admission Type` column
+sa_mh_regions_long$`Admission Type` <- NA
+sa_mh_regions_long$`Admission Type`[sa_mh_regions_long$Variable == "Mental Health"] <- "Mental Health"
+sa_mh_regions_long$`Admission Type`[sa_mh_regions_long$Variable == "Substance Abuse"] <- "Substance Abuse"
+sa_mh_regions_long$`Admission Type`[sa_mh_regions_long$Variable == "Mental Health and Substance Abuse"] <- "Mental Health and Substance Abuse"
+sa_mh_regions_long$`Admission Type`[sa_mh_regions_long$Variable == "Total Num"] <- "Total"
+sa_mh_regions_long$`Admission Type`[grepl("^MH ", sa_mh_regions_long$Variable)] <- "Mental Health"
+sa_mh_regions_long$`Admission Type`[grepl("^SA ", sa_mh_regions_long$Variable)] <- "Substance Abuse"
+sa_mh_regions_long$`Admission Type`[grepl("^MHSA ", sa_mh_regions_long$Variable)] <- "Mental Health and Substance Abuse"
+sa_mh_regions_long$`Admission Type`[grepl("Total", sa_mh_regions_long$Variable)] <- "Total"
+sa_mh_regions_long$`Admission Type`[grepl("^MH ", sa_mh_regions_long$Variable)] <- "Mental Health"
+sa_mh_regions_long$`Admission Type`[grepl("^SA ", sa_mh_regions_long$Variable)] <- "Substance Abuse"
+sa_mh_regions_long$`Admission Type`[grepl("^MHSA ", sa_mh_regions_long$Variable)] <- "Mental Health and Substance Abuse"
+sa_mh_regions_long$`Admission Type`[grepl("% MH$", sa_mh_regions_long$Variable)] <- "Mental Health"
+sa_mh_regions_long$`Admission Type`[grepl("% SA", sa_mh_regions_long$Variable)] <- "Substance Abuse"
+sa_mh_regions_long$`Admission Type`[grepl("% MH-SA", sa_mh_regions_long$Variable)] <- "Mental Health and Substance Abuse"
+
+#Assign MT column
+sa_mh_regions_long$`Measure Type` <- "Number of Admissions"
+sa_mh_regions_long$`Measure Type`[grepl("%", sa_mh_regions_long$Variable)] <- "Percent of Admissions"
+sa_mh_regions_long$`Measure Type`[grepl("Rate", sa_mh_regions_long$Variable)] <- "Rate (per 10,000)"
+
+#Remove Variable column
+sa_mh_regions_long$Variable <- NULL
+sa_mh_regions_long$Value <- round(sa_mh_regions_long$Value, 0)
+
+#Setup table
+sa_mh_regions_long <- spread(sa_mh_regions_long, `Measure Type`, Value)
+sa_mh_regions_long <- sa_mh_regions_long[sa_mh_regions_long$`Admission Type` != "Total",]
+sa_mh_regions_long$`Admission Type` <- factor(sa_mh_regions_long$`Admission Type`, levels = c("Mental Health", "Substance Abuse", "Mental Health and Substance Abuse"))
+sa_mh_regions_long <- sa_mh_regions_long %>% arrange(Region, `Admission Type`)
+
 ############################################################################
 #Write to File
 write.table(health_regions, file.path(path_to_data, "health_regions.csv"), sep = ",", row.names = F)
@@ -150,6 +280,8 @@ write.table(health_rates_regions, file.path(path_to_data, "health_rates_regions.
 write.table(SA_regions, file.path(path_to_data, "SA_regions.csv"), sep = ",", row.names = F)
 write.table(SA_regions_long, file.path(path_to_data, "SA_regions_long.csv"), sep = ",", row.names = F)
 write.table(SA_regions_wide, file.path(path_to_data, "SA_regions_wide.csv"), sep = ",", row.names = F)
+write.table(sa_mh_regions, file.path(path_to_data, "sa_mh_regions.csv"), sep = ",", row.names = F)
+write.table(sa_mh_regions_long, file.path(path_to_data, "sa_mh_regions_long.csv"), sep = ",", row.names = F)
 #######EARLY CHILDHOOD############################################################################################################################
 print("early childhood")
 b23 <- read.csv("./raw/birth_to_three_annual_2016_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
@@ -279,19 +411,57 @@ backfill_races <- expand.grid(
 cw_backfill <- merge(cw_race_total, backfill_races, all.y=T)
 cw_backfill$Value[is.na(cw_backfill$Value)] <- 0
 ############################################################################
-cw_data4 <- getURL('http://data.ctdata.org/dataset/73a25e29-e338-4596-afd7-307f67d7484f/resource/ce572760-8506-42c5-9ead-cddb51ee5458/download/employed-or-enrolled-youth.csv')
-cw_eey <- read.csv(textConnection(cw_data4), header=T, stringsAsFactors = FALSE, check.names=FALSE)
-max_year_cw_eey <- max(cw_eey$Year)
-cw_eey <- cw_eey[cw_eey$Year == max_year_cw_eey & cw_eey$Value != -9999,]
-cw_eey_regions <- merge(cw_eey, dcf_regions, by = c("Town", "FIPS"), all.x=T)
-cw_eey_regions$Region <- mylist[match(cw_eey_regions$Region, region_list)]
+cw_data4 <- getURL('http://data.ctdata.org/dataset/c2817b00-a218-4682-916f-1f53348c44f1/resource/48c83bf2-aab8-46f5-9318-95dab76047a6/download/disengaged-youth.csv')
+cw_dy <- read.csv(textConnection(cw_data4), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_cw_dy <- max(cw_dy$Year)
+cw_dy <- cw_dy[cw_dy$Year == max_year_cw_dy & cw_dy$Value != -9999,]
+cw_dy_regions <- merge(cw_dy, dcf_regions, by = c("Town", "FIPS"), all.x=T)
+cw_dy_regions$Region <- mylist[match(cw_dy_regions$Region, region_list)]
+
+cw_dy_regions <- spread(cw_dy_regions, Variable, Value)
+
+cw_dy_regions_calc <- unique(cw_dy_regions %>% 
+  filter(`Measure Type` != "Percent")  %>% 
+  group_by(Region, Gender, Engagement) %>% 
+  mutate(tot_Value = sum(`Disengaged Youth`), 
+        tot_moe = aggregate_moe(`Margins of Error`)) %>% 
+  select(Gender, `Measure Type`, Region, tot_Value, tot_moe, Engagement))
+
+cw_dy_regions_calc <- cw_dy_regions_calc %>% 
+  gather(Variable, Value, 4:5) %>%
+  unite(Combined, Variable, Engagement) %>%
+  spread(Combined, Value)
+
+source('./scripts/from_tidycensus.R')
+
+#calculate % by regions
+cw_dy_regions_calc2 <- cw_dy_regions_calc %>% 
+  mutate(`Percent Engaged` = round((tot_Value_Engaged / tot_Value_Total)*100, 2), 
+         `Percent Disengaged` = round((tot_Value_Disengaged / tot_Value_Total)*100, 2), 
+         `Percent Engaged MOE` = round(moe_prop(tot_Value_Engaged, tot_Value_Total, tot_moe_Engaged, tot_moe_Total), 2),  
+         `Percent Disengaged MOE` = round(moe_prop(tot_Value_Disengaged, tot_Value_Total, tot_moe_Disengaged, tot_moe_Total), 2)) %>% 
+  select(Gender, Region, `Percent Engaged`, `Percent Disengaged`, `Percent Engaged MOE`, `Percent Disengaged MOE`)
+############################################################################
+cw_data5 <- getURL('http://data.ctdata.org/dataset/30462875-af97-4d6e-8567-20cd1f8ae135/resource/8642c967-652b-4f3d-af6e-a4d2984b2206/download/childabuseneglect2017.csv')
+cw_can <- read.csv(textConnection(cw_data5), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_cw_can <- max(cw_can$Year)
+cw_can <- cw_can[cw_can$Year == max_year_cw_can,]
+cw_can_regions <- merge(cw_can, dcf_regions, by = c("Town", "FIPS"), all.x=T)
+cw_can_regions$Region <- mylist[match(cw_can_regions$Region, region_list)]
+cw_can_regions$Category <- "All"
+cw_can_regions$Category[grepl("Neglect", cw_can_regions$`Allegation Type`)] <- "Neglect"
+cw_can_regions$Category[grepl("Risk", cw_can_regions$`Allegation Type`)] <- "Risk"
+cw_can_regions$Category[grepl("Abuse", cw_can_regions$`Allegation Type`)] <- "Abuse"
+
 ############################################################################
 #Write to File
 write.table(cw_total, file.path(path_to_data, "cw_total.csv"), sep = ",", row.names = F)
 write.table(cw_gender_total, file.path(path_to_data, "cw_gender_total.csv"), sep = ",", row.names = F)
 write.table(cw_race_total, file.path(path_to_data, "cw_race_total.csv"), sep = ",", row.names = F)
 write.table(cw_backfill, file.path(path_to_data, "cw_backfill.csv"), sep = ",", row.names = F)
-write.table(cw_eey_regions, file.path(path_to_data, "cw_eey_regions.csv"), sep = ",", row.names = F)
+write.table(cw_dy_regions_calc2, file.path(path_to_data, "cw_dy_regions.csv"), sep = ",", row.names = F)
+write.table(cw_can_regions, file.path(path_to_data, "cw_can_regions.csv"), sep = ",", row.names = F)
+
 ########DEMOGRAPHICS####################################################################################################################################
 print("demographics")
 pop_by_age_gender_df <- dir(path_to_raw, recursive=T, pattern = "pop_by_age_gender_regions")
@@ -309,12 +479,33 @@ mhi_df <- mhi_df[mhi_df$Year == max_year_mhi_regions & mhi_df$`Race/Ethnicity` =
 mhi_df_regions <- merge(mhi_df, dcf_regions, by = c("Town", "FIPS"))
 mhi_df_regions$Region <- mylist[match(mhi_df_regions$Region, region_list)]
 ############################################################################
+pov_data <- getURL('http://data.ctdata.org/dataset/5469c7d4-bb6a-4230-8b14-ab3c33daedb8/resource/5a5a3a39-166f-47ba-ac93-dba793106be8/download/poverty-status-by-town-2016.csv')
+pov_df <- read.csv(textConnection(pov_data), header=T, stringsAsFactors = FALSE, check.names=FALSE)
+max_year_pov_regions <- max(pov_df$Year)
+pov_df <- pov_df[pov_df$Year == max_year_pov_regions & pov_df$`Measure Type` == "Number" & pov_df$Variable == "Poverty Status",]
+pov_df_regions <- merge(pov_df, dcf_regions, by = c("Town", "FIPS"))
+pov_df_regions$Region <- mylist[match(pov_df_regions$Region, region_list)]
+pov_df_regions <- spread(pov_df_regions, `Poverty Status`, Value)
+pov_df_regions <- unique(pov_df_regions %>% 
+  group_by(Region, Age, `Race/Ethnicity`) %>% 
+  mutate(`Below Poverty Level` = sum(`Below Poverty Level`), 
+         `Poverty Status Determined` = sum(`Poverty Status Determined`)) %>% 
+  select (-Town, -FIPS, -`Measure Type`, -Variable))
+
+pov_df_regions <- pov_df_regions %>% 
+  mutate(`Percent Below Poverty Level` = round((`Below Poverty Level` / `Poverty Status Determined`)*100, 2))
+
+
+############################################################################
 #Write to File
 write.table(pop_by_age_gender_regions, file.path(path_to_data, "pop_by_age_gender_regions.csv"), sep = ",", row.names = F)
 write.table(pop_by_race_gender_regions, file.path(path_to_data, "pop_by_race_gender_regions.csv"), sep = ",", row.names = F)
 write.table(pop_by_age_race_regions, file.path(path_to_data, "pop_by_age_race_regions.csv"), sep = ",", row.names = F)
 write.table(mhi_df_regions, file.path(path_to_data, "mhi_df_regions.csv"), sep = ",", row.names = F)
 write.table(mhi_df, file.path(path_to_data, "mhi_df.csv"), sep = ",", row.names = F)
+write.table(pov_df_regions, file.path(path_to_data, "pov_df_regions.csv"), sep = ",", row.names = F)
+
+
 #####BEHAVIORAL HEALTH################################################################################################################################
 print("behavioral health")
 bh_data <- dir(path_to_raw, recursive=T, pattern = "rh.csv")
@@ -490,10 +681,15 @@ max_year_edu6 <- max(edu6$Year)
 myfile7 <- getURL('http://data.ctdata.org/dataset/9572f54c-b1c3-4153-8ead-e5b16e678d90/resource/99a54e37-a66d-4642-a499-c6b3953d8be8/download/studentenrollmentbyraceethnicity2011-2018.csv')
 edu7 <- read.csv(textConnection(myfile7), header=T, stringsAsFactors = FALSE, check.names=FALSE)
 max_year_edu7 <- max(edu7$Year)
+kei <- read.csv("./raw/kindergarten-entrance-inventory-2017_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
+max_year_kei <- max(kei$Year)
+kei <- kei[kei$Year == max_year_kei,]
+kei <- kei %>% select(Year, Domain, FixedDistrict, `Level 1`, `Level 2`, `Level 3`)
+#set -9999 to NA
+kei$`Level 1`[kei$`Level 1` %in% c(-9999)] <- NA
+kei$`Level 2`[kei$`Level 2` %in% c(-9999)] <- NA
+kei$`Level 3`[kei$`Level 3` %in% c(-9999)] <- NA
 
-
-# kei <- read.csv("./raw/kindergarten-entrance-inventory-2017_UNSUPPRESSED.csv", stringsAsFactors = F, header=T, check.names=F)
-# max_year_kei <- max(kei$Year)
 ############################################################################
 #Write to File
 write.table(bh_CT, file.path(path_to_data, "bh_CT.csv"), sep = ",", row.names = F)
@@ -504,6 +700,7 @@ write.table(edu4, file.path(path_to_data, "edu4.csv"), sep = ",", row.names = F)
 write.table(edu5, file.path(path_to_data, "edu5.csv"), sep = ",", row.names = F)
 write.table(edu6, file.path(path_to_data, "edu6.csv"), sep = ",", row.names = F)
 write.table(edu7, file.path(path_to_data, "edu7.csv"), sep = ",", row.names = F)
+write.table(kei, file.path(path_to_data, "kei.csv"), sep = ",", row.names = F)
 
 print("End reading data")
 
