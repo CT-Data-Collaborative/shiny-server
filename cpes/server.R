@@ -19,6 +19,31 @@ library(shiny)
   
 # Define server logic
 shinyServer(function(input, output, session) {
+
+    observeEvent(input$do0a, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })
+    observeEvent(input$do0b, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })
+    observeEvent(input$do0c, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })
+    observeEvent(input$do0d, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })    
+    observeEvent(input$do0e, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })    
+    observeEvent(input$do0f, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "home")
+    })      
     observeEvent(input$do1, {
         updateTabsetPanel(session, "tabs",
                           selected = "indicators")
@@ -36,6 +61,14 @@ shinyServer(function(input, output, session) {
         updateTabsetPanel(session, "tabs",
                           selected = "profiles")      
     }) 
+    observeEvent(input$do5, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "products")      
+    })     
+    observeEvent(input$do6, {
+        updateTabsetPanel(session, "tabs",
+                          selected = "news")      
+    })
     
    output$indicator_table <- renderDataTable({
      my_table <- clean
