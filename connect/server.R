@@ -10,6 +10,15 @@
 # Define server logic
 shinyServer(function(input, output, session) {
   
+########################### 
+  output$acs_year <- renderText({
+    max_yr_spf_calc
+  }) 
+ ########################### 
+   output$acs_year2 <- renderText({
+    max_yr_spf_calc
+  }) 
+ ########################### 
   observeEvent(input$toTop, {
     js$toTop();
  })
@@ -150,42 +159,48 @@ shinyServer(function(input, output, session) {
   })  
   ###########################
   output$sa_ct_value <- renderText({
-    selected = input$select
-    sa_ct <- sa_regions[sa_regions$Region == selected,]
-    sa_ct$Total_Admc <- format(sa_ct$Total_Adm, big.mark=",", scientific=FALSE)
-    sa_ct_num <- unique(sa_ct$Total_Admc)
-    SFY <- unique(sa_ct$SFY)
-    paste("SFY", paste0(SFY-1, "-", SFY), ":", sa_ct_num, sep = " ")
+    data <- sa_ct
+    data$Adm_Count_Yr_State <- format(data$Adm_Count_Yr_State, big.mark=",", scientific=FALSE)
+    sa_ct_num <- unique(data$Adm_Count_Yr_State)
   })
   ###########################
-  sa_regions$Value <- as.numeric(sa_regions$Value)
-  output$HPlot3 <- renderPlotly({
+  sa_table_reactive <- reactive({
+    table <- sa_ct %>% select(-Adm_Count_Yr_State)
+    table$`Number of Admissions` <- format(table$Adm_Count_by_Drug_Yr_State, big.mark=",", scientific=FALSE)
+    table$`Percent of Admissions`<- gsub("$", "%", table$`Pct Adm Drug State`)
+    table <- table %>%
+      arrange(desc(`Adm_Count_by_Drug_Yr_State`)) %>% 
+      select(-c(FiscalYear, Adm_Count_by_Drug_Yr_State, `Pct Adm Drug State`))
+  })
+  
+   output$SATable <- renderTable({
+      sa_table_reactive()
+   }, digits = 0, caption = "Source: CT DMHAS, accessed via ctdata.org", 
+     striped=T, hover=T,  responsive=T, spacing="m", align = 'lcc', width = "100%")
+  ###########################
+  output$sa_region_value <- renderText({
     selected<- input$select
-    shiny::validate(
-      need(input$select != "", "Please select a Region to populate the chart")
-    )   
-    hplot3 <- sa_regions %>% filter(Substance != "Total", Region == selected, !is.na(Total_Adm), Total_Adm != 0)
-    hplot3 <- ggplot(hplot3, aes(y=Town, x=Substance, group= Substance, text=sprintf("%s<br>%s", Town, paste(Total_Adm, Substance, "Admissions", sep = " ")))) +
-                  geom_point(aes(size = Value, color = Substance)) + ylab ("Town") + xlab("Substance") + theme_minimal() +
-              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8)) +
-              scale_x_discrete(labels = function(x) str_wrap(x, width=10)) 
-              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
-              hplot3 <- ggplotly(hplot3, tooltip="text")
-              hplot3 <- hplot3 %>% 
-                layout(margin=list(t=30, b=120, l=90), 
-                       title = paste(paste0(selected, ","), "SFY", paste0(max_year_SA_regions-1, "-", max_year_SA_regions), sep = " "),
-                       annotations = list(x = 1, y = -0.27, 
-                                          text = HTML("Source: Connecticut DMHAS, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
-                                          showarrow = F, 
-                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                                          font=list(size=15, color="grey", align="right")
-                       ),                       
-                       barmode = 'group',
-                       xaxis = list(tickfont = list(size = 12)), 
-                       bargap = 0.3, showlegend = FALSE
-                )
-              hplot3   
-  })  
+    data <- subset(SA_regions_calc_final, Region == selected & FiscalYear == max_year_SA_regions)
+    data$Adm_Count_Yr_Region <- format(data$Adm_Count_Yr_Region, big.mark=",", scientific=FALSE)
+    sa_region_num <- unique(data$Adm_Count_Yr_Region)
+  })
+  ###########################
+  sa_region_table_reactive <- reactive({
+    selected<- input$select
+    table <- subset(SA_regions_calc_final, Region == selected)
+    table$`Number of Admissions` <- format(table$Adm_Count_by_Drug_Yr_Region, big.mark=",", scientific=FALSE)
+    table$`Percent of Admissions`<- gsub("$", "%", table$`Pct Adm Drug Region`)
+    table <- unique(table %>%
+      arrange(desc(`Adm_Count_by_Drug_Yr_Region`)) %>% 
+      select(-c(Town, Region, FiscalYear, Adm_Count_Yr_Town, Adm_Count_by_Drug_Yr_Town, Adm_Count_Yr_Region, Adm_Count_by_Drug_Yr_Region, 
+                Adm_Count_by_Drug_Yr_State, Adm_Count_Yr_State, `Pct Adm Drug Town`, `Pct Adm Drug Region`, `Pct Adm Drug State`)))
+  })
+   
+  output$SARegionTable <- renderTable({
+      sa_region_table_reactive()
+   }, digits = 0, caption = "Source: CT DMHAS, accessed via ctdata.org", 
+     striped=T, hover=T,  responsive=T, spacing="m", align = 'lcc', width = "100%")
+   
   ###########################
 
   mhsa_table_reactive <- reactive({
@@ -201,6 +216,115 @@ shinyServer(function(input, output, session) {
       mhsa_table_reactive()
    }, digits = 0, caption = "Source: CT DMHAS, accessed via ctdata.org", 
      striped=T, hover=T, condensed=T, responsive=T, spacing="s", align = 'lccc', width = "100%")
+   
+########################### 
+  output$suicide_year1 <- renderText({
+    max_year_suicide_regions
+  }) 
+########################### 
+  output$suicide_year2 <- renderText({
+    max_year_suicide_regions
+  })    
+  ###########################
+  output$suicide_value1 <- renderText({
+    selected<- input$select
+    suicide_table <- subset(suicide_regions, Region == selected & Year == max_year_suicide_regions)
+    count <- suicide_table %>% 
+      filter(Value != -6666, `Measure Type` == "Number") %>% 
+      summarise(Total = sum(Value))
+    count$TotalC <- format(count$Total, big.mark=",", scientific=FALSE) 
+    number <- count$TotalC
+  })
+  ###########################
+  output$suicide_value2 <- renderText({
+    selected<- input$select
+    suicide_table <- subset(suicide_regions, Region == selected & Year == max_year_suicide_regions)
+    count <- suicide_table %>% 
+      filter(Value != -6666, `Measure Type` == "Number") %>% 
+      summarise(Total = sum(Value))
+    count$TotalC <- format(count$Total, big.mark=",", scientific=FALSE) 
+    number <- count$TotalC
+  })
+  ###########################
+  output$suicide_cr <- renderText({
+    selected<- input$select
+    suicide_table <- subset(suicide_regions, Region == selected & Year == max_year_suicide_regions)
+    count <- suicide_table %>% 
+      filter(`Measure Type` == "Crude Rate (per 100,000)")
+    rate <- count$Value
+  })
+  ###########################
+  output$suicide_aamr <- renderText({
+    selected<- input$select
+    suicide_table <- subset(suicide_regions, Region == selected & Year == max_year_suicide_regions)
+    count <- suicide_table %>% 
+      filter(`Measure Type` == "AAMR (per 100,000)")
+    rate <- count$Value
+  })   
+  ###########################
+  output$HPlot3 <- renderPlotly({
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )    
+    selected<- input$select
+    #if (selected %in% c("Western Region", "Central Region")) {
+    #  lm = 200
+    #  rm = 70
+    #} else if (selected %in% c("Eastern Region")) {
+    #  lm = 100
+    #  rm = 70
+    #} else {
+    #  lm = 0
+    #  rm = 0
+    #}
+    rate_sel <- input$rates
+    if (rate_sel == "Crude Rate (per 100,000)") {
+      title = "Crude Rate <br> (per 100,000)"
+      label = "Crude Rate"
+    } else {
+      title = "AAMR <br> (per 100,000)"
+      label = "AAMR"
+    }
+    suicide_table <- subset(suicide_regions, Region == selected & Year == max_year_suicide_regions)
+    merge.shp <- merge(CT_towns, suicide_table, by.x="id", by.y = "Town", all.y=TRUE)
+    final.plot <- merge.shp %>% 
+      filter(`Measure Type` == rate_sel) %>% 
+      arrange(order)
+    final.plot$Value[final.plot$Value == -6666] <- NA
+    final.plot$hole <- NULL
+    mymap_value <- ggplot() + geom_polygon(data = final.plot, aes(x = long, y = lat, group = id, fill = Value, 
+                                                                  text = sprintf("%s<br>%s: %s", id, label, Value)),  color = "black") + 
+                   scale_fill_gradientn(colours = c("darkgreen", "yellow", "orange", "red"), limits = c(0,43.06), name = title) +
+                   coord_fixed(ratio = 1) +
+                   theme(axis.line=element_blank(), axis.text.x=element_blank(),
+                         axis.text.y=element_blank(), axis.ticks=element_blank(),
+                         axis.title.x=element_blank(),
+                         axis.title.y=element_blank(),
+                         panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
+                         panel.grid.minor=element_blank(),plot.background=element_blank()) +
+                   labs(title=unique(final.plot$Region), fill = "Crude Rate", x="", y="")
+    
+    hplot3 <- ggplotly(mymap_value, tooltip = "text")
+
+    hplot3 <- hplot3 %>% 
+      layout(margin=list(t=30, b=30, l=0, r=0), 
+             title = paste(paste0(selected, ","), max_year_suicide_regions, sep = " "),
+             annotations = list(
+               list(x = 1.2, y = -0.06,
+                                text = HTML("Source: Connecticut Department of Public Health, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"),
+                                showarrow = F, 
+                                xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                font=list(size=15, color="grey", align="right")
+             ), 
+             list(x = 1.2, y = -0.01,
+                                text = HTML("Note: NA denotes suppressed values"),
+                                showarrow = F, 
+                                xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                                font=list(size=15, color="grey", align="right")
+             )
+      ))
+    hplot3 
+  })    
   ###########################
   ecplot1_reactive <- reactive({
     selected<- input$select
@@ -563,56 +687,157 @@ shinyServer(function(input, output, session) {
     paste("+/-", moe, sep = " ")
   })  
   ########################### 
-  cwneglect_reactive <- reactive ({
-    selected<- input$select
-    town_sel <- input$town_select
-    cwplot5 <- cw_can_regions
-    cwplot5 <- subset(cwplot5, Region == selected & Town == town_sel & Value != -9999 & Category != "All")
-    cwplot5
-  })
-  
-  cw_plot5 <- ggplot(cwplot5, aes(Category, Value, text=sprintf("%s<br>%s<br>%s<br>%s<br>%s", Town, Region, Category, `Allegation Type`, Value))) + 
-    geom_bar(aes(fill = `Allegation Type`),
-                width = 0.4, position = position_dodge(width=0.5), stat="identity")
-  
-  cw_plot5 <- ggplotly(cw_plot5, tooltip = "text")
-  
-  
-  output$CWPlot_neglect <- renderPlotly({
-    shiny::validate(
-      need(input$select != "", "Please select a Region to populate the chart")
-    )    
-    selected<- input$select
-    cw_plot5 <- ggplot(cwneglect_reactive(), aes(x=`Type of Placement`, y=Value, fill = `Race/Ethnicity`, text=sprintf("%s<br>%s<br>%s", `Race/Ethnicity`, `Type of Placement`, Value))) +
-              geom_bar(stat="identity", position = "dodge") + 
-              xlab ("Type of Placement") + ylab("Number") + theme_minimal() +
-              theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
-              scale_fill_brewer(palette="Paired") +
-              scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
-              scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
-              cwplot2 <- ggplotly(cwplot2, tooltip="text", textposition = 'auto')
-              cwplot2 <- cwplot2 %>% 
-                layout(margin=list(l=220, b=82, t=30, r=130), 
-                      title = paste(paste0(selected, ","), max_year_cw_race, "-", placement, sep = " "),
-                       annotations = list(x = 1, y = -0.27, 
-                                          text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
-                                          showarrow = F, 
-                                          xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                                          font=list(size=15, color="grey", align="right")
-                       ),                       
-                       barmode = 'group',
-                       xaxis = list(tickfont = list(size = 12)), 
-                       bargap = 0.3, legend = list(x = 1, y = 1)
-                )
-              cwplot2
-  })
-  
-  
-  
-  
-  
-  
-  
+#     selected<- input$select
+#     cwplot5 <- test3
+#     cwplot5 <- subset(cwplot5, Region == selected)
+#     cwplot5$Town <- factor(cwplot5$Town, levels = unique(cwplot5$Town)[order(cwplot5$`Sub Rate`, decreasing = TRUE)])
+#     cwplot5 <- cwplot5 %>% filter(!is.na(`Sub Rate`))
+#     
+#     table1 <- cwplot5 %>%
+#       gather(New_Var, Value, 4:6) %>% 
+#       unite(Combined, New_Var, `Allegation Type`) %>% 
+#       spread(Combined, Value)
+#       
+#     out <- datatable(table1, rownames = FALSE, options = list(dom = 't')) %>%
+#       formatStyle('Alleged_Educational Neglect',
+#                   background = styleColorBar(table1$`Alleged_Educational Neglect`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right') %>%
+#       formatStyle('Alleged_Emotional Neglect',
+#                   background = styleColorBar(table1$`Alleged_Emotional Neglect`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right') %>%
+#       formatStyle('Alleged_Medical Neglect',
+#                   background = styleColorBar(table1$`Alleged_Medical Neglect`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right') %>%
+#       formatStyle('Alleged_Physical Neglect',
+#                   background = styleColorBar(table1$`Alleged_Physical Neglect`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right') %>%
+#       formatStyle('Alleged_Physical Abuse',
+#                   background = styleColorBar(table1$`Alleged_Physical Abuse`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right') %>%
+#       formatStyle('Alleged_Sexual Abuse',
+#                   background = styleColorBar(table1$`Alleged_Sexual Abuse`, 'orange'),
+#                   backgroundSize = '95% 80%',
+#                   backgroundRepeat = 'no-repeat',
+#                   backgroundPosition = 'right')
+#    out
+#    
+#    
+# table1[,8] %>%
+#   mutate(
+#     town = row.names(.),
+#     mpg = color_tile("white", "orange")(mpg),
+#     cyl = cell_spec(cyl, "html", angle = (1:5)*60, 
+#                     background = "red", color = "white", align = "center"),
+#     disp = ifelse(disp > 200,
+#                   cell_spec(disp, "html", color = "red", bold = T),
+#                   cell_spec(disp, "html", color = "green", italic = T)),
+#     hp = color_bar("lightgreen")(hp)
+#   ) %>%
+#   select(car, everything()) %>%
+#   kable("html", escape = F) %>%
+#   kable_styling("hover", full_width = F) %>%
+#   column_spec(5, width = "3cm") %>%
+#   add_header_above(c(" ", "Hello" = 2, "World" = 2))
+#    
+#    
+#    
+#     
+#     
+#     
+#     
+#     
+# 
+#     cwplot_5 <- plot_ly(cwplot5, x = ~cwplot5$Town, y = ~cwplot5$`Sub Rate`, 
+#                      name = 'Sub Rate', type = 'bar', #mode = 'markers',
+#                      hoverinfo = 'text', 
+#                      text = ~paste(paste0(Town, ":"), `Allegation Type`, paste0(`Sub Rate`, "%"), sep = " "),
+#                      transforms = list(
+#                        list(
+#                          type = 'groupby',
+#                          groups = cwplot5$`Allegation Type`,
+#                          styles = list(
+#                            list(target = "Emotional Neglect", value = list(marker =list(color = 'blue'))), 
+#                            list(target = "Educational Neglect", value = list(marker =list(color = 'red'))), 
+#                            list(target = "Medical Neglect", value = list(marker =list(color = 'orange'))),
+#                            list(target = "Physical Neglect", value = list(marker =list(color = 'green'))),
+#                            list(target = "Physical Abuse", value = list(marker =list(color = 'purple'))),
+#                            list(target = "Sexual Abuse", value = list(marker =list(color = 'grey')))
+#                          )
+#                        )
+#                      )) %>%
+#      layout(margin=list(b=100, r=45),
+#             title = paste(selected, max_year_cw_can, sep = ", "),
+#          xaxis = list(title = "Town", tickangle = 45),
+#          yaxis = list(title = "Sub Rate"), 
+#          barmode = 'group', 
+#          legend = list(x = 0.7, y = 0.95),
+#          annotations = list(x = 1, y = -0.35, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+#                             showarrow = F, xref='paper', yref='paper', 
+#                             xanchor='right', yanchor='auto', xshift=0, yshift=0,
+#                             font=list(size=15, color="grey")))
+#       cwplot_5
+#     
+#     
+#   #   cwplot5 <- cwplot5 %>% arrange(desc(Alleged))
+#   #   cwplot5a <- subset(cwplot5, Region == selected & `Allegation Type` == "Educational Neglect")
+#   #   cwplot5b <- subset(cwplot5, Region == selected & `Allegation Type` == "Emotional Neglect")
+#   #   cwplot5c <- subset(cwplot5, Region == selected & `Allegation Type` == "Medical Neglect")
+#   #   cwplot5d <- subset(cwplot5, Region == selected & `Allegation Type` == "Physical Neglect")
+#   #   cwplot5e <- subset(cwplot5, Region == selected & `Allegation Type` == "Physical Abuse")
+#   #   cwplot5f <- subset(cwplot5, Region == selected & `Allegation Type` == "Sexual Abuse")
+#   # 
+#   # cwneglect_reactive <- reactive ({
+#   #   selected<- input$select
+#   #   #town_sel <- input$town_select
+# 
+#   })
+#   
+#   cw_plot5a <- ggplot(cwplot5a, aes(Town, Alleged, text=sprintf("%s<br>%s<br>%s", Town, `Allegation Type`, Alleged))) + 
+#     geom_bar(aes(fill = `Allegation Type`),
+#                 width = 0.4, position = position_dodge(width=0.5), 
+#                 stat="identity")
+#   
+#   cw_plot5a <- ggplotly(cw_plot5a, tooltip = "text")
+#   
+#   
+#   output$CWPlot_neglect <- renderPlotly({
+#     shiny::validate(
+#       need(input$select != "", "Please select a Region to populate the chart")
+#     )    
+#     selected<- input$select
+#     cw_plot5 <- ggplot(cwplot5, aes(x=`Allegation Type`, y=Value, fill = `Report Status`, text=sprintf("%s<br>%s<br>%s", `Report Status`, `Allegation Type`, Value))) +
+#               geom_bar(stat="identity", position = "dodge") + 
+#               xlab ("Allegation Type") + ylab("Number") + theme_minimal() +
+#               theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), axis.line.x = element_line(), plot.title = element_text(size=8))+
+#               scale_fill_brewer(palette="Paired") +
+#               scale_x_discrete(labels = function(x) str_wrap(x, width=40)) + coord_flip() +
+#               scale_y_continuous(expand = c(0,0), breaks = NULL) #remove space around plot
+#               cw_plot5 <- ggplotly(cw_plot5, tooltip="text", textposition = 'auto')
+#               cw_plot5 <- cw_plot5 %>% 
+#                 layout(margin=list(l=220, b=82, t=30, r=130), 
+#                       title = paste(paste0(selected, ","), max_year_cw_race, "-", sep = " "),
+#                        annotations = list(x = 1, y = -0.27, 
+#                                           text = HTML("Source: CT Dept of Children and Families, accessed via <a href='https://data.ct.gov/' target='_blank'>data.ct.gov</a>"),
+#                                           showarrow = F, 
+#                                           xref='paper', yref='paper', xanchor='right', yanchor='auto', xshift=0, yshift=0,
+#                                           font=list(size=15, color="grey", align="right")
+#                        ),                       
+#                        barmode = 'group',
+#                        xaxis = list(tickfont = list(size = 12)), 
+#                        bargap = 0.3, legend = list(x = 1, y = 1)
+#                 )
+#               cw_plot5
+#   })
   ########################### 
   output$race_sel_text1 <- renderText({
     if (input$race == "All" & input$select == "Statewide") {
@@ -949,7 +1174,7 @@ shinyServer(function(input, output, session) {
                      error_y = ~list(array = `Margins of Error`, color = '#000000')) %>%
      layout(margin=list(b=100, r=45),
             title = paste(selected, max_year_mhi_regions, sep = ", "),
-         xaxis = list(title = "Towns", tickangle = 45),
+         xaxis = list(title = "Town", tickangle = 45),
          yaxis = list(title = "Median Household Income ($)"), 
          barmode = 'group', 
          legend = list(x = 0.7, y = 0.95),
@@ -960,8 +1185,12 @@ shinyServer(function(input, output, session) {
       dplot3
   })
   ###########################  
-  output$mhi_text <- renderText({
+  output$ct_text <- renderText({
      input$select
+  })
+  ###########################  
+  output$reg_text <- renderText({
+     gsub(" Region", "", input$select)
   })
   ########################### 
   output$mhi_value <- renderText({
@@ -1125,8 +1354,90 @@ shinyServer(function(input, output, session) {
       )
     dplotpov  
   })
-  ###########################
 
+  ########################### 
+  output$spf_value <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_valueC <- trimws(unique(d_plot_spf$total_number_of_single_familiesC))
+  }) 
+  ########################### 
+  output$spf_moe <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_moeC <- trimws(unique(d_plot_spf$total_number_of_single_families_moeC))
+    paste0("+/-", max_moeC)
+  })   
+  ########################### 
+  output$spf_valueR <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_valueC <- trimws(unique(d_plot_spf$total_number_of_single_familiesC))
+  }) 
+  ########################### 
+  output$spf_moeR <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_moeC <- trimws(unique(d_plot_spf$total_number_of_single_families_moeC))
+    paste0("+/-", max_moeC)
+  })     
+  ########################### 
+  output$spf_valueP <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_valueC <- trimws(unique(d_plot_spf$Region_pct_single_parent_families))
+    paste0(max_valueC, "%")
+  }) 
+  ########################### 
+  output$spf_moeP <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_moeC <- trimws(unique(d_plot_spf$Region_pct_single_parent_families_moe))
+    paste0("+/-", max_moeC)
+  })   
+  ########################### 
+  output$spf_valuePR <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_valueC <- trimws(unique(d_plot_spf$Region_pct_single_parent_families))
+    paste0(max_valueC, "%")
+  }) 
+  ########################### 
+  output$spf_moePR <- renderText({
+    selected<- input$select
+    d_plot_spf <- subset(spf_calc, Region == selected)
+    max_moeC <- trimws(unique(d_plot_spf$Region_pct_single_parent_families_moe))
+    paste0("+/-", max_moeC)
+  })    
+  ###########################
+  output$DPlot_spf <- renderPlotly({
+    shiny::validate(
+      need(input$select != "", "Please select a Region to populate the chart")
+    )    
+    selected<- input$select
+    d_plot_spf <- spf_calc
+    d_plot_spf <- subset(d_plot_spf, Region == selected)
+    d_plot_spf$Town <- factor(d_plot_spf$Town, levels = unique(d_plot_spf$Town)[order(d_plot_spf$`Town_pct_single_parent_families`, decreasing = FALSE)])
+    dplotspf <- plot_ly(d_plot_spf, x = ~Town, y = ~`Town_pct_single_parent_families`, 
+                     name = 'Single Parent Families', type = 'scatter', mode = 'markers',
+                     hoverinfo = 'text', 
+                     text = ~paste(Town, paste("<b>Number:</b>", paste0(`Single-Parent - All - Single-Parent FamiliesC`, ""), "+/-", `Single-Parent - All - Margins of ErrorC`, sep = " "),
+                       paste("<b>Percent:</b>", paste0(`Town_pct_single_parent_families`, "%"), "+/-", `Town_pct_single_parent_families_moe`, sep = " ") , sep = "<br>"),
+                     error_y = ~list(array = `Town_pct_single_parent_families_moe`, color = '#000000')) %>%
+     layout(margin=list(b=100, r=45),
+            title = paste(selected, max_year_mhi_regions, sep = ", "),
+         xaxis = list(title = "Town", tickangle = 45),
+         yaxis = list(title = "Percent Families with Single Parents"), 
+         barmode = 'group', 
+         legend = list(x = 0.7, y = 0.95),
+         annotations = list(x = 1, y = -0.35, text = HTML("Source: U.S. Census, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+                            showarrow = F, xref='paper', yref='paper', 
+                            xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                            font=list(size=15, color="grey")))
+      dplotspf 
+  })
+  ###########################
+  
   cols <- c("White", "Black", "Hispanic", "Other", "Total")
   bh_plot1[cols] <- sapply(bh_plot1[cols],as.numeric)
 
@@ -1302,7 +1613,7 @@ shinyServer(function(input, output, session) {
          e_plot1 <- ggplotly(e_plot1, tooltip="text")
          e_plot1 <- e_plot1 %>% 
            layout(margin=list(l=40, b=90), 
-                  annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+                  annotations = list(x = 1, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
                   showarrow = F, xref='paper', yref='paper', 
                   xanchor='right', yanchor='auto', xshift=0, yshift=0,
                   font=list(size=15, color="grey")))
@@ -1334,7 +1645,7 @@ shinyServer(function(input, output, session) {
       e_plot2 <- ggplotly(e_plot2, tooltip="text")
       e_plot2 <- e_plot2 %>% layout(
         margin=list(l=40, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        annotations = list(x = 1, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),
@@ -1370,7 +1681,7 @@ shinyServer(function(input, output, session) {
       e_plot3 <- ggplotly(e_plot3, tooltip="text")
       e_plot3 <- e_plot3 %>% layout(
         margin=list(l=50, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        annotations = list(x = 1, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),
@@ -1383,8 +1694,9 @@ shinyServer(function(input, output, session) {
   ########################### 
   output$EPlot4 <- renderPlotly({
     selected<- input$select_edu
-    edu4_plot <- edu4[edu4$District %in% selected & edu4$Value != -6666 & edu4$Value != -9999 & 
-                        edu4$Year == max_year_edu4,]
+    incidents <- rbind(edu4, edu8)
+    edu4_plot <- incidents[incidents$District %in% selected & incidents$Value != -6666 & incidents$Value != -9999 & 
+                        incidents$Year == max_year_edu4 & !grepl("Students", incidents$Variable),]
     edu4_plot$Valuec <- format(edu4_plot$Value, big.mark = ",", scientific = FALSE)
     
     shiny::validate(
@@ -1406,7 +1718,7 @@ shinyServer(function(input, output, session) {
       e_plot4 <- ggplotly(e_plot4, tooltip="text")
       e_plot4 <- e_plot4 %>% layout(
         margin=list(l=50, b=90), 
-        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        annotations = list(x = 1, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),
@@ -1459,7 +1771,7 @@ shinyServer(function(input, output, session) {
       e_plot5 <- ggplotly(e_plot5, tooltip="text")
       e_plot5 <- e_plot5 %>% layout(
         margin=list(l=50, b=110), 
-        annotations = list(x = 1.2, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
+        annotations = list(x = 1, y = -0.3, text = HTML("Source: Connecticut State Department of Education, accessed via <a href='http://ctdata.org/' target='_blank'>ctdata.org</a>"), 
         showarrow = F, xref='paper', yref='paper', 
         xanchor='right', yanchor='auto', xshift=0, yshift=0,
         font=list(size=15, color="grey")),

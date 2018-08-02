@@ -26,6 +26,10 @@ library(dplyr)
 library(rgdal)
 library(censusr)
 library(RColorBrewer)
+library(formattable)
+library(DT)
+library(shinyWidgets)
+
 
 ##Read in data
 #######HEALTH####################################################################################################################################
@@ -57,7 +61,9 @@ shinyUI(
                   }", 
                  ".navbar .navbar-text {
                     float: right;
-                  }"
+                  }",
+                 ".shiny-output-error { visibility: hidden; }",
+                 ".shiny-output-error:before { visibility: hidden; }"
       ), 
       tags$style(type="text/css", "body {padding-top: 70px;}")
     ),
@@ -90,7 +96,7 @@ shinyUI(
           column(10, offset = 1, panel_div("primary", 
                               "Need Help? Email Us!",
                               content = HTML( "Ask a question or provide feedback to the <a href='mailto:info@ctdata.org?Subject=CONNECT%20Dashboard' target='_top'>Connecticut Data Collaborative</a>")))
-        ),  
+        ),
         tags$footer(
           tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
           HTML(paste("Connecticut Data Collaborative is a Project of InformCT, Inc.", 
@@ -113,17 +119,7 @@ shinyUI(
           # ),
       #  ),
            dashboardPage(
-             dashboardHeader(disable=T
-          #      column(10, offset = 1, 
-          #        bsCollapsePanel("Click Here for Directions", 
-          #                        HTML('<ul><li>Use the pull down menu on the left to select the Region or statewide data you wish to explore.
-          #                              <li>Click through the category tabs along the top to explore the various categories.
-          #                              <li>Use the Education tab to select data by District.
-          #                              <li>Town/District level data is available by clicking on the <font size="4" color="dodgerblue">Explore the Data</font> link.</li><ul/>'),
-          #                        style="primary"
-          #        )
-          # )
-          ),
+             dashboardHeader(disable=T),
              dashboardSidebar(
                width=350, 
                tags$head(
@@ -153,8 +149,13 @@ shinyUI(
                                        color: #000000;
                                        font-size: 14px;}
                                 .selectize-dropdown {
-                                       font-size: 14px; }"
-                 )
+                                       font-size: 14px; }", 
+                          "#ct_text {display:inline}", 
+                          "#reg_text {display:inline}",
+                          "#acs_year {display:inline}", "#acs_year2 {display:inline}",
+                          "#suicide_year1 {display:inline}", "#button {display:inline}",
+                          ".small-box.bg-navy { background-color: #272869 !important; color: white !important; }", 
+                          ".bg-navy {background-color: #272869 !important; }")
                ),
                conditionalPanel(
                  style = "position:fixed;",
@@ -186,7 +187,7 @@ shinyUI(
                    style="padding: 0px 0px",
                    selectizeInput("select_edu",
                      label = HTML('<h3 style="color:black;">Select One or More Districts</h3><br><p style="color:black;">Calculated percents 
-                                   resulting from counts of less than 5 students have been suppressed. Be aware that as the number of districts 
+                                   resulting from counts of less than 5 students have been suppressed. <br>Be aware that as the number of districts 
                                    selected increases, visibility/usability of these charts may decrease.</p>'),
                      choices = district_list, selected = "Hartford School District", multiple=TRUE, 
                      options = list(placeholder = "Start typing in a District", 
@@ -199,6 +200,149 @@ shinyUI(
              ), #end of dashboardSidebar
              dashboardBody(
                tabsetPanel(
+              tabPanel("Demographics", value = 5,
+                fluidRow(
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                  column(8,
+                    box(width="100%",
+                        plotlyOutput("DPlot_age_race", width="100%")
+                    )
+                  ),
+                  column(4,
+                    box(width="100%",
+                      selectInput("race", 
+                                   label = HTML('<h4 style="color:black;">Select Race/Ethnicity:</h4>'),
+                                   choices = list("All", 
+                                                  "White Alone",
+                                                  "White Alone Not Hispanic or Latino",
+                                                  "Hispanic or Latino",
+                                                  "Black or African American Alone",
+                                                  "Some Other Race Alone",
+                                                  "Asian Alone",
+                                                  "Two or More Races",
+                                                  "American Indian and Alaska Native Alone",
+                                                  "Native Hawaiian and Other Pacific Islander"), selected = "All"), 
+                      size = "default"
+                    ), 
+                      fluidRow(width=4,
+                               infoBox(value= textOutput("race_sel_text1"),
+                                       subtitle = textOutput("race_sel_value1"),
+                                       title = "",
+                                       icon = shiny::icon("hashtag"), color = "navy", width = NULL,
+                                       href = NULL, fill = FALSE)),
+                      fluidRow(width=4,
+                               infoBox(value= textOutput("race_sel_text2"), 
+                                       subtitle = textOutput("race_sel_value2"),
+                                       title = "",
+                                       icon = shiny::icon("percent"), color = "navy", width = NULL,
+                                       href = NULL, fill = FALSE))
+
+                  ), 
+                  collapsible=T
+                )
+                ),  
+                fluidRow(
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Gender - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                        plotlyOutput("DPlot_age", width="100%"),
+                        collapsible = T
+                  )
+                ),
+                fluidRow(
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Race/Ethnicity and Gender - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                        plotlyOutput("DPlot_race", width="100%"),
+                        collapsible = T
+                  )
+                ),
+                fluidRow(
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Single-Parent Families - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/single-parent-families" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    conditionalPanel(
+                      condition="input.select=='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 h4('Connecticut Single-Parent Families: ', style="display:inline", textOutput("acs_year")), HTML("<br><br>"),
+                                 valueBox(value = textOutput("spf_value"), subtitle = textOutput("spf_moe"), icon = NULL, color = "navy", width = 4, href = NULL),                                 
+                                 valueBox(value = textOutput("spf_valueP"), subtitle = textOutput("spf_moeP"), icon = NULL, color = "navy", width = 4, href = NULL),
+                                 HTML('<h5 align="right" style="color:grey;">Source: U.S. Census<br>accessed via ctdata.org</h5>')
+                             )
+                      ), collapsible=T
+                    ), 
+                    conditionalPanel(
+                      condition="input.select!='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 plotlyOutput("DPlot_spf", width="100%")
+                             )
+                      ),
+                      column(3,
+                             box(width="100%",
+                                 h4("Single-Parent Families in Region"),
+                                 HTML('<h3><span id="spf_valueR" class="shiny-text-output"></span>&nbsp;<span id="spf_moeR"
+                                       style="color:grey;font-size:0.67em;"
+                                       class="shiny-text-output"></span></h3>')
+                             ),
+                             box(width="100%",
+                                 h4("Percent of all Families in Region"),
+                                 HTML('<h3><span id="spf_valuePR" class="shiny-text-output"></span>&nbsp;<span id="spf_moePR"
+                                       style="color:grey;font-size:0.67em;"
+                                       class="shiny-text-output"></span></h3>')
+                             )
+                      ), collapsible=T
+                    ), collapsible=T
+                      
+                  )
+                ),
+                fluidRow(
+                  box(width=12, 
+                      title = tagList(shiny::icon("bar-chart"), "Median Household Income - ", 
+                                      HTML('<a href="http://data.ctdata.org/visualization/median-household-income-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    conditionalPanel(
+                      condition="input.select=='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 h4('Connecticut Median Household Income: ', style="display:inline", textOutput("acs_year2")), HTML("<br><br>"),
+                                 valueBox(value = textOutput("mhi_value"), subtitle = textOutput("mhi_moe"), icon = NULL, color = "navy", width = 4, href = NULL),                                 
+                                 HTML('<h5 align="right" style="color:grey;">Source: U.S. Census<br>accessed via ctdata.org</h5>')
+                             )
+                      ), collapsible=T
+                    ), 
+                    conditionalPanel(
+                      condition="input.select!='Statewide'",
+                      column(9,
+                             box(width="100%",
+                                 plotlyOutput("Dplot_mhi", width="100%")
+                             )
+                      ),
+                      column(3,
+                             box(width="100%",
+                                 HTML('<h4 style="color:black;"> Max Median Household Income</h4>'),
+                                 h3(textOutput("max_mhi_town")),
+                                 HTML('<h3><span id="max_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="max_mhi_moe" 
+                                       style="color:grey;font-size:0.67em;" 
+                                       class="shiny-text-output"></span></h3>')
+                             ),
+                             box(width="100%",
+                                 HTML('<h4 style="color:black;">Min Median Household Income</h4>'),
+                                 h3(textOutput("min_mhi_town")),
+                                 HTML('<h3><span id="min_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="min_mhi_moe"
+                                       style="color:grey;font-size:0.67em;"
+                                       class="shiny-text-output"></span></h3>')
+                             )
+                      ), collapsible=T
+                    ), collapsible=T
+                  )
+                ), 
+                fluidRow(
+                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Poverty Status by Age Range and Race/Ethnicity - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/poverty-status-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                        plotlyOutput("DPlot_pov", width="100%"),
+                        collapsible = T
+                  )
+                )
+              ),                 
                  tabPanel("Health", value = 1,
                    fluidRow(
                      box(width=12, title = tagList(shiny::icon("bar-chart"), "Mortality Rates - ", 
@@ -215,8 +359,71 @@ shinyUI(
                   )
                 ),
                 fluidRow(
+                  box(width=12, title = tagList(shiny::icon("info-circle"), "Suicide Rates - ", 
+                                                HTML('<a href="http://data.ctdata.org/visualization/suicide" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                    conditionalPanel(
+                      condition="input.select=='Statewide'",
+                      column(12,
+                             box(width="100%",
+                                 h4('Connecticut Suicide Statistics: ', style="display:inline", textOutput("suicide_year1")), HTML("<br><br>"),
+                                 valueBox(value = textOutput("suicide_cr"), subtitle = "Crude Rate (per 100,000)", icon = NULL, color = "navy", width = 4, href = NULL),                                 
+                                 valueBox(value = textOutput("suicide_aamr"), subtitle = "AAMR (per 100,000)", icon = NULL, color = "navy", width = 4, href = NULL),
+                                 valueBox(value = textOutput("suicide_value1"), subtitle = "Total Suicides", icon = NULL, color = "navy", width = 4, href = NULL),
+                                 HTML('<h5 align="right" style="color:grey;">Source: Department of Public Health<br>accessed via ctdata.org</h5>')
+                             ), 
+                             fluidRow(
+                               tabBox(width=6,
+                                 tabPanel("Crude Rate", 
+                                          div(HTML("Crude death rate is a measure of the number of deaths in a population scaled to the size of that 
+                                                  population per unit time. The rate is calculated by dividing the number of deaths in a population 
+                                                  in a year by the midyear resident population."), 
+                                              HTML("<br>Source: Department of Public Health")))
+                               ),
+                               tabBox(width=6,
+                                 tabPanel("Age-Adjusted Mortality Rate (AAMR)", 
+                                          div(HTML("Age-adjusted mortality rates are rates where the effect of differing age
+                                                  distributions between the groups has been removed. Age-adjusted rates are computed by applying age-specific 
+                                                  rates in a population of interest to a standardized age distribution, in order to 
+                                                  eliminate differences in observed rates that result from age differences in population composition."), 
+                                              HTML("<br>Source: Department of Public Health")))
+                               )  
+                             )
+                      )
+                    ), 
+                    conditionalPanel(
+                      condition="input.select!='Statewide'",
+                      column(8,
+                             box(width="100%",
+                                 radioButtons("rates", label = NULL, inline = TRUE, 
+                                          c("Crude Rate" = "Crude Rate (per 100,000)", "AAMR" = "AAMR (per 100,000)"), 
+                                         selected = "Crude Rate (per 100,000)"),                                 
+                                 plotlyOutput("HPlot3", width="100%")
+                             )
+                      ),
+                      column(4,
+                             tabBox(width="100%",
+                               tabPanel("Crude Rate", 
+                                        div(HTML("Crude death rate is a measure of the number of deaths in a population scaled to the size of that 
+                                                  population per unit time. The rate is calculated by dividing the number of deaths in a population 
+                                                  in a year by the midyear resident population."), 
+                                              HTML("<br>Source: Department of Public Health")))
+                             ),
+                             tabBox(width="100%",
+                               tabPanel("Age-Adjusted Mortality Rate (AAMR)", 
+                                        div(HTML("Age-adjusted mortality rates are rates where the effect of differing age
+                                                  distributions between the groups has been removed. Age-adjusted rates are computed by applying age-specific 
+                                                  rates in a population of interest to a standardized age distribution, in order to 
+                                                  eliminate differences in observed rates that result from age differences in population composition."), 
+                                              HTML("<br>Source: Department of Public Health")))
+                             )                             
+                      ), collapsible=T
+                    ), collapsible=T
+                      
+                  )
+                ),                
+                fluidRow(
                   box(width= 12, 
-                      title = tagList(shiny::icon("table"), "Mental Health and Substance Abuse Treatment Admissions - ", 
+                      title = tagList(shiny::icon("table"), "Mental Health and Substance Abuse Treatment Admissions", paste0("(FY ", max_year_SA_regions, ")"), " - ", 
                       HTML('<a href="http://data.ctdata.org/visualization/mental-health-and-substance-abuse-treatment-admissions" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                     fluidRow(  
                       box(width = 9, 
@@ -230,39 +437,42 @@ shinyUI(
                 ), 
                 fluidRow(
                   box(width=12, 
-                      title = tagList(shiny::icon("bar-chart"), "Substance Abuse Treatment Admissions by Drug Type - ", 
+                      title = tagList(shiny::icon("table"), "Substance Abuse Treatment Admissions by Drug Type", paste0("(FY ", max_year_SA_regions, ")"), " - ", 
                       HTML('<a href="http://data.ctdata.org/visualization/substance-treatment-admissions-by-drug-type" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                     conditionalPanel(
                       condition="input.select=='Statewide'",
                       fluidRow(
                              box(width = 9, 
-                                 HTML('<h4 style="color:black;">Total Connecticut Substance Abuse Treatment Admissions</h4>'),
+                                 tableOutput("SATable")
+                             ), 
+                             box(width=3,
+                                 h4('Total Admissions: ', style="display:inline", textOutput("ct_text")), 
                                  HTML('<h3><span id="sa_ct_value" class="shiny-text-output"></span></h3>'),
-                                 HTML('<h5 align="right" style="color:grey;">Source: CT DMHAS accessed via ctdata.org</h5>')
-                             ),                               
+                                 HTML('<h5 align="right" style="color:grey;">Source: CT DMHAS <br> accessed via ctdata.org</h5>')
+                             ), 
                              tabBox(width=3, id = "tabset6",
-                                    tabPanel("Suppression", div(HTML("DMHAS reports number of admissions per month, per town,
-                                                                         per substance, resulting in some months with suppressed values. Therefore,
-                                                                         the ANNUAL TOTAL FOR CONNECTICUT DOES NOT INCLUDE SUPPRESSED VALUES and is lower than the actual value.")))
+                               tabPanel("Metadata", div(HTML("These values represent duplicated admission counts (clients may be admitted more than once during the year) for a given drug 
+                                        type. The 'Other' category includes: Other Stimulants, Methamphetamines, Tobacco, Other Sedatives or Hypnotics, Amphetamines, Over-the-Counter, 
+                                                             Tranquilizers, Cocaine/Crack, Other, Barbiturates, Non-Prescriptive Methadone, Inhalants, and Hallucinogens: LSD, DMS, STP, etc")))
                              )
-
                       ) 
                     ), collapsible=T,
                     conditionalPanel(
                       condition="input.select!='Statewide'",
-                      column(12,
-                             tabBox(width="100%", id = "tabset6",
-                                    tabPanel("Suppression", div(HTML("This chart includes values only for those substances where more than zero 
-                                                                         admissions were reported. The substances listed on the x-axis may 
-                                                                         change based on the selected Region. The values represent the aggregated annual total number 
-                                                                         of admissions, per town, per substance. DMHAS reports number of admissions per month, per town, 
-                                                                         per substance, resulting in some months with suppressed values. Therefore, 
-                                                                         the ANNUAL TOTALS DO NOT INCLUDE SUPPRESSED VALUES and are lower than the actual value.")))
+                      fluidRow(
+                             box(width=9,
+                                 tableOutput("SARegionTable")
                              ),
-                             box(width="100%",
-                                 plotlyOutput("HPlot3", width="100%", height = "600px")
+                             box(width=3,
+                                 h4('Total Admissions: ', style="display:inline", textOutput("reg_text")), 
+                                 HTML('<h3><span id="sa_region_value" class="shiny-text-output"></span></h3>'),
+                                 HTML('<h5 align="right" style="color:grey;">Source: CT DMHAS <br> accessed via ctdata.org</h5>')
+                             ),
+                             tabBox(width=3, id = "tabset6",
+                               tabPanel("Metadata", div(HTML("These values represent duplicated admission counts (clients may be admitted more than once during the year) for a given drug 
+                                        type. The 'Other' category includes: Other Stimulants, Methamphetamines, Tobacco, Other Sedatives or Hypnotics, Amphetamines, Over-the-Counter, 
+                                                             Tranquilizers, Cocaine/Crack, Other, Barbiturates, Non-Prescriptive Methadone, Inhalants, and Hallucinogens: LSD, DMS, STP, etc")))
                              ) 
-  
                       ), collapsible = T
                     )
                   ) 
@@ -376,125 +586,19 @@ shinyUI(
                             href = NULL, fill = FALSE),
                     HTML("<font color='grey'>Source: U.S. Census<br>accessed via ctdata.org</font>")
                          ), collapsible=T
-                ), 
-                fluidRow(
-                  box(width=12, 
-                    title = tagList(shiny::icon("bar-chart"), "Child Abuse and Neglect - ", 
-                                                HTML('<a href="http://data.ctdata.org/visualization/child-abuse-and-neglect" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
-                    ),
-                    column(8,
-                      box(width="100%",
-                        plotlyOutput("CWPlot_neglect", width="100%")
-                      )
-                    )
-                  )
-                )
-              ),
-              tabPanel("Demographics", value = 5,
-                fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Race/Ethnicity - ", 
-                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                  column(8,
-                    box(width="100%",
-                        plotlyOutput("DPlot_age_race", width="100%")
-                    )
-                  ),
-                  column(4,
-                    box(width="100%",
-                      selectInput("race", 
-                                   label = HTML('<h4 style="color:black;">Select Race/Ethnicity:</h4>'),
-                                   choices = list("All", 
-                                                  "White Alone",
-                                                  "White Alone Not Hispanic or Latino",
-                                                  "Hispanic or Latino",
-                                                  "Black or African American Alone",
-                                                  "Some Other Race Alone",
-                                                  "Asian Alone",
-                                                  "Two or More Races",
-                                                  "American Indian and Alaska Native Alone",
-                                                  "Native Hawaiian and Other Pacific Islander"), selected = "All"), 
-                      size = "default"
-                    ), 
-                      fluidRow(width=4,
-                               infoBox(value= textOutput("race_sel_text1"),
-                                       subtitle = textOutput("race_sel_value1"),
-                                       title = "",
-                                       icon = shiny::icon("hashtag"), color = "navy", width = NULL,
-                                       href = NULL, fill = FALSE)),
-                      fluidRow(width=4,
-                               infoBox(value= textOutput("race_sel_text2"), 
-                                       subtitle = textOutput("race_sel_value2"),
-                                       title = "",
-                                       icon = shiny::icon("percent"), color = "navy", width = NULL,
-                                       href = NULL, fill = FALSE))
-
-                  ), 
-                  collapsible=T
-                )
-                ),  
-                fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Age and Gender - ", 
-                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                        plotlyOutput("DPlot_age", width="100%"),
-                        collapsible = T
-                  )
-                ),
-                fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Population by Race/Ethnicity and Gender - ", 
-                                                HTML('<a href="http://data.ctdata.org/visualization/population-by-age-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                        plotlyOutput("DPlot_race", width="100%"),
-                        collapsible = T
-                  )
-                ),
-                fluidRow(
-                  box(width=12, 
-                      title = tagList(shiny::icon("bar-chart"), "Median Household Income - ", 
-                                      HTML('<a href="http://data.ctdata.org/visualization/median-household-income-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                    conditionalPanel(
-                      condition="input.select=='Statewide'",
-                      column(9,
-                             box(width="100%",
-                                 HTML('<h4 style="color:black;">Connecticut Median Household Income</h4>'),
-                                 HTML('<h3><span id="mhi_value" class="shiny-text-output"></span>&nbsp;<span id="mhi_moe"
-                                       style="color:grey;font-size:0.67em;"
-                                       class="shiny-text-output"></span></h3>'), 
-                                 HTML('<h5 align="right" style="color:grey;">Source: U.S. Census<br>accessed via ctdata.org</h5>')
-                             )
-                      ), collapsible=T
-                    ), 
-                    conditionalPanel(
-                      condition="input.select!='Statewide'",
-                      column(9,
-                             box(width="100%",
-                                 plotlyOutput("Dplot_mhi", width="100%")
-                             )
-                      ),
-                      column(3,
-                             box(width="100%",
-                                 HTML('<h4 style="color:black;"> Max Median Household Income</h4>'),
-                                 h3(textOutput("max_mhi_town")),
-                                 HTML('<h3><span id="max_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="max_mhi_moe" 
-                                       style="color:grey;font-size:0.67em;" 
-                                       class="shiny-text-output"></span></h3>')
-                             ),
-                             box(width="100%",
-                                 HTML('<h4 style="color:black;">Min Median Household Income</h4>'),
-                                 h3(textOutput("min_mhi_town")),
-                                 HTML('<h3><span id="min_mhi_value" class="shiny-text-output"></span>&nbsp;<span id="min_mhi_moe"
-                                       style="color:grey;font-size:0.67em;"
-                                       class="shiny-text-output"></span></h3>')
-                             )
-                      ), collapsible=T
-                    ), collapsible=T
-                  )
-                ), 
-                fluidRow(
-                  box(width=12, title = tagList(shiny::icon("bar-chart"), "Poverty Status by Age Range and Race/Ethnicity - ", 
-                                                HTML('<a href="http://data.ctdata.org/visualization/poverty-status-by-town" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
-                        plotlyOutput("DPlot_pov", width="100%"),
-                        collapsible = T
-                  )
-                )
+                )#, 
+                # fluidRow(
+                #   box(width=12, 
+                #     title = tagList(shiny::icon("bar-chart"), "Child Abuse and Neglect - ", 
+                #                                 HTML('<a href="http://data.ctdata.org/visualization/child-abuse-and-neglect" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')
+                #     ),
+                #     column(8,
+                #       box(width="100%",
+                #         plotlyOutput("CWPlot_neglect", width="100%")
+                #       )
+                #     )
+                #   )
+                # )
               ),
               tabPanel("Behavioral Health", value = 6,
                 fluidRow(
@@ -531,10 +635,12 @@ shinyUI(
                        plotlyOutput("EPlot3"),
                        collapsible = T
                    ), 
-                   box(width=12,title =  tagList(shiny::icon("bar-chart"), "Incidents by Type", max_year_edu4, "-", HTML('<a href="http://data.ctdata.org/visualization/incidents" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
+                   box(width=12, title = span(shiny::icon("bar-chart"),"Incidents by Type", max_year_edu4, "-", dropdownButton(label = "Explore the Data", 
+                                    HTML('<a href="http://data.ctdata.org/visualization/bullying" target="_blank"><font color="dodgerblue">Bullying</font></a>'),                                                                                                                               
+                                    HTML('<a href="http://data.ctdata.org/visualization/incidents" target="_blank"><font color="dodgerblue">Incidents</font></a>'),
+                                    circle = FALSE, status = "success", icon = NULL)),
                        plotlyOutput("EPlot4"),
-                       collapsible = T
-                   ), 
+                       collapsible = T),
                    box(width=12,title =  tagList(shiny::icon("bar-chart"), "Four-Year Graduation Rates by Race/Ethnicity", max_year_edu5, "-", HTML('<a href="http://data.ctdata.org/visualization/four-year-grad-rates-by-race-ethnicity" target="_blank"><font color="dodgerblue">Explore the Data</font></a>')),
                        plotlyOutput("EPlot5"),
                        collapsible = T
@@ -587,6 +693,7 @@ shinyUI(
                            panel_title = "Additional Resources",
                            content = HTML("<b>The Child Health and Development Institute of Connecticut</b> - <a href='https://www.chdi.org/' target='_blank'> www.chdi.org</a><hr>
                                       <b>Network of Care Analysis</b>
+                                      <ul><li><a href = 'https://s3.amazonaws.com/connect-ctdata/reports/Updated2017+NOC+Overview-pdf.pdf' target='_blank'>Network of Care Introduction and Methods</a></ul>
                                       <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/CCMC_AAP+Final+Report+10_24_17.pdf' target='_blank'>Assessment of the System of Mental Health Care for Children: a Focus on Pediatric Primary Care</a></ul>
                                       <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/Brief+Report+SSM.pdf' target='_blank'>System Support Mapping and Schools Pilot Project</a></ul>
                                       <ul><li><a href='https://s3.amazonaws.com/connect-ctdata/reports/Collaboration+survey+Overall+Summary+and+All+Reports.pdf' target='_blank'>Collaboration Survey - Overall Summary and All Reports</a></ul>
