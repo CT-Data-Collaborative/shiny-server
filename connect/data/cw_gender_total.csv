@@ -1,0 +1,589 @@
+"Region","Location of Placement","Type of Placement","Gender","Value"
+"Eastern Region","In State","Total","Total",860
+"North Central Region","In State","Total","Total",845
+"Western Region","In State","Total","Total",835
+"South Central Region","In State","Total","Total",585
+"Central Region","In State","Total","Total",557
+"Southwest Region","In State","Total","Total",468
+"North Central Region","In State","Total","Male",459
+"Eastern Region","In State","Total","Male",441
+"Western Region","In State","Total","Male",439
+"Eastern Region","In State","Total","Female",419
+"Western Region","In State","Total","Female",396
+"North Central Region","In State","Total","Female",386
+"Eastern Region","In State","Relative Foster Care","Total",330
+"South Central Region","In State","Total","Female",302
+"North Central Region","In State","Relative Foster Care","Total",291
+"South Central Region","In State","Total","Male",283
+"Central Region","In State","Total","Male",281
+"Central Region","In State","Total","Female",276
+"Western Region","In State","Relative Foster Care","Total",276
+"Eastern Region","In State","Foster Care","Total",275
+"Southwest Region","In State","Total","Male",271
+"Western Region","In State","Foster Care","Total",262
+"North Central Region","In State","Foster Care","Total",218
+"Southwest Region","In State","Total","Female",197
+"South Central Region","In State","Relative Foster Care","Total",174
+"Central Region","In State","Relative Foster Care","Total",170
+"Eastern Region","In State","Relative Foster Care","Female",168
+"Eastern Region","In State","Relative Foster Care","Male",162
+"Western Region","In State","Therapeutic Foster Care","Total",155
+"North Central Region","In State","Relative Foster Care","Male",154
+"Southwest Region","In State","Relative Foster Care","Total",152
+"Western Region","In State","Relative Foster Care","Male",149
+"South Central Region","In State","Foster Care","Total",146
+"Eastern Region","In State","Foster Care","Male",142
+"North Central Region","In State","Relative Foster Care","Female",137
+"Western Region","In State","Foster Care","Female",135
+"Central Region","In State","Foster Care","Total",134
+"Eastern Region","In State","Foster Care","Female",133
+"Southwest Region","In State","Foster Care","Total",128
+"Western Region","In State","Relative Foster Care","Female",127
+"Western Region","In State","Foster Care","Male",127
+"North Central Region","In State","Foster Care","Male",114
+"North Central Region","In State","Therapeutic Foster Care","Total",113
+"Central Region","In State","Therapeutic Foster Care","Total",108
+"South Central Region","In State","Therapeutic Foster Care","Total",106
+"North Central Region","In State","Foster Care","Female",104
+"South Central Region","In State","Relative Foster Care","Female",91
+"Southwest Region","In State","Relative Foster Care","Male",91
+"Central Region","In State","Relative Foster Care","Male",86
+"South Central Region","In State","Foster Care","Female",86
+"Central Region","In State","Relative Foster Care","Female",84
+"Western Region","In State","Therapeutic Foster Care","Male",84
+"Eastern Region","In State","Therapeutic Foster Care","Total",83
+"South Central Region","In State","Relative Foster Care","Male",83
+"Southwest Region","In State","Therapeutic Foster Care","Total",82
+"Western Region","In State","Special Study","Total",76
+"Central Region","In State","Foster Care","Female",72
+"North Central Region","In State","Special Study","Total",71
+"Western Region","In State","Therapeutic Foster Care","Female",71
+"Southwest Region","In State","Foster Care","Male",69
+"Central Region","In State","Foster Care","Male",62
+"North Central Region","In State","Therapeutic Foster Care","Male",62
+"Southwest Region","In State","Relative Foster Care","Female",61
+"South Central Region","In State","Foster Care","Male",60
+"Southwest Region","In State","Foster Care","Female",59
+"North Central Region","In State","Group Home","Total",57
+"South Central Region","In State","Therapeutic Foster Care","Male",56
+"Central Region","In State","Therapeutic Foster Care","Male",55
+"Central Region","In State","Therapeutic Foster Care","Female",53
+"Eastern Region","In State","Special Study","Total",53
+"North Central Region","In State","Therapeutic Foster Care","Female",51
+"South Central Region","In State","Therapeutic Foster Care","Female",50
+"Southwest Region","In State","Therapeutic Foster Care","Female",50
+"South Central Region","In State","Independent Living","Total",44
+"Eastern Region","In State","Therapeutic Foster Care","Male",43
+"Central Region","In State","Group Home","Total",42
+"Western Region","In State","Special Study","Female",42
+"Eastern Region","In State","Therapeutic Foster Care","Female",40
+"Eastern Region","In State","Group Home","Total",40
+"North Central Region","In State","Special Study","Male",40
+"North Central Region","In State","Independent Living","Total",38
+"Central Region","In State","Independent Living","Total",36
+"South Central Region","In State","Special Study","Total",36
+"South Central Region","In State","Group Home","Total",35
+"Southwest Region","In State","Special Study","Total",35
+"Eastern Region","In State","Independent Living","Total",34
+"Western Region","In State","Special Study","Male",34
+"Central Region","In State","Special Study","Total",33
+"North Central Region","In State","Group Home","Male",33
+"Southwest Region","In State","Therapeutic Foster Care","Male",32
+"North Central Region","In State","Special Study","Female",31
+"Central Region","In State","Group Home","Male",30
+"Eastern Region","In State","Special Study","Female",28
+"Eastern Region","In State","Group Home","Male",28
+"Eastern Region","In State","Residential Treatment Center","Total",28
+"Eastern Region","Out of State","Total","Total",27
+"Eastern Region","In State","Special Study","Male",25
+"Central Region","In State","Independent Living","Female",24
+"North Central Region","In State","Group Home","Female",24
+"South Central Region","In State","Independent Living","Female",24
+"South Central Region","In State","Group Home","Male",23
+"Southwest Region","In State","Group Home","Total",23
+"North Central Region","In State","Residential Treatment Center","Total",22
+"South Central Region","In State","Residential Treatment Center","Total",22
+"Eastern Region","In State","Independent Living","Female",21
+"North Central Region","Out of State","Total","Total",21
+"South Central Region","In State","Special Study","Female",21
+"Western Region","In State","Group Home","Total",21
+"North Central Region","In State","Independent Living","Female",20
+"South Central Region","In State","Independent Living","Male",20
+"Southwest Region","In State","Special Study","Male",20
+"Central Region","In State","Residential Treatment Center","Total",19
+"South Central Region","Out of State","Total","Total",19
+"Central Region","In State","Special Study","Female",18
+"Eastern Region","In State","Residential Treatment Center","Male",18
+"Eastern Region","Out of State","Total","Male",18
+"North Central Region","In State","Independent Living","Male",18
+"Southwest Region","In State","Group Home","Male",18
+"Southwest Region","In State","Independent Living","Total",18
+"North Central Region","In State","Shelter","Total",17
+"Western Region","In State","Group Home","Male",16
+"Central Region","In State","Special Study","Male",15
+"Eastern Region","Out of State","Relative Foster Care","Total",15
+"South Central Region","In State","Special Study","Male",15
+"Southwest Region","In State","Special Study","Female",15
+"Western Region","In State","Independent Living","Total",15
+"North Central Region","In State","Residential Treatment Center","Male",14
+"North Central Region","Out of State","Relative Foster Care","Total",14
+"Eastern Region","In State","Independent Living","Male",13
+"South Central Region","In State","Residential Treatment Center","Male",13
+"Southwest Region","In State","Independent Living","Male",13
+"Southwest Region","In State","Residential Treatment Center","Total",13
+"Central Region","In State","Group Home","Female",12
+"Central Region","In State","Independent Living","Male",12
+"Eastern Region","In State","Group Home","Female",12
+"North Central Region","Out of State","Total","Male",12
+"South Central Region","In State","Group Home","Female",12
+"Southwest Region","In State","Connecticut Juvenile Training School","Male",12
+"Southwest Region","In State","Connecticut Juvenile Training School","Total",12
+"Central Region","In State","Residential Treatment Center","Male",11
+"South Central Region","Out of State","Total","Female",11
+"Southwest Region","In State","Residential Treatment Center","Male",11
+"Western Region","In State","Residential Treatment Center","Total",11
+"Central Region","Out of State","Total","Total",10
+"Eastern Region","In State","Residential Treatment Center","Female",10
+"North Central Region","In State","Shelter","Male",10
+"South Central Region","Out of State","Relative Foster Care","Total",10
+"Southwest Region","Out of State","Total","Total",10
+"Eastern Region","In State","Shelter","Total",9
+"Eastern Region","Out of State","Total","Female",9
+"North Central Region","Out of State","Total","Female",9
+"South Central Region","In State","Residential Treatment Center","Female",9
+"Western Region","In State","Connecticut Juvenile Training School","Male",9
+"Western Region","In State","Connecticut Juvenile Training School","Total",9
+"Central Region","In State","Residential Treatment Center","Female",8
+"Eastern Region","Out of State","Relative Foster Care","Male",8
+"North Central Region","In State","Residential Treatment Center","Female",8
+"South Central Region","Out of State","Total","Male",8
+"Western Region","In State","Independent Living","Female",8
+"Western Region","In State","Residential Treatment Center","Male",8
+"Western Region","Out of State","Total","Total",8
+"Eastern Region","Out of State","Relative Foster Care","Female",7
+"North Central Region","In State","Shelter","Female",7
+"North Central Region","In State","Solnit Center","Total",7
+"North Central Region","Out of State","Relative Foster Care","Female",7
+"North Central Region","Out of State","Relative Foster Care","Male",7
+"South Central Region","In State","Connecticut Juvenile Training School","Male",7
+"South Central Region","In State","Connecticut Juvenile Training School","Total",7
+"South Central Region","In State","Solnit Center","Total",7
+"Western Region","In State","Independent Living","Male",7
+"Western Region","Out of State","Relative Foster Care","Total",7
+"Central Region","Out of State","Total","Male",6
+"North Central Region","In State","Connecticut Juvenile Training School","Male",6
+"North Central Region","In State","Connecticut Juvenile Training School","Total",6
+"South Central Region","In State","Solnit Center","Female",6
+"Southwest Region","Out of State","Total","Female",6
+"Southwest Region","Out of State","Relative Foster Care","Total",6
+"Western Region","Out of State","Total","Male",6
+"Central Region","In State","Connecticut Juvenile Training School","Male",5
+"Central Region","In State","Connecticut Juvenile Training School","Total",5
+"Central Region","In State","Medical or Psychiatric Hospital Placement","Total",5
+"Eastern Region","In State","Shelter","Male",5
+"North Central Region","In State","Solnit Center","Male",5
+"North Central Region","In State","Medical or Psychiatric Hospital Placement","Total",5
+"South Central Region","Out of State","Relative Foster Care","Female",5
+"South Central Region","Out of State","Relative Foster Care","Male",5
+"South Central Region","Out of State","Independent Living","Total",5
+"Southwest Region","In State","Group Home","Female",5
+"Southwest Region","In State","Independent Living","Female",5
+"Western Region","In State","Group Home","Female",5
+"Western Region","Out of State","Relative Foster Care","Male",5
+"Central Region","Out of State","Total","Female",4
+"Central Region","Out of State","Independent Living","Total",4
+"Eastern Region","In State","Shelter","Female",4
+"Eastern Region","In State","Solnit Center","Total",4
+"Eastern Region","Out of State","Residential Treatment Center","Total",4
+"South Central Region","Out of State","Independent Living","Female",4
+"Southwest Region","Out of State","Relative Foster Care","Female",4
+"Southwest Region","Out of State","Total","Male",4
+"Western Region","In State","Shelter","Total",4
+"Central Region","In State","Medical or Psychiatric Hospital Placement","Male",3
+"Central Region","In State","Solnit Center","Total",3
+"Central Region","Out of State","Independent Living","Male",3
+"Central Region","Out of State","Foster Care","Total",3
+"Eastern Region","In State","Connecticut Juvenile Training School","Male",3
+"Eastern Region","In State","Connecticut Juvenile Training School","Total",3
+"Eastern Region","Out of State","Foster Care","Male",3
+"Eastern Region","Out of State","Residential Treatment Center","Male",3
+"Eastern Region","Out of State","Foster Care","Total",3
+"North Central Region","In State","Medical or Psychiatric Hospital Placement","Male",3
+"North Central Region","Out of State","Foster Care","Total",3
+"South Central Region","In State","Medical or Psychiatric Hospital Placement","Total",3
+"South Central Region","In State","PDC or Safe Home","Total",3
+"South Central Region","Out of State","Therapeutic Foster Care","Total",3
+"Southwest Region","Out of State","Independent Living","Total",3
+"Western Region","In State","Residential Treatment Center","Female",3
+"Central Region","In State","Medical or Psychiatric Hospital Placement","Female",2
+"Central Region","In State","Solnit Center","Female",2
+"Central Region","In State","Shelter","Total",2
+"Central Region","Out of State","Foster Care","Female",2
+"Central Region","Out of State","Therapeutic Foster Care","Male",2
+"Central Region","Out of State","Therapeutic Foster Care","Total",2
+"Eastern Region","In State","Solnit Center","Female",2
+"Eastern Region","In State","Solnit Center","Male",2
+"Eastern Region","Out of State","Independent Living","Male",2
+"Eastern Region","Out of State","Independent Living","Total",2
+"Eastern Region","Out of State","Special Study","Total",2
+"North Central Region","In State","Medical or Psychiatric Hospital Placement","Female",2
+"North Central Region","In State","Solnit Center","Female",2
+"North Central Region","Out of State","Foster Care","Male",2
+"North Central Region","Out of State","Residential Treatment Center","Male",2
+"North Central Region","Out of State","Residential Treatment Center","Total",2
+"North Central Region","Out of State","Therapeutic Foster Care","Total",2
+"South Central Region","In State","Medical or Psychiatric Hospital Placement","Female",2
+"South Central Region","In State","PDC or Safe Home","Male",2
+"South Central Region","In State","Shelter","Male",2
+"South Central Region","In State","Shelter","Total",2
+"South Central Region","Out of State","Therapeutic Foster Care","Male",2
+"Southwest Region","In State","Residential Treatment Center","Female",2
+"Southwest Region","In State","Medical or Psychiatric Hospital Placement","Male",2
+"Southwest Region","In State","Solnit Center","Male",2
+"Southwest Region","In State","Medical or Psychiatric Hospital Placement","Total",2
+"Southwest Region","In State","Solnit Center","Total",2
+"Southwest Region","Out of State","Independent Living","Male",2
+"Southwest Region","Out of State","Relative Foster Care","Male",2
+"Western Region","In State","PDC or Safe Home","Female",2
+"Western Region","In State","Shelter","Female",2
+"Western Region","In State","Medical or Psychiatric Hospital Placement","Male",2
+"Western Region","In State","Shelter","Male",2
+"Western Region","In State","Medical or Psychiatric Hospital Placement","Total",2
+"Western Region","In State","PDC or Safe Home","Total",2
+"Western Region","In State","Solnit Center","Total",2
+"Western Region","Out of State","Relative Foster Care","Female",2
+"Western Region","Out of State","Total","Female",2
+"Central Region","In State","Shelter","Female",1
+"Central Region","In State","Shelter","Male",1
+"Central Region","In State","Solnit Center","Male",1
+"Central Region","Out of State","Independent Living","Female",1
+"Central Region","Out of State","Relative Foster Care","Female",1
+"Central Region","Out of State","Foster Care","Male",1
+"Central Region","Out of State","Relative Foster Care","Total",1
+"Eastern Region","In State","Medical or Psychiatric Hospital Placement","Female",1
+"Eastern Region","In State","Medical or Psychiatric Hospital Placement","Total",1
+"Eastern Region","Out of State","Residential Treatment Center","Female",1
+"Eastern Region","Out of State","Special Study","Female",1
+"Eastern Region","Out of State","Medical or Psychiatric Hospital Placement","Male",1
+"Eastern Region","Out of State","Special Study","Male",1
+"Eastern Region","Out of State","Medical or Psychiatric Hospital Placement","Total",1
+"North Central Region","Out of State","Foster Care","Female",1
+"North Central Region","Out of State","Therapeutic Foster Care","Female",1
+"North Central Region","Out of State","Therapeutic Foster Care","Male",1
+"South Central Region","In State","PDC or Safe Home","Female",1
+"South Central Region","In State","Medical or Psychiatric Hospital Placement","Male",1
+"South Central Region","In State","Solnit Center","Male",1
+"South Central Region","Out of State","Foster Care","Female",1
+"South Central Region","Out of State","Therapeutic Foster Care","Female",1
+"South Central Region","Out of State","Independent Living","Male",1
+"South Central Region","Out of State","Foster Care","Total",1
+"Southwest Region","In State","Shelter","Male",1
+"Southwest Region","In State","Shelter","Total",1
+"Southwest Region","Out of State","Independent Living","Female",1
+"Southwest Region","Out of State","Residential Treatment Center","Female",1
+"Southwest Region","Out of State","Residential Treatment Center","Total",1
+"Western Region","In State","Solnit Center","Female",1
+"Western Region","In State","Solnit Center","Male",1
+"Western Region","Out of State","Residential Treatment Center","Male",1
+"Western Region","Out of State","Residential Treatment Center","Total",1
+"Central Region","In State","Connecticut Juvenile Training School","Female",0
+"Central Region","In State","High Meadows","Female",0
+"Central Region","In State","PDC or Safe Home","Female",0
+"Central Region","In State","High Meadows","Male",0
+"Central Region","In State","PDC or Safe Home","Male",0
+"Central Region","In State","High Meadows","Total",0
+"Central Region","In State","PDC or Safe Home","Total",0
+"Central Region","Out of State","Connecticut Juvenile Training School","Female",0
+"Central Region","Out of State","Group Home","Female",0
+"Central Region","Out of State","High Meadows","Female",0
+"Central Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"Central Region","Out of State","PDC or Safe Home","Female",0
+"Central Region","Out of State","Residential Treatment Center","Female",0
+"Central Region","Out of State","Shelter","Female",0
+"Central Region","Out of State","Solnit Center","Female",0
+"Central Region","Out of State","Special Study","Female",0
+"Central Region","Out of State","Therapeutic Foster Care","Female",0
+"Central Region","Out of State","Connecticut Juvenile Training School","Male",0
+"Central Region","Out of State","Group Home","Male",0
+"Central Region","Out of State","High Meadows","Male",0
+"Central Region","Out of State","Medical or Psychiatric Hospital Placement","Male",0
+"Central Region","Out of State","PDC or Safe Home","Male",0
+"Central Region","Out of State","Relative Foster Care","Male",0
+"Central Region","Out of State","Residential Treatment Center","Male",0
+"Central Region","Out of State","Shelter","Male",0
+"Central Region","Out of State","Solnit Center","Male",0
+"Central Region","Out of State","Special Study","Male",0
+"Central Region","Out of State","Connecticut Juvenile Training School","Total",0
+"Central Region","Out of State","Group Home","Total",0
+"Central Region","Out of State","High Meadows","Total",0
+"Central Region","Out of State","Medical or Psychiatric Hospital Placement","Total",0
+"Central Region","Out of State","PDC or Safe Home","Total",0
+"Central Region","Out of State","Residential Treatment Center","Total",0
+"Central Region","Out of State","Shelter","Total",0
+"Central Region","Out of State","Solnit Center","Total",0
+"Central Region","Out of State","Special Study","Total",0
+"Eastern Region","In State","Connecticut Juvenile Training School","Female",0
+"Eastern Region","In State","High Meadows","Female",0
+"Eastern Region","In State","PDC or Safe Home","Female",0
+"Eastern Region","In State","High Meadows","Male",0
+"Eastern Region","In State","Medical or Psychiatric Hospital Placement","Male",0
+"Eastern Region","In State","PDC or Safe Home","Male",0
+"Eastern Region","In State","High Meadows","Total",0
+"Eastern Region","In State","PDC or Safe Home","Total",0
+"Eastern Region","Out of State","Connecticut Juvenile Training School","Female",0
+"Eastern Region","Out of State","Foster Care","Female",0
+"Eastern Region","Out of State","Group Home","Female",0
+"Eastern Region","Out of State","High Meadows","Female",0
+"Eastern Region","Out of State","Independent Living","Female",0
+"Eastern Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"Eastern Region","Out of State","PDC or Safe Home","Female",0
+"Eastern Region","Out of State","Shelter","Female",0
+"Eastern Region","Out of State","Solnit Center","Female",0
+"Eastern Region","Out of State","Therapeutic Foster Care","Female",0
+"Eastern Region","Out of State","Connecticut Juvenile Training School","Male",0
+"Eastern Region","Out of State","Group Home","Male",0
+"Eastern Region","Out of State","High Meadows","Male",0
+"Eastern Region","Out of State","PDC or Safe Home","Male",0
+"Eastern Region","Out of State","Shelter","Male",0
+"Eastern Region","Out of State","Solnit Center","Male",0
+"Eastern Region","Out of State","Therapeutic Foster Care","Male",0
+"Eastern Region","Out of State","Connecticut Juvenile Training School","Total",0
+"Eastern Region","Out of State","Group Home","Total",0
+"Eastern Region","Out of State","High Meadows","Total",0
+"Eastern Region","Out of State","PDC or Safe Home","Total",0
+"Eastern Region","Out of State","Shelter","Total",0
+"Eastern Region","Out of State","Solnit Center","Total",0
+"Eastern Region","Out of State","Therapeutic Foster Care","Total",0
+"North Central Region","In State","Connecticut Juvenile Training School","Female",0
+"North Central Region","In State","High Meadows","Female",0
+"North Central Region","In State","PDC or Safe Home","Female",0
+"North Central Region","In State","High Meadows","Male",0
+"North Central Region","In State","PDC or Safe Home","Male",0
+"North Central Region","In State","High Meadows","Total",0
+"North Central Region","In State","PDC or Safe Home","Total",0
+"North Central Region","Out of State","Connecticut Juvenile Training School","Female",0
+"North Central Region","Out of State","Group Home","Female",0
+"North Central Region","Out of State","High Meadows","Female",0
+"North Central Region","Out of State","Independent Living","Female",0
+"North Central Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"North Central Region","Out of State","PDC or Safe Home","Female",0
+"North Central Region","Out of State","Residential Treatment Center","Female",0
+"North Central Region","Out of State","Shelter","Female",0
+"North Central Region","Out of State","Solnit Center","Female",0
+"North Central Region","Out of State","Special Study","Female",0
+"North Central Region","Out of State","Connecticut Juvenile Training School","Male",0
+"North Central Region","Out of State","Group Home","Male",0
+"North Central Region","Out of State","High Meadows","Male",0
+"North Central Region","Out of State","Independent Living","Male",0
+"North Central Region","Out of State","Medical or Psychiatric Hospital Placement","Male",0
+"North Central Region","Out of State","PDC or Safe Home","Male",0
+"North Central Region","Out of State","Shelter","Male",0
+"North Central Region","Out of State","Solnit Center","Male",0
+"North Central Region","Out of State","Special Study","Male",0
+"North Central Region","Out of State","Connecticut Juvenile Training School","Total",0
+"North Central Region","Out of State","Group Home","Total",0
+"North Central Region","Out of State","High Meadows","Total",0
+"North Central Region","Out of State","Independent Living","Total",0
+"North Central Region","Out of State","Medical or Psychiatric Hospital Placement","Total",0
+"North Central Region","Out of State","PDC or Safe Home","Total",0
+"North Central Region","Out of State","Shelter","Total",0
+"North Central Region","Out of State","Solnit Center","Total",0
+"North Central Region","Out of State","Special Study","Total",0
+"South Central Region","In State","Connecticut Juvenile Training School","Female",0
+"South Central Region","In State","High Meadows","Female",0
+"South Central Region","In State","Shelter","Female",0
+"South Central Region","In State","High Meadows","Male",0
+"South Central Region","In State","High Meadows","Total",0
+"South Central Region","Out of State","Connecticut Juvenile Training School","Female",0
+"South Central Region","Out of State","Group Home","Female",0
+"South Central Region","Out of State","High Meadows","Female",0
+"South Central Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"South Central Region","Out of State","PDC or Safe Home","Female",0
+"South Central Region","Out of State","Residential Treatment Center","Female",0
+"South Central Region","Out of State","Shelter","Female",0
+"South Central Region","Out of State","Solnit Center","Female",0
+"South Central Region","Out of State","Special Study","Female",0
+"South Central Region","Out of State","Connecticut Juvenile Training School","Male",0
+"South Central Region","Out of State","Foster Care","Male",0
+"South Central Region","Out of State","Group Home","Male",0
+"South Central Region","Out of State","High Meadows","Male",0
+"South Central Region","Out of State","Medical or Psychiatric Hospital Placement","Male",0
+"South Central Region","Out of State","PDC or Safe Home","Male",0
+"South Central Region","Out of State","Residential Treatment Center","Male",0
+"South Central Region","Out of State","Shelter","Male",0
+"South Central Region","Out of State","Solnit Center","Male",0
+"South Central Region","Out of State","Special Study","Male",0
+"South Central Region","Out of State","Connecticut Juvenile Training School","Total",0
+"South Central Region","Out of State","Group Home","Total",0
+"South Central Region","Out of State","High Meadows","Total",0
+"South Central Region","Out of State","Medical or Psychiatric Hospital Placement","Total",0
+"South Central Region","Out of State","PDC or Safe Home","Total",0
+"South Central Region","Out of State","Residential Treatment Center","Total",0
+"South Central Region","Out of State","Shelter","Total",0
+"South Central Region","Out of State","Solnit Center","Total",0
+"South Central Region","Out of State","Special Study","Total",0
+"Southwest Region","In State","Connecticut Juvenile Training School","Female",0
+"Southwest Region","In State","High Meadows","Female",0
+"Southwest Region","In State","Medical or Psychiatric Hospital Placement","Female",0
+"Southwest Region","In State","PDC or Safe Home","Female",0
+"Southwest Region","In State","Shelter","Female",0
+"Southwest Region","In State","Solnit Center","Female",0
+"Southwest Region","In State","High Meadows","Male",0
+"Southwest Region","In State","PDC or Safe Home","Male",0
+"Southwest Region","In State","High Meadows","Total",0
+"Southwest Region","In State","PDC or Safe Home","Total",0
+"Southwest Region","Out of State","Connecticut Juvenile Training School","Female",0
+"Southwest Region","Out of State","Foster Care","Female",0
+"Southwest Region","Out of State","Group Home","Female",0
+"Southwest Region","Out of State","High Meadows","Female",0
+"Southwest Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"Southwest Region","Out of State","PDC or Safe Home","Female",0
+"Southwest Region","Out of State","Shelter","Female",0
+"Southwest Region","Out of State","Solnit Center","Female",0
+"Southwest Region","Out of State","Special Study","Female",0
+"Southwest Region","Out of State","Therapeutic Foster Care","Female",0
+"Southwest Region","Out of State","Connecticut Juvenile Training School","Male",0
+"Southwest Region","Out of State","Foster Care","Male",0
+"Southwest Region","Out of State","Group Home","Male",0
+"Southwest Region","Out of State","High Meadows","Male",0
+"Southwest Region","Out of State","Medical or Psychiatric Hospital Placement","Male",0
+"Southwest Region","Out of State","PDC or Safe Home","Male",0
+"Southwest Region","Out of State","Residential Treatment Center","Male",0
+"Southwest Region","Out of State","Shelter","Male",0
+"Southwest Region","Out of State","Solnit Center","Male",0
+"Southwest Region","Out of State","Special Study","Male",0
+"Southwest Region","Out of State","Therapeutic Foster Care","Male",0
+"Southwest Region","Out of State","Connecticut Juvenile Training School","Total",0
+"Southwest Region","Out of State","Foster Care","Total",0
+"Southwest Region","Out of State","Group Home","Total",0
+"Southwest Region","Out of State","High Meadows","Total",0
+"Southwest Region","Out of State","Medical or Psychiatric Hospital Placement","Total",0
+"Southwest Region","Out of State","PDC or Safe Home","Total",0
+"Southwest Region","Out of State","Shelter","Total",0
+"Southwest Region","Out of State","Solnit Center","Total",0
+"Southwest Region","Out of State","Special Study","Total",0
+"Southwest Region","Out of State","Therapeutic Foster Care","Total",0
+"Western Region","In State","Connecticut Juvenile Training School","Female",0
+"Western Region","In State","High Meadows","Female",0
+"Western Region","In State","Medical or Psychiatric Hospital Placement","Female",0
+"Western Region","In State","High Meadows","Male",0
+"Western Region","In State","PDC or Safe Home","Male",0
+"Western Region","In State","High Meadows","Total",0
+"Western Region","Out of State","Connecticut Juvenile Training School","Female",0
+"Western Region","Out of State","Foster Care","Female",0
+"Western Region","Out of State","Group Home","Female",0
+"Western Region","Out of State","High Meadows","Female",0
+"Western Region","Out of State","Independent Living","Female",0
+"Western Region","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"Western Region","Out of State","PDC or Safe Home","Female",0
+"Western Region","Out of State","Residential Treatment Center","Female",0
+"Western Region","Out of State","Shelter","Female",0
+"Western Region","Out of State","Solnit Center","Female",0
+"Western Region","Out of State","Special Study","Female",0
+"Western Region","Out of State","Therapeutic Foster Care","Female",0
+"Western Region","Out of State","Connecticut Juvenile Training School","Male",0
+"Western Region","Out of State","Foster Care","Male",0
+"Western Region","Out of State","Group Home","Male",0
+"Western Region","Out of State","High Meadows","Male",0
+"Western Region","Out of State","Independent Living","Male",0
+"Western Region","Out of State","Medical or Psychiatric Hospital Placement","Male",0
+"Western Region","Out of State","PDC or Safe Home","Male",0
+"Western Region","Out of State","Shelter","Male",0
+"Western Region","Out of State","Solnit Center","Male",0
+"Western Region","Out of State","Special Study","Male",0
+"Western Region","Out of State","Therapeutic Foster Care","Male",0
+"Western Region","Out of State","Connecticut Juvenile Training School","Total",0
+"Western Region","Out of State","Foster Care","Total",0
+"Western Region","Out of State","Group Home","Total",0
+"Western Region","Out of State","High Meadows","Total",0
+"Western Region","Out of State","Independent Living","Total",0
+"Western Region","Out of State","Medical or Psychiatric Hospital Placement","Total",0
+"Western Region","Out of State","PDC or Safe Home","Total",0
+"Western Region","Out of State","Shelter","Total",0
+"Western Region","Out of State","Solnit Center","Total",0
+"Western Region","Out of State","Special Study","Total",0
+"Western Region","Out of State","Therapeutic Foster Care","Total",0
+"Statewide","In State","Total","Total",4150
+"Statewide","In State","Total","Male",2174
+"Statewide","In State","Total","Female",1976
+"Statewide","In State","Relative Foster Care","Total",1393
+"Statewide","In State","Foster Care","Total",1163
+"Statewide","In State","Relative Foster Care","Male",725
+"Statewide","In State","Relative Foster Care","Female",668
+"Statewide","In State","Therapeutic Foster Care","Total",647
+"Statewide","In State","Foster Care","Female",589
+"Statewide","In State","Foster Care","Male",574
+"Statewide","In State","Therapeutic Foster Care","Male",332
+"Statewide","In State","Therapeutic Foster Care","Female",315
+"Statewide","In State","Special Study","Total",304
+"Statewide","In State","Group Home","Total",218
+"Statewide","In State","Independent Living","Total",185
+"Statewide","In State","Special Study","Female",155
+"Statewide","In State","Special Study","Male",149
+"Statewide","In State","Group Home","Male",148
+"Statewide","In State","Residential Treatment Center","Total",115
+"Statewide","In State","Independent Living","Female",102
+"Statewide","Out of State","Total","Total",95
+"Statewide","In State","Independent Living","Male",83
+"Statewide","In State","Residential Treatment Center","Male",75
+"Statewide","In State","Group Home","Female",70
+"Statewide","Out of State","Total","Male",54
+"Statewide","Out of State","Relative Foster Care","Total",53
+"Statewide","In State","Connecticut Juvenile Training School","Male",42
+"Statewide","In State","Connecticut Juvenile Training School","Total",42
+"Statewide","Out of State","Total","Female",41
+"Statewide","In State","Residential Treatment Center","Female",40
+"Statewide","In State","Shelter","Total",35
+"Statewide","Out of State","Relative Foster Care","Male",27
+"Statewide","Out of State","Relative Foster Care","Female",26
+"Statewide","In State","Solnit Center","Total",25
+"Statewide","In State","Shelter","Male",21
+"Statewide","In State","Medical or Psychiatric Hospital Placement","Total",18
+"Statewide","In State","Shelter","Female",14
+"Statewide","Out of State","Independent Living","Total",14
+"Statewide","In State","Solnit Center","Female",13
+"Statewide","In State","Solnit Center","Male",12
+"Statewide","In State","Medical or Psychiatric Hospital Placement","Male",11
+"Statewide","Out of State","Foster Care","Total",10
+"Statewide","Out of State","Independent Living","Male",8
+"Statewide","Out of State","Residential Treatment Center","Total",8
+"Statewide","In State","Medical or Psychiatric Hospital Placement","Female",7
+"Statewide","Out of State","Therapeutic Foster Care","Total",7
+"Statewide","Out of State","Independent Living","Female",6
+"Statewide","Out of State","Foster Care","Male",6
+"Statewide","Out of State","Residential Treatment Center","Male",6
+"Statewide","In State","PDC or Safe Home","Total",5
+"Statewide","Out of State","Therapeutic Foster Care","Male",5
+"Statewide","Out of State","Foster Care","Female",4
+"Statewide","In State","PDC or Safe Home","Female",3
+"Statewide","In State","PDC or Safe Home","Male",2
+"Statewide","Out of State","Residential Treatment Center","Female",2
+"Statewide","Out of State","Therapeutic Foster Care","Female",2
+"Statewide","Out of State","Special Study","Total",2
+"Statewide","Out of State","Special Study","Female",1
+"Statewide","Out of State","Medical or Psychiatric Hospital Placement","Male",1
+"Statewide","Out of State","Special Study","Male",1
+"Statewide","Out of State","Medical or Psychiatric Hospital Placement","Total",1
+"Statewide","In State","Connecticut Juvenile Training School","Female",0
+"Statewide","In State","High Meadows","Female",0
+"Statewide","In State","High Meadows","Male",0
+"Statewide","In State","High Meadows","Total",0
+"Statewide","Out of State","Connecticut Juvenile Training School","Female",0
+"Statewide","Out of State","Group Home","Female",0
+"Statewide","Out of State","High Meadows","Female",0
+"Statewide","Out of State","Medical or Psychiatric Hospital Placement","Female",0
+"Statewide","Out of State","PDC or Safe Home","Female",0
+"Statewide","Out of State","Shelter","Female",0
+"Statewide","Out of State","Solnit Center","Female",0
+"Statewide","Out of State","Connecticut Juvenile Training School","Male",0
+"Statewide","Out of State","Group Home","Male",0
+"Statewide","Out of State","High Meadows","Male",0
+"Statewide","Out of State","PDC or Safe Home","Male",0
+"Statewide","Out of State","Shelter","Male",0
+"Statewide","Out of State","Solnit Center","Male",0
+"Statewide","Out of State","Connecticut Juvenile Training School","Total",0
+"Statewide","Out of State","Group Home","Total",0
+"Statewide","Out of State","High Meadows","Total",0
+"Statewide","Out of State","PDC or Safe Home","Total",0
+"Statewide","Out of State","Shelter","Total",0
+"Statewide","Out of State","Solnit Center","Total",0

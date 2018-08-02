@@ -1,0 +1,22 @@
+"Region","Year","Admission Type","Number of Admissions","Percent of Admissions","Rate (per 10,000)"
+"Central Region",2016,"Mental Health",4173,31,84
+"Central Region",2016,"Substance Abuse",8536,63,172
+"Central Region",2016,"Mental Health and Substance Abuse",933,7,19
+"Eastern Region",2016,"Mental Health",8439,44,131
+"Eastern Region",2016,"Substance Abuse",9441,49,147
+"Eastern Region",2016,"Mental Health and Substance Abuse",1401,7,22
+"North Central Region",2016,"Mental Health",13111,52,213
+"North Central Region",2016,"Substance Abuse",10477,42,170
+"North Central Region",2016,"Mental Health and Substance Abuse",1633,6,27
+"South Central Region",2016,"Mental Health",8614,48,168
+"South Central Region",2016,"Substance Abuse",7975,44,155
+"South Central Region",2016,"Mental Health and Substance Abuse",1477,8,29
+"Southwest Region",2016,"Mental Health",7173,48,102
+"Southwest Region",2016,"Substance Abuse",6883,46,98
+"Southwest Region",2016,"Mental Health and Substance Abuse",941,6,13
+"Statewide",2016,"Mental Health",51523,46,144
+"Statewide",2016,"Substance Abuse",53639,48,149
+"Statewide",2016,"Mental Health and Substance Abuse",7702,7,21
+"Western Region",2016,"Mental Health",8819,47,143
+"Western Region",2016,"Substance Abuse",8790,47,142
+"Western Region",2016,"Mental Health and Substance Abuse",1044,6,17
